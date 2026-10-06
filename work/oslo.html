@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oslo — UX Terrain</title>
+    <meta
+      name="description"
+      content="Oslo is a product-design agent built into UX Terrain. The case is a portfolio that defends the thinking: fenced to shipped work, paced as a walk, and open to interrogation."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var key = "ux-terrain-theme";
+          var stored = localStorage.getItem(key);
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Lora", "Palatino", "serif"],
+              sans: ['"Source Sans 3"', "system-ui", "sans-serif"],
+              mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="../css/design-system.css" />
+  </head>
+  <body class="h-full overflow-hidden antialiased">
+    <div id="app-shell" class="flex h-full w-full overflow-hidden">
+      <div
+        id="site-column"
+        class="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
+      >
+        <header
+          class="sticky top-0 z-40 border-b backdrop-blur-md"
+          style="
+            background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
+            border-color: var(--color-border);
+          "
+        >
+          <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+            <a href="../index.html" class="site-lockup font-serif text-xl" style="color: var(--color-text)">UX Terrain</a>
+            <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../index.html#work" style="color: var(--color-text-muted)">Work</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../systems.html" style="color: var(--color-text-muted)">Systems</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../walk.html" style="color: var(--color-text-muted)">Walk</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../about.html" style="color: var(--color-text-muted)">About</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../index.html#contact" style="color: var(--color-text-muted)">Contact</a>
+            </nav>
+            <div class="flex items-center gap-3">
+              <button class="js-agent-open agent-trigger" type="button" aria-controls="agent-panel" aria-expanded="false">Ask <span class="oslo-word">Oslo</span></button>
+              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                <svg class="icon-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z" />
+                </svg>
+                <svg class="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4" />
+                  <path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.93 4.93l1.06 1.06M17.99 17.99l1.06 1.06M3 12h1.5M19.5 12H21M4.93 19.07l1.06-1.06M17.99 6.01l1.06-1.06" />
+                </svg>
+              </button>
+              <button id="nav-toggle" class="theme-toggle md:hidden" type="button" aria-controls="nav-menu" aria-expanded="false" aria-label="Open menu">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="nav-menu" class="hidden border-t px-5 py-3 md:hidden" style="border-color: var(--color-border)">
+            <nav class="flex flex-col gap-3" aria-label="Mobile">
+              <a class="text-sm font-medium" href="../index.html#work" style="color: var(--color-text)">Work</a>
+              <a class="text-sm font-medium" href="../systems.html" style="color: var(--color-text)">Systems</a>
+              <a class="text-sm font-medium" href="../walk.html" style="color: var(--color-text)">Walk</a>
+              <a class="text-sm font-medium" href="../about.html" style="color: var(--color-text)">About</a>
+              <a class="text-sm font-medium" href="../index.html#contact" style="color: var(--color-text)">Contact</a>
+            </nav>
+          </div>
+        </header>
+
+        <main class="min-h-0 flex-1 overflow-y-auto">
+          <article class="mx-auto max-w-6xl px-5 pb-24 pt-10 md:px-8 md:pt-14">
+            <a class="case-back inline-block" href="../index.html#work">← All projects</a>
+
+            <p class="font-mono mt-10 text-xs uppercase tracking-[0.22em]" style="color: var(--color-accent)">
+              Oslo · UX Terrain Agents
+            </p>
+            <h1 class="font-serif mt-4 max-w-4xl text-4xl leading-[1.12] tracking-tight md:text-6xl">
+              A portfolio that defends the thinking, instead of only displaying it.
+            </h1>
+            <div class="mt-6 max-w-2xl space-y-5 text-lg leading-relaxed" style="color: var(--color-text-muted)">
+              <p>
+                For over a decade, the digital design portfolio has been flattened to pass a
+                hiring filter. Designers learned to trade messy human realities for sanitized
+                bullets, real trade-offs for clean metrics, and rigorous debate for
+                frictionless scrolling.
+              </p>
+              <p>
+                The result looks pristine on a grid and tells you little about how a designer
+                thinks under pressure. These are brochures designed for compliance, not proof
+                of capability.
+              </p>
+            </div>
+
+            <section class="mt-16 max-w-2xl">
+              <h2 class="font-serif text-3xl tracking-tight">From exhibition to dialogue</h2>
+              <div class="mt-5 space-y-5 text-lg leading-relaxed" style="color: var(--color-text-muted)">
+                <p>
+                  Oslo began as a provocation. What if a portfolio defended the thinking,
+                  instead of only displaying it?
+                </p>
+                <p>
+                  Design is conversational, argumentative, and iterative. A static screen
+                  keeps a decision’s final state and loses the journey: the constraints that
+                  were accepted, the paths that were abandoned, and the architectural
+                  convictions that held the work together.
+                </p>
+                <p>
+                  Oslo is a purpose-built product design agent, embedded in the architecture
+                  of UX Terrain. A recruiter, a hiring manager, or a design peer can
+                  interrogate an architectural choice, test a rationale, and walk a complex
+                  system in real time. The portfolio leaves the museum of finished artifacts
+                  and becomes an active intellectual partner.
+                </p>
+                <p>
+                  This case is the systems design, the rationale, and the technical execution
+                  behind that partner. Oslo is a native feature of the practice, wired into
+                  the site itself.
+                </p>
+              </div>
+            </section>
+
+            <dl class="case-meta mt-12 border-y py-8" style="border-color: var(--color-border)">
+              <div>
+                <dt>Role</dt>
+                <dd>Product designer</dd>
+              </div>
+              <div>
+                <dt>Surface</dt>
+                <dd>Walk + Ask Oslo</dd>
+              </div>
+              <div>
+                <dt>Material</dt>
+                <dd>Written instruction</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>On this site</dd>
+              </div>
+            </dl>
+
+            <figure class="case-figure mt-12 rounded-2xl">
+              <img
+                src="../images/work/oslo/picker.png"
+                alt="Walk with Oslo, choosing between the ground layer and Performance Monitoring"
+              />
+              <figcaption>
+                The first introduction. Two trails, a few minutes, no background required.
+              </figcaption>
+            </figure>
+
+            <section class="mt-20">
+              <h2 class="font-serif text-3xl tracking-tight">Why it matters to the visitor</h2>
+              <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                For a hiring manager, a design director, or a peer, the value is cutting
+                through the noise. Watching a model generate text is not the work. The work
+                is a bounded conversation about decisions that shipped.
+              </p>
+              <div class="case-reasons">
+                <article class="case-reason">
+                  <h3 class="font-serif">Zero fluff, high signal</h3>
+                  <p>Oslo is fenced to shipped work and the rationale that was written down. It does not drift into vague generalities, and it does not invent a project.</p>
+                </article>
+                <article class="case-reason">
+                  <h3 class="font-serif">The pacing of a real walk</h3>
+                  <p>Trails and stations respect the visitor’s time. The foundational claim lands before the interface detail. Five stops, a few minutes, then the questions.</p>
+                </article>
+                <article class="case-reason">
+                  <h3 class="font-serif">Active interrogation</h3>
+                  <p>The visitor can press the weak points, ask about constraints, and test the logic while the page is still open.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="mt-20">
+              <h2 class="font-serif text-3xl tracking-tight">The foundation, then the story.</h2>
+              <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                The script precedes the system. Before a screen, a card, or a cut is shown,
+                Oslo establishes the ground floor: the core claim and the real job to be done.
+                Once that bedrock is laid, the details sharpen. Later stations succeed
+                precisely because the visitor already knows the ground they stand on.
+              </p>
+              <div class="case-reasons">
+                <article class="case-reason">
+                  <h3 class="font-serif">The picker</h3>
+                  <p>What the walk is, before you enter. Two trails, a few minutes, and no prior knowledge assumed.</p>
+                </article>
+                <article class="case-reason">
+                  <h3 class="font-serif">The first station</h3>
+                  <p>The foundation, spoken. The ground layer opens on its claim. Performance Monitoring opens on the job.</p>
+                </article>
+                <article class="case-reason">
+                  <h3 class="font-serif">Then the story</h3>
+                  <p>Holds, cards, the cut, the chart. Specific, because the foundation has already landed.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="mt-20">
+              <h2 class="font-serif text-3xl tracking-tight">The instruction is the design.</h2>
+              <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                Before any panel was wired, the material was written: who speaks, what is in
+                bounds, which facts a case is allowed to rest on, and what to say at each stop.
+                That document is the product. The interface only performs it.
+              </p>
+              <div class="case-checks case-checks-4">
+                <article class="case-check">
+                  <span>01</span>
+                  <h3 class="font-serif">Persona</h3>
+                  <p>Oslo, for this practice. A distinct voice, a fixed tone, and a name that doesn't trade away.</p>
+                </article>
+                <article class="case-check">
+                  <span>02</span>
+                  <h3 class="font-serif">Fence</h3>
+                  <p>The portfolio, the cases, the ground layer. Everything else gets the same polite no.</p>
+                </article>
+                <article class="case-check">
+                  <span>03</span>
+                  <h3 class="font-serif">Cases</h3>
+                  <p>Facts written down so an answer cannot drift into a project that was never shipped.</p>
+                </article>
+                <article class="case-check">
+                  <span>04</span>
+                  <h3 class="font-serif">Stations</h3>
+                  <p>What to say at this stop, paired with fixed guardrails for the dialogue. Not the whole walk at once.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="station-section mt-20">
+              <h2 class="font-serif text-3xl tracking-tight">A station is a designed stop.</h2>
+              <div class="station-lead">
+                <p>
+                  Each stop is sized before it is shown. The written line has a word budget,
+                  and both walks are held to it: five stations on the ground layer, five on
+                  Performance Monitoring, the same narrow band.
+                </p>
+                <p>
+                  Every stop carries two questions. Next belongs to the visitor. It is the
+                  only control that advances the trail.
+                </p>
+              </div>
+              <figure class="station-chart" aria-label="Words written per station. Ground layer: 94, 94, 86, 105, 104. Performance Monitoring: 98, 99, 108, 98, 102. Two questions at every station.">
+                <div class="station-chart-head">
+                  <p class="station-chart-kicker">Words in the script</p>
+                  <div class="station-chart-legend">
+                    <span><i class="swatch-ground"></i>Ground layer</span>
+                    <span><i class="swatch-m365"></i>Performance Monitoring</span>
+                  </div>
+                </div>
+                <div class="station-plot">
+                  <div class="station-y" aria-hidden="true">
+                    <span>120</span>
+                    <span>80</span>
+                    <span>40</span>
+                    <span>0</span>
+                  </div>
+                  <div class="station-field">
+                    <div class="station-guides" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                    <div class="station-col">
+                      <span class="station-bar ground" style="height: 78.3%" title="Ground layer, station 01, 94 words"></span>
+                      <span class="station-bar m365" style="height: 81.7%" title="Performance Monitoring, station 01, 98 words"></span>
+                    </div>
+                    <div class="station-col">
+                      <span class="station-bar ground" style="height: 78.3%" title="Ground layer, station 02, 94 words"></span>
+                      <span class="station-bar m365" style="height: 82.5%" title="Performance Monitoring, station 02, 99 words"></span>
+                    </div>
+                    <div class="station-col">
+                      <span class="station-bar ground" style="height: 71.7%" title="Ground layer, station 03, 86 words"></span>
+                      <span class="station-bar m365" style="height: 90%" title="Performance Monitoring, station 03, 108 words"></span>
+                    </div>
+                    <div class="station-col">
+                      <span class="station-bar ground" style="height: 87.5%" title="Ground layer, station 04, 105 words"></span>
+                      <span class="station-bar m365" style="height: 81.7%" title="Performance Monitoring, station 04, 98 words"></span>
+                    </div>
+                    <div class="station-col">
+                      <span class="station-bar ground" style="height: 86.7%" title="Ground layer, station 05, 104 words"></span>
+                      <span class="station-bar m365" style="height: 85%" title="Performance Monitoring, station 05, 102 words"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="station-x" aria-hidden="true">
+                  <span></span>
+                  <ol>
+                    <li>01<span>2</span></li>
+                    <li>02<span>2</span></li>
+                    <li>03<span>2</span></li>
+                    <li>04<span>2</span></li>
+                    <li>05<span>2</span></li>
+                  </ol>
+                </div>
+                <p class="station-x-note">Questions per station</p>
+                <figcaption>
+                  Script length by station. Both walks stay between 86 and 108 words.
+                </figcaption>
+              </figure>
+              <blockquote class="station-pull">
+                <p>If the line is not written, Oslo does not get to invent the walk.</p>
+              </blockquote>
+            </section>
+
+            <section class="mt-20">
+              <h2 class="font-serif text-3xl tracking-tight">The panel is the other feature.</h2>
+              <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                Walk is Oslo leading. The panel is the visitor leading. It opens from any
+                page, and the page stays beside it. There is no station and no Next. You
+                bring a question, or you take one written for the page you are already on.
+                The answer still comes from the same brief.
+              </p>
+              <div class="case-reasons">
+                <article class="case-reason">
+                  <h3 class="font-serif">The page stays</h3>
+                  <p>Ask Oslo from the header, a case, or the hero. The site makes room. You do not leave the work you were reading.</p>
+                </article>
+                <article class="case-reason">
+                  <h3 class="font-serif">A written question</h3>
+                  <p>Three invitations, written for that page. On a case, the first one is about the case. The field is there when none of them is your question.</p>
+                </article>
+                <article class="case-reason">
+                  <h3 class="font-serif">The fence</h3>
+                  <p>The practice, the cases, the ground layer. Off that map, Oslo declines. The walk and the panel share this line.</p>
+                </article>
+              </div>
+              <p class="case-callout mt-8 max-w-2xl text-xl leading-snug">
+                The walk teaches the foundation in order. The panel starts from the question you already have.
+              </p>
+            </section>
+
+            <section class="mt-20">
+              <h2 class="font-serif text-3xl tracking-tight">One route. The brief, then the model.</h2>
+              <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                Both features call the same endpoint. The panel sends the question.
+                The walk sends the question and the station it is standing on — the
+                title and the claim — and asks Oslo to stay there. The server has
+                already loaded the written instruction. It attaches that as the
+                system message, asks gpt-4o-mini to answer, and streams the tokens
+                back as plain text. The key stays on the server.
+              </p>
+              <ol class="case-flow">
+                <li class="case-flow-step">
+                  <span>01</span>
+                  <h3 class="font-serif">Two clients</h3>
+                  <p>The panel posts a message. The walk posts the message plus the station, and cancels the request if you leave that stop.</p>
+                </li>
+                <li class="case-flow-step">
+                  <span>02</span>
+                  <h3 class="font-serif">One route</h3>
+                  <p>/api/chat. An empty message is refused. A message past the length cap is refused. A missing key never reaches the model.</p>
+                </li>
+                <li class="case-flow-step">
+                  <span>03</span>
+                  <h3 class="font-serif">Brief, then model</h3>
+                  <p>The instruction is the system message, read once when the server starts. There is no retrieval index. The model streams.</p>
+                </li>
+                <li class="case-flow-step">
+                  <span>04</span>
+                  <h3 class="font-serif">Plain text</h3>
+                  <p>Tokens write into the thread as they arrive. Markdown is stripped. A failed key, quota, or stream becomes the reply you can read.</p>
+                </li>
+              </ol>
+              <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                While a reply is in flight, the field and the written questions wait,
+                so a second question cannot stack on the first.
+              </p>
+              <p class="case-callout mt-8 max-w-2xl text-xl leading-snug">
+                The model is the unreliable part. The brief is loaded before it speaks.
+              </p>
+            </section>
+
+            <section class="mt-16">
+              <h2 class="font-serif text-3xl tracking-tight">What I owned</h2>
+              <ul class="mt-6 max-w-2xl space-y-3 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                <li>The instruction: persona, the fence, case facts, and a script for every station.</li>
+                <li>Walk as a guided surface — introductions, one station, a rail, and Next.</li>
+                <li>The panel as its own surface — the page stays, the questions are written for where you are, and the fence holds.</li>
+                <li>The route both features share — one endpoint, the instruction as the system message, and a streamed reply in plain text.</li>
+              </ul>
+            </section>
+
+            <section class="mt-20 grid gap-16">
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">01</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">The station</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  The visual stays on the left. Oslo speaks from the rail, offers two
+                  questions, and will not advance the trail on its own.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img
+                    src="../images/work/oslo/station.png"
+                    alt="A ground-layer walk station with Oslo narrating from the rail and two suggested questions"
+                  />
+                  <figcaption>Show, say, ask. Next is the visitor’s.</figcaption>
+                </figure>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">02</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">The panel</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  The case stays on the left. Oslo opens on the right, with a greeting
+                  and three questions written for this page.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img
+                    src="../images/work/oslo/panel.png"
+                    alt="Ask Oslo open beside the case, with questions written for this page"
+                  />
+                  <figcaption>The page stays. The question is yours, or one of the three.</figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <section class="mt-20 max-w-2xl">
+              <h2 class="font-serif text-3xl tracking-tight">The medium is the proof</h2>
+              <div class="mt-5 space-y-5 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                <p>
+                  Building Oslo is the case, because the system has to perform the thesis.
+                  A portfolio that can be questioned is the evidence. The interface is the
+                  argument, running on the same site as the work.
+                </p>
+                <p>
+                  The future of this practice is intelligent, highly bounded systems that
+                  respect context, honor constraints, and raise how a complex idea gets
+                  communicated.
+                </p>
+              </div>
+              <p class="case-callout mt-8 text-xl leading-snug">
+                The bounded system is the proof. It respects the context, honors the constraint, and can be questioned.
+              </p>
+            </section>
+
+            <p class="mt-16 flex flex-wrap gap-x-6 gap-y-3">
+              <a class="accent-link text-sm font-medium" href="../walk.html">Take the walk →</a>
+              <a class="accent-link text-sm font-medium" href="../index.html#work">← Back to selected work</a>
+            </p>
+          </article>
+        </main>
+
+        <footer class="mx-auto w-full max-w-6xl px-5 pb-10 pt-4 md:px-8">
+          <p class="font-mono text-xs" style="color: var(--color-text-muted)">
+            This website is handmade · © 2026 UX Terrain
+            · <a href="https://www.linkedin.com/in/jimmyvangalder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            · <a href="https://github.com/uxterrain" target="_blank" rel="noopener noreferrer">GitHub</a>
+            · <a href="https://www.instagram.com/uxterrain" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </p>
+        </footer>
+      </div>
+
+      <aside
+        id="agent-panel"
+        class="agent-panel flex h-full w-0 max-w-0 shrink-0 flex-col overflow-hidden"
+        role="complementary"
+        aria-labelledby="agent-title"
+        aria-hidden="true"
+        inert
+      >
+        <div class="flex h-full min-h-0 w-full flex-col">
+          <header class="flex shrink-0 items-start justify-between gap-4 border-b px-6 py-5" style="border-color: var(--color-border)">
+            <div>
+              <h2 id="agent-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
+              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Questions written for this page</p>
+            </div>
+            <button id="agent-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </header>
+
+          <div id="chat-log" class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-6 py-5" aria-live="polite">
+            <article class="chat-turn chat-turn-agent">
+              <p class="chat-turn-label">Oslo</p>
+              <p class="chat-turn-body">Greetings, I'm Oslo an AI Agent. I'm designed to help answer questions about our AI experiences here at UX Terrain.</p>
+            </article>
+          </div>
+
+          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Quick inquiries">
+            <p class="font-mono mb-2 px-1 text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">
+              Quick inquiry
+            </p>
+            <div class="flex flex-col gap-2">
+              <button type="button" class="js-quick-inquiry agent-inquiry">How was Oslo instructed so the Walk stays on one station?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you take Figma to production code with MCP?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you manage handover and design systems sync between design and development teams?</button>
+            </div>
+          </div>
+
+          <form id="chat-form" class="flex shrink-0 gap-2 border-t p-4" style="border-color: var(--color-border)">
+            <label class="sr-only" for="chat-input">Message</label>
+            <input
+              id="chat-input"
+              class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+              type="text"
+              name="message"
+              autocomplete="off"
+              placeholder="Write a message…"
+            />
+            <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Send</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+    <script src="../js/app.js"></script>
+  </body>
+</html>
