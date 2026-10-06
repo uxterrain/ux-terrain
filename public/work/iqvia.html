@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IQVIA ePromo — UX Terrain</title>
+    <meta
+      name="description"
+      content="Case study: IQVIA ePromo — a pharma document platform that made MLR review collaborative and cut workflow time by 40%."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var key = "ux-terrain-theme";
+          var stored = localStorage.getItem(key);
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Lora", "Palatino", "serif"],
+              sans: ['"Source Sans 3"', "system-ui", "sans-serif"],
+              mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="../css/design-system.css" />
+  </head>
+  <body class="h-full overflow-hidden antialiased">
+    <div id="app-shell" class="flex h-full w-full overflow-hidden">
+      <div id="site-column" class="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+        <header class="sticky top-0 z-40 border-b backdrop-blur-md" style="background-color: color-mix(in srgb, var(--color-bg) 88%, transparent); border-color: var(--color-border);">
+          <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+            <a href="../index.html" class="site-lockup font-serif text-xl" style="color: var(--color-text)">UX Terrain</a>
+            <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../index.html#work" style="color: var(--color-text-muted)">Work</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../systems.html" style="color: var(--color-text-muted)">Systems</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../walk.html" style="color: var(--color-text-muted)">Walk</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../about.html" style="color: var(--color-text-muted)">About</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../index.html#contact" style="color: var(--color-text-muted)">Contact</a>
+            </nav>
+            <div class="flex items-center gap-3">
+              <button class="js-agent-open agent-trigger" type="button" aria-controls="agent-panel" aria-expanded="false">Ask <span class="oslo-word">Oslo</span></button>
+              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                <svg class="icon-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z" />
+                </svg>
+                <svg class="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4" />
+                  <path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.93 4.93l1.06 1.06M17.99 17.99l1.06 1.06M3 12h1.5M19.5 12H21M4.93 19.07l1.06-1.06M17.99 6.01l1.06-1.06" />
+                </svg>
+              </button>
+              <button id="nav-toggle" class="theme-toggle md:hidden" type="button" aria-controls="nav-menu" aria-expanded="false" aria-label="Open menu">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="nav-menu" class="hidden border-t px-5 py-3 md:hidden" style="border-color: var(--color-border)">
+            <nav class="flex flex-col gap-3" aria-label="Mobile">
+              <a class="text-sm font-medium" href="../index.html#work" style="color: var(--color-text)">Work</a>
+              <a class="text-sm font-medium" href="../systems.html" style="color: var(--color-text)">Systems</a>
+              <a class="text-sm font-medium" href="../walk.html" style="color: var(--color-text)">Walk</a>
+              <a class="text-sm font-medium" href="../about.html" style="color: var(--color-text)">About</a>
+              <a class="text-sm font-medium" href="../index.html#contact" style="color: var(--color-text)">Contact</a>
+            </nav>
+          </div>
+        </header>
+
+        <main class="min-h-0 flex-1 overflow-y-auto">
+          <article class="mx-auto max-w-6xl px-5 pb-24 pt-10 md:px-8 md:pt-14">
+            <a class="case-back inline-block" href="../index.html#work">← All projects</a>
+
+            <p class="font-mono mt-10 text-xs uppercase tracking-[0.22em]" style="color: var(--color-accent)">
+              IQVIA · Pharma
+            </p>
+            <h1 class="font-serif mt-4 max-w-4xl text-4xl leading-[1.12] tracking-tight md:text-6xl">
+              Content that can survive MLR.
+            </h1>
+            <p class="mt-6 max-w-2xl text-lg leading-relaxed" style="color: var(--color-text-muted)">
+              ePromo is IQVIA’s document platform for commercial and medical content. The job was
+              to take a tool 90% of users could not finish without help, and turn it into a
+              collaborative review surface — annotation, approval, and templates — that moved
+              material from concept to delivery without leaving FDA reality behind.
+            </p>
+
+            <dl class="case-meta mt-12 border-y py-8" style="border-color: var(--color-border)">
+              <div>
+                <dt>Role</dt>
+                <dd>Product designer</dd>
+              </div>
+              <div>
+                <dt>Contribution</dt>
+                <dd>Lean UX, research, wireframes, prototypes, visual design</dd>
+              </div>
+              <div>
+                <dt>Product</dt>
+                <dd>ePromo</dd>
+              </div>
+              <div>
+                <dt>Outcome</dt>
+                <dd>40% faster workflows</dd>
+              </div>
+            </dl>
+
+            <figure class="case-figure mt-12 rounded-2xl">
+              <img
+                src="../images/work/iqvia/iqvia-01.png"
+                alt="ePromo review of a Glidim HCP detail aid on a desktop, with inline comments on the creative"
+              />
+              <figcaption>
+                The destination: medical content on the canvas, claims in the rail, comments on the
+                artifact — not in a side email.
+              </figcaption>
+            </figure>
+
+            <section class="case-prose mt-20">
+              <h2 class="font-serif text-3xl tracking-tight">What shipped</h2>
+              <p class="mt-5 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                A purpose-built document system for pharma teams: create, collaborate, stay
+                compliant, and get to market. Automated the work that had been tribal, tightened
+                accuracy on claims, and made approval a conversation on the page. Secure data,
+                fewer missed deadlines, and a measured 40% lift in workflow speed.
+              </p>
+            </section>
+
+            <section class="case-prose mt-16">
+              <h2 class="font-serif text-3xl tracking-tight">Why this product exists</h2>
+              <p class="mt-5 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                I watched people use the existing tools. The pattern was consistent: a labyrinth of
+                features, a pause, then a call for support. Creative agencies, brand managers,
+                project managers, and MLR reviewers all lived in the same hub — and 90% of them
+                could not complete the journey without someone else in the room.
+              </p>
+              <p class="case-callout mt-8 text-xl leading-snug" style="color: var(--color-text)">
+                Compliance cannot live in a menu maze. It has to live next to the sentence it is
+                judging.
+              </p>
+            </section>
+
+            <section class="mt-16">
+              <h2 class="font-serif text-3xl tracking-tight">What I owned</h2>
+              <ul class="mt-6 max-w-2xl space-y-3 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                <li>Discovery with the ePromo team: demographics, roles, and how each of them actually talks when a document is late.</li>
+                <li>Persona-driven IA so MLR, marketing, agency, and PM are not forced through one dashboard.</li>
+                <li>User flows, task flows, and sitemaps with product owners — estimates early, even when they were deliberately rough.</li>
+                <li>The collaborative canvas: inline comments, threaded annotation cards, and a menu that only shows what you need first.</li>
+              </ul>
+            </section>
+
+            <section class="mt-20 grid gap-16">
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">01</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">The first hour is the product</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  An emotional map of first arrival and first task made the cost of the old IA
+                  visible: uncertainty, no self-identification, inability to complete, nowhere to
+                  find help. Excitement only showed up when setup was already done for them. That
+                  chart was the brief.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img src="../images/work/iqvia/iqvia-02.png" alt="Emotional map of an ePromo user’s first arrival and first task" />
+                  <figcaption>Peaks of efficiency only after the product has already done the orientation work.</figcaption>
+                </figure>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">02</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">Two jobs, two dashboards</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  An MLR reviewer needs which documents are in review, due date, file type, and a
+                  calendar of meetings. Marketing needs overdue pieces, WIP, expiring assets,
+                  campaigns, and claims. Same product. Different “needs to know.” Personas were not
+                  decoration — they were the permission to stop designing one home for everyone.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img src="../images/work/iqvia/iqvia-03.png" alt="Persona needs for an MLR reviewer versus a marketing user" />
+                </figure>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">03</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">Navigation that assigns a role, then a room</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Existing builds showed how each persona actually completed a task. Onboarding
+                  then split: unrecognized users register; recognized users get a role and land on
+                  the dashboard that matches — agency, brand, coordinator, or MLR — each with
+                  submissions, library, campaign, and inbox. Create, search, and the submission
+                  room sit off the header, not buried in a feature list.
+                </p>
+                <div class="mt-8 grid gap-6">
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/iqvia/iqvia-05.png" alt="Onboarding and navigation flow across ePromo personas and dashboards" />
+                    <figcaption>Use case 0: sign-in, role, then four parallel dashboard families.</figcaption>
+                  </figure>
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/iqvia/iqvia-10.png" alt="ePromo header wireframe with dashboard, campaign, inbox, library, submissions, and create" />
+                    <figcaption>Header as a short list of rooms — Create sits in the chrome, not in a maze.</figcaption>
+                  </figure>
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/iqvia/iqvia-07.png" alt="Lean UX process from user story and business requirement through test, compare, and delivery" />
+                    <figcaption>The working method: test against users and competitors before visual design is treated as done.</figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">04</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">Create as identification, then categorization</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  New documents used to dump every field at once. The redesigned sequence is
+                  identification, then categorization, then artifact, content, and metadata — with
+                  a progress bar that tells you what happens after the click. Templates are a
+                  library you customize, not a blank page you fear.
+                </p>
+                <div class="mt-8 grid gap-6">
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/iqvia/iqvia-09.png" alt="New document flow: identification, categorization, and template import" />
+                  </figure>
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/iqvia/iqvia-12.png" alt="Create from template and a profile menu with role, lists, and recently commented" />
+                    <figcaption>Template gallery and a profile that names the role — coordinator, not a generic user.</figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">05</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">The canvas is the meeting</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Review used to leak into email. The collaborative canvas keeps comments on the
+                  creative: real-time annotations, threaded replies with author and timestamp,
+                  targeted pins, and a history you can audit. Approve, request changes, or reject
+                  without leaving the exhibit. Menus were cut to the tools people actually touch —
+                  labels in their language, not the platform’s.
+                </p>
+                <div class="case-figure-pair">
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/iqvia/iqvia-14.png" alt="Early ePromo review canvas with pins, threaded comments, and approve or reject actions" />
+                    <figcaption>Wireframe: comment on the page, decide in the rail.</figcaption>
+                  </figure>
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/iqvia/iqvia-16.png" alt="Annotation cards and threaded replies in a sidebar next to media" />
+                    <figcaption>Annotation cards as a design-system component, not a one-off modal.</figcaption>
+                  </figure>
+                </div>
+                <figure class="case-figure mt-6 rounded-2xl">
+                  <img src="../images/work/iqvia/iqvia-18.png" alt="High-fidelity ePromo review of a Glidim parent instruction with inline comments and related claims" />
+                  <figcaption>
+                    Visual design: claims, comments, and the creative in one review — MLR status
+                    visible without hunting.
+                  </figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <p class="mt-16">
+              <a class="accent-link text-sm font-medium" href="../index.html#work">← Back to selected work</a>
+            </p>
+          </article>
+        </main>
+
+        <footer class="mx-auto w-full max-w-6xl px-5 pb-10 pt-4 md:px-8">
+          <p class="font-mono text-xs" style="color: var(--color-text-muted)">
+            This website is handmade · © 2026 UX Terrain
+            · <a href="https://www.linkedin.com/in/jimmyvangalder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            · <a href="https://github.com/uxterrain" target="_blank" rel="noopener noreferrer">GitHub</a>
+            · <a href="https://www.instagram.com/uxterrain" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </p>
+        </footer>
+      </div>
+
+      <aside
+        id="agent-panel"
+        class="agent-panel flex h-full w-0 max-w-0 shrink-0 flex-col overflow-hidden"
+        role="complementary"
+        aria-labelledby="agent-title"
+        aria-hidden="true"
+        inert
+      >
+        <div class="flex h-full min-h-0 w-full flex-col">
+          <header class="flex shrink-0 items-start justify-between gap-4 border-b px-6 py-5" style="border-color: var(--color-border)">
+            <div>
+              <h2 id="agent-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
+              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Questions written for this page</p>
+            </div>
+            <button id="agent-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </header>
+
+          <div id="chat-log" class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-6 py-5" aria-live="polite">
+            <article class="chat-turn chat-turn-agent">
+              <p class="chat-turn-label">Oslo</p>
+              <p class="chat-turn-body">Greetings, I'm Oslo an AI Agent. I'm designed to help answer questions about our AI experiences here at UX Terrain.</p>
+            </article>
+          </div>
+
+          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Quick inquiries">
+            <p class="font-mono mb-2 px-1 text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">
+              Quick inquiry
+            </p>
+            <div class="flex flex-col gap-2">
+              <button type="button" class="js-quick-inquiry agent-inquiry">How did you design the AI-powered Incident Cards for M365?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you take Figma to production code with MCP?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you manage handover and design systems sync between design and development teams?</button>
+            </div>
+          </div>
+
+          <form id="chat-form" class="flex shrink-0 gap-2 border-t p-4" style="border-color: var(--color-border)">
+            <label class="sr-only" for="chat-input">Message</label>
+            <input
+              id="chat-input"
+              class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+              type="text"
+              name="message"
+              autocomplete="off"
+              placeholder="Write a message…"
+            />
+            <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Send</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+    <script src="../js/app.js"></script>
+  </body>
+</html>

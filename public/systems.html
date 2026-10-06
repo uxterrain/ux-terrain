@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The ground layer — Design systems — UX Terrain</title>
+    <meta
+      name="description"
+      content="UX Terrain on design systems: tokens as bedrock, primitives as paths, and a two-way trail between Figma and code so products don't drift."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var key = "ux-terrain-theme";
+          var stored = localStorage.getItem(key);
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Lora", "Palatino", "serif"],
+              sans: ['"Source Sans 3"', "system-ui", "sans-serif"],
+              mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/design-system.css" />
+  </head>
+  <body class="h-full overflow-hidden antialiased">
+    <div id="app-shell" class="flex h-full w-full overflow-hidden">
+      <div id="site-column" class="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+        <header
+          class="sticky top-0 z-40 border-b backdrop-blur-md"
+          style="
+            background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
+            border-color: var(--color-border);
+          "
+        >
+          <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+            <a href="index.html" class="site-lockup font-serif text-xl" style="color: var(--color-text)">UX Terrain</a>
+            <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="index.html#work" style="color: var(--color-text-muted)">Work</a>
+              <a class="text-sm font-medium underline underline-offset-4" href="systems.html" aria-current="page" style="color: var(--color-text)">Systems</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="walk.html" style="color: var(--color-text-muted)">Walk</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="about.html" style="color: var(--color-text-muted)">About</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="#contact" style="color: var(--color-text-muted)">Contact</a>
+            </nav>
+            <div class="flex items-center gap-3">
+              <button class="js-agent-open agent-trigger" type="button" aria-controls="agent-panel" aria-expanded="false">Ask <span class="oslo-word">Oslo</span></button>
+              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                <svg class="icon-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z" />
+                </svg>
+                <svg class="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4" />
+                  <path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.93 4.93l1.06 1.06M17.99 17.99l1.06 1.06M3 12h1.5M19.5 12H21M4.93 19.07l1.06-1.06M17.99 6.01l1.06-1.06" />
+                </svg>
+              </button>
+              <button id="nav-toggle" class="theme-toggle md:hidden" type="button" aria-controls="nav-menu" aria-expanded="false" aria-label="Open menu">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="nav-menu" class="hidden border-t px-5 py-3 md:hidden" style="border-color: var(--color-border)">
+            <nav class="flex flex-col gap-3" aria-label="Mobile">
+              <a class="text-sm font-medium" href="index.html#work" style="color: var(--color-text)">Work</a>
+              <a class="text-sm font-medium" href="systems.html" aria-current="page" style="color: var(--color-text)">Systems</a>
+              <a class="text-sm font-medium" href="walk.html" style="color: var(--color-text)">Walk</a>
+              <a class="text-sm font-medium" href="about.html" style="color: var(--color-text)">About</a>
+              <a class="text-sm font-medium" href="#contact" style="color: var(--color-text)">Contact</a>
+            </nav>
+          </div>
+        </header>
+
+        <main class="min-h-0 flex-1 overflow-y-auto">
+          <article class="mx-auto max-w-6xl px-5 pb-24 pt-10 md:px-8 md:pt-14">
+            <a class="case-back inline-block" href="index.html">← Index</a>
+
+            <header class="mt-10">
+              <p class="font-mono text-xs uppercase tracking-[0.22em]" style="color: var(--color-accent)">
+                Point of view · Design systems
+              </p>
+              <h1 class="font-serif mt-4 max-w-4xl text-4xl leading-[1.12] tracking-tight md:text-6xl">
+                The ground layer
+              </h1>
+            </header>
+
+            <div class="sys-hero">
+              <p class="sys-lede">
+                A design system used to be a kit you flipped through. That worked when a person drew
+                every screen and read every note. It fails the moment the interface is assembled later —
+                by a second team, a pipeline, or an agent that has never opened the file.
+                <strong>We stop shipping a kit. We ship the ground the product stands on.</strong>
+              </p>
+              <dl class="sys-meta">
+                <div>
+                  <dt>For</dt>
+                  <dd>Product teams whose Figma and code have quietly stopped agreeing</dd>
+                </div>
+                <div>
+                  <dt>Claim</dt>
+                  <dd>Tokens, primitives, and checks — named once, held in both places</dd>
+                </div>
+                <div>
+                  <dt>Method</dt>
+                  <dd>Survey the drift, then cut a two-way trail through MCP</dd>
+                </div>
+                <div>
+                  <dt>Read</dt>
+                  <dd>~6 minutes, or <a class="accent-link" href="walk.html#ground">walk it with Oslo</a></dd>
+                </div>
+              </dl>
+            </div>
+
+            <blockquote class="sys-quote">
+              <p>
+                Tokens are bedrock. Primitives are paths. Patterns are weather — they change, but they
+                never leave the ground.
+              </p>
+              <footer>The cut this whole page is drawn from</footer>
+            </blockquote>
+
+            <div class="sys-prose">
+              <p>
+                Most teams meet that pressure by decorating faster. A copilot in the file. A prettier
+                kit. A longer wiki. The product still drifts, because the decisions never left the
+                guidance page. Spacing is a habit. Color is a screenshot. A card is “whatever we did
+                last time.”
+              </p>
+              <p>
+                The work is to move those decisions into something both a designer and a machine can
+                be held to. Named tokens. Primitives with states and an accessibility contract.
+                A trail that runs both ways between the design file and production, so neither can lie
+                to the other. When a composition is wrong, it fails a check — it does not wait for a
+                review meeting that may never happen.
+              </p>
+            </div>
+
+            <section class="about-section" aria-labelledby="shifts-title">
+              <h2 id="shifts-title" class="about-section-title font-serif">Three holds</h2>
+              <p class="sys-prose" style="margin-top: 1.5rem">
+                Not new tools. A change in what the system is allowed to forget.
+              </p>
+              <div class="sys-shifts">
+                <article class="sys-shift">
+                  <h3>The decision</h3>
+                  <p class="sys-shift-fromto">Wiki → tokens</p>
+                  <p>
+                    If a value isn’t named, it isn’t a decision — it’s sediment. Color, type, space,
+                    and motion live in variables both files can share, not in a paragraph someone
+                    has to remember.
+                  </p>
+                </article>
+                <article class="sys-shift">
+                  <h3>The trail</h3>
+                  <p class="sys-shift-fromto">Handoff → two-way sync</p>
+                  <p>
+                    Static redlines are a one-way walk that immediately grows over. We wire Figma
+                    and code through MCP so the canvas and the repository stay on the same map.
+                  </p>
+                </article>
+                <article class="sys-shift">
+                  <h3>The edge</h3>
+                  <p class="sys-shift-fromto">Meeting → a check that fails</p>
+                  <p>
+                    Review doesn’t scale to runtime-assembled UI. A primitive that is the wrong
+                    choice, or a contrast that slips, should fail before a user ever sees it.
+                  </p>
+                </article>
+              </div>
+            </section>
+
+            <section class="about-section" aria-labelledby="cut-title">
+              <h2 id="cut-title" class="about-section-title font-serif">A cut through the system</h2>
+              <p class="sys-prose">
+                Most libraries are arranged like a catalog: pages of components, a few tokens at the
+                back. We read them the other way — from the ground up. Products are weather. They
+                should never have to invent bedrock.
+              </p>
+
+              <figure class="sys-figure">
+                <svg
+                  class="sys-svg"
+                  viewBox="0 0 920 400"
+                  role="img"
+                  aria-label="A geological cut of a design system. Four strata from top to bottom: products, patterns, primitives, and tokens, with a survey drill through all four."
+                >
+                  <rect width="920" height="400" fill="var(--color-bg)" />
+                  <path
+                    d="M0 0 H920 V108 C780 92 640 118 500 104 C360 90 220 116 0 98 Z"
+                    fill="color-mix(in srgb, var(--color-accent) 9%, var(--color-bg))"
+                  />
+                  <path
+                    d="M0 98 C220 116 360 90 500 104 C640 118 780 92 920 108 V206 C760 188 600 214 440 198 C280 182 140 208 0 192 Z"
+                    fill="var(--color-bg-muted)"
+                  />
+                  <path
+                    d="M0 192 C140 208 280 182 440 198 C600 214 760 188 920 206 V298 C790 282 640 306 480 292 C320 278 160 302 0 286 Z"
+                    fill="color-mix(in srgb, var(--color-accent) 16%, var(--color-bg-muted))"
+                  />
+                  <path
+                    d="M0 286 C160 302 320 278 480 292 C640 306 790 282 920 298 V400 H0 Z"
+                    fill="color-mix(in srgb, var(--color-text) 14%, var(--color-bg-elevated))"
+                  />
+                  <path
+                    d="M0 98 C220 116 360 90 500 104 C640 118 780 92 920 108"
+                    fill="none"
+                    stroke="var(--color-border-strong)"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M0 192 C140 208 280 182 440 198 C600 214 760 188 920 206"
+                    fill="none"
+                    stroke="var(--color-border-strong)"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M0 286 C160 302 320 278 480 292 C640 306 790 282 920 298"
+                    fill="none"
+                    stroke="var(--color-border-strong)"
+                    stroke-width="1"
+                  />
+
+                  <text class="sys-svg-kicker" x="36" y="42">Sky</text>
+                  <text class="sys-svg-title" x="36" y="64">Products</text>
+                  <text class="sys-svg-note" x="36" y="84">Runtime UI — assembled later</text>
+
+                  <text class="sys-svg-kicker" x="36" y="138">Weather</text>
+                  <text class="sys-svg-title" x="36" y="160">Patterns</text>
+                  <text class="sys-svg-note" x="36" y="180">Recipes that may change</text>
+
+                  <text class="sys-svg-kicker" x="36" y="232">Paths</text>
+                  <text class="sys-svg-title" x="36" y="254">Primitives</text>
+                  <text class="sys-svg-note" x="36" y="274">States, a11y, allowed contents</text>
+
+                  <text class="sys-svg-kicker" x="36" y="328">Bedrock</text>
+                  <text class="sys-svg-title" x="36" y="350">Tokens</text>
+                  <text class="sys-svg-note" x="36" y="370">Named once. Shared by both files.</text>
+
+                  <line
+                    x1="708"
+                    y1="28"
+                    x2="708"
+                    y2="372"
+                    stroke="var(--color-accent)"
+                    stroke-width="1.5"
+                    stroke-dasharray="3 5"
+                  />
+                  <circle cx="708" cy="28" r="5" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="1.6" />
+                  <rect x="700" y="368" width="16" height="10" rx="1" fill="var(--color-accent)" />
+                  <text class="sys-svg-kicker" x="724" y="32">Survey drill</text>
+                  <text class="sys-svg-note" x="724" y="50">A core through every layer</text>
+                </svg>
+                <figcaption>The cut — most teams decorate the weather. The work is naming the bedrock.</figcaption>
+              </figure>
+            </section>
+
+            <section class="about-section" aria-labelledby="core-title">
+              <h2 id="core-title" class="about-section-title font-serif">What a core actually looks like</h2>
+              <p class="sys-prose">
+                Pull a sample from a live admin surface and you can tell, immediately, whether the
+                ground is named. One core is sediment: leftover hex, a spacing habit, a blue that
+                means three different things. The other is logged. Same product. Different honesty.
+              </p>
+
+              <div class="sys-cores">
+                <figure class="sys-core sys-core-unlogged">
+                  <p class="sys-core-label">Core A · unlogged</p>
+                  <div class="sys-core-tube" aria-hidden="true">
+                    <div class="sys-core-cap">Admin · unnamed</div>
+                    <div class="sys-core-band" style="background: color-mix(in srgb, #8a7a62 55%, var(--color-bg)); min-height: 3.1rem">that blue from last quarter</div>
+                    <div class="sys-core-band" style="background: color-mix(in srgb, #c4b49a 40%, var(--color-bg)); min-height: 2.4rem">13px? 14?</div>
+                    <div class="sys-core-band" style="background: color-mix(in srgb, #6d5c45 35%, var(--color-bg)); min-height: 3.4rem">gap: 7px / 11px / “a bit more”</div>
+                    <div class="sys-core-band" style="background: color-mix(in srgb, #b08948 30%, var(--color-bg)); min-height: 2.6rem">card, or panel, or both</div>
+                    <div class="sys-core-band" style="background: color-mix(in srgb, #4a4338 28%, var(--color-bg)); min-height: 2.8rem">#333-ish</div>
+                  </div>
+                  <figcaption>Sediment. The file still looks finished. The code cannot be held to it.</figcaption>
+                </figure>
+                <figure class="sys-core sys-core-logged">
+                  <p class="sys-core-label">Core B · logged</p>
+                  <div class="sys-core-tube" aria-hidden="true">
+                    <div class="sys-core-cap">Admin · named</div>
+                    <div class="sys-core-band" style="background: var(--color-accent-soft); min-height: 3.1rem; color: var(--color-accent)">--color-accent</div>
+                    <div class="sys-core-band" style="background: var(--color-bg-muted); min-height: 2.4rem">--type-body / 16 · 1.6</div>
+                    <div class="sys-core-band" style="background: color-mix(in srgb, var(--color-text) 6%, var(--color-bg)); min-height: 3.4rem">--space-300 / --space-400</div>
+                    <div class="sys-core-band" style="background: var(--color-bg-elevated); min-height: 2.6rem">primitive.card</div>
+                    <div class="sys-core-band" style="background: var(--color-bg); min-height: 2.8rem">--color-text</div>
+                  </div>
+                  <figcaption>A logged core. Every band is a decision both Figma and code can answer to.</figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <section class="about-section" aria-labelledby="trail-title">
+              <h2 id="trail-title" class="about-section-title font-serif">The trail that must run both ways</h2>
+              <p class="sys-prose">
+                A handoff is a path that washes out overnight. The useful picture is a trail with
+                cairns: Figma on one side, production on the other, tokens stacked in the middle so
+                neither walker gets lost. MCP is how we keep the cairns from being kicked over.
+              </p>
+
+              <figure class="sys-figure">
+                <svg
+                  class="sys-svg"
+                  viewBox="0 0 920 280"
+                  role="img"
+                  aria-label="A two-way trail from a Figma file through a token cairn to production code, with a faded drift path veering off into unnamed values."
+                >
+                  <rect width="920" height="280" fill="var(--color-bg-muted)" />
+                  <path d="M20 52 C160 68 300 36 460 58 C620 80 760 46 900 62" fill="none" stroke="var(--color-border)" stroke-width="1" />
+                  <path d="M20 96 C180 112 320 84 500 102 C680 120 800 90 900 106" fill="none" stroke="var(--color-border)" stroke-width="1" />
+                  <path d="M20 140 C140 128 280 156 460 138 C640 120 780 158 900 146" fill="none" stroke="var(--color-border)" stroke-width="1" />
+                  <path d="M20 188 C170 204 330 176 510 194 C690 212 810 180 900 196" fill="none" stroke="var(--color-border)" stroke-width="1" />
+                  <path d="M20 232 C150 216 310 244 480 228 C650 212 800 246 900 234" fill="none" stroke="var(--color-border)" stroke-width="1" />
+
+                  <path
+                    d="M180 168 C280 168 340 168 460 168 C580 168 660 168 740 168"
+                    fill="none"
+                    stroke="var(--color-text)"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M300 168 C340 138 400 100 470 78 C560 52 640 44 710 38"
+                    fill="none"
+                    stroke="var(--color-text-muted)"
+                    stroke-width="1.4"
+                    stroke-dasharray="5 6"
+                  />
+                  <circle cx="710" cy="38" r="4" fill="none" stroke="var(--color-text-muted)" stroke-width="1.3" />
+                  <text class="sys-svg-kicker" x="724" y="34">Drift</text>
+                  <text class="sys-svg-note" x="724" y="52">unnamed values leave the trail</text>
+
+                  <rect x="48" y="128" width="132" height="80" rx="10" fill="var(--color-bg-elevated)" stroke="var(--color-border-strong)" />
+                  <text class="sys-svg-kicker" x="64" y="154">Studio</text>
+                  <text class="sys-svg-title" x="64" y="178">Figma</text>
+                  <text class="sys-svg-note" x="64" y="196">variables, not frames</text>
+
+                  <g transform="translate(460 156)">
+                    <circle cy="26" r="18" fill="var(--color-bg-elevated)" stroke="var(--color-accent)" stroke-width="1.7" />
+                    <circle cy="6" r="14" fill="var(--color-accent-soft)" stroke="var(--color-accent)" stroke-width="1.5" />
+                    <circle cy="-12" r="11" fill="var(--color-bg-elevated)" stroke="var(--color-accent)" stroke-width="1.5" />
+                  </g>
+                  <text class="sys-svg-kicker" text-anchor="middle" x="460" y="220">Cairn</text>
+                  <text class="sys-svg-title" text-anchor="middle" x="460" y="242">tokens.json</text>
+                  <text class="sys-svg-note" text-anchor="middle" x="460" y="260">MCP keeps this stacked</text>
+
+                  <rect x="740" y="128" width="132" height="80" rx="10" fill="var(--color-bg-elevated)" stroke="var(--color-border-strong)" />
+                  <text class="sys-svg-kicker" x="756" y="154">Ship</text>
+                  <text class="sys-svg-title" x="756" y="178">Code</text>
+                  <text class="sys-svg-note" x="756" y="196">CSS · Tailwind · checks</text>
+                </svg>
+                <figcaption>The two-way trail — cairns in the middle, drift off the shoulder.</figcaption>
+              </figure>
+            </section>
+
+            <section class="about-section" aria-labelledby="lay-title">
+              <h2 id="lay-title" class="about-section-title font-serif">How we lay the ground</h2>
+              <p class="sys-prose">
+                We don’t boil a library. We survey one surface, name what it already stands on, and
+                only then cut paths. The point is a trail the next team can walk without us.
+              </p>
+
+              <figure class="sys-figure">
+                <svg
+                  class="sys-svg"
+                  viewBox="0 0 920 320"
+                  role="img"
+                  aria-label="A survey transect across rolling terrain with four stakes: survey, bedrock, paths, and weather."
+                >
+                  <rect width="920" height="320" fill="var(--color-bg)" />
+                  <path
+                    d="M0 248 C80 248 120 232 170 210 C230 184 270 176 320 188 C380 204 420 150 500 128 C580 106 640 132 700 148 C770 168 820 120 920 108 L920 320 L0 320 Z"
+                    fill="color-mix(in srgb, var(--color-accent) 10%, var(--color-bg-muted))"
+                  />
+                  <path
+                    d="M0 248 C80 248 120 232 170 210 C230 184 270 176 320 188 C380 204 420 150 500 128 C580 106 640 132 700 148 C770 168 820 120 920 108"
+                    fill="none"
+                    stroke="var(--color-border-strong)"
+                    stroke-width="1.6"
+                  />
+                  <line x1="40" y1="40" x2="40" y2="280" stroke="var(--color-border)" stroke-width="1" />
+                  <text class="sys-svg-kicker" transform="translate(28 160) rotate(-90)" text-anchor="middle">Elevation of hold</text>
+
+                  <g>
+                    <line x1="170" y1="210" x2="170" y2="86" stroke="var(--color-accent)" stroke-width="1.4" />
+                    <polygon points="170,86 170,112 198,99" fill="var(--color-accent)" />
+                    <circle cx="170" cy="210" r="4" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="1.4" />
+                    <text class="sys-svg-kicker" text-anchor="middle" x="170" y="268">01</text>
+                    <text class="sys-svg-title" text-anchor="middle" x="170" y="288">Survey</text>
+                  </g>
+                  <g>
+                    <line x1="320" y1="188" x2="320" y2="72" stroke="var(--color-accent)" stroke-width="1.4" />
+                    <polygon points="320,72 320,98 348,85" fill="var(--color-accent)" />
+                    <circle cx="320" cy="188" r="4" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="1.4" />
+                    <text class="sys-svg-kicker" text-anchor="middle" x="320" y="268">02</text>
+                    <text class="sys-svg-title" text-anchor="middle" x="320" y="288">Bedrock</text>
+                  </g>
+                  <g>
+                    <line x1="500" y1="128" x2="500" y2="56" stroke="var(--color-accent)" stroke-width="1.4" />
+                    <polygon points="500,56 500,82 528,69" fill="var(--color-accent)" />
+                    <circle cx="500" cy="128" r="4" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="1.4" />
+                    <text class="sys-svg-kicker" text-anchor="middle" x="500" y="268">03</text>
+                    <text class="sys-svg-title" text-anchor="middle" x="500" y="288">Paths</text>
+                  </g>
+                  <g>
+                    <line x1="700" y1="148" x2="700" y2="48" stroke="var(--color-accent)" stroke-width="1.4" />
+                    <polygon points="700,48 700,74 728,61" fill="var(--color-accent)" />
+                    <circle cx="700" cy="148" r="4" fill="var(--color-bg)" stroke="var(--color-accent)" stroke-width="1.4" />
+                    <text class="sys-svg-kicker" text-anchor="middle" x="700" y="268">04</text>
+                    <text class="sys-svg-title" text-anchor="middle" x="700" y="288">Weather</text>
+                  </g>
+                </svg>
+                <figcaption>A survey transect — four stakes, one surface, then the trail is walkable without us.</figcaption>
+              </figure>
+
+              <div class="sys-phases">
+                <article class="sys-phase">
+                  <p class="sys-phase-kicker">Stake 01</p>
+                  <h3>Survey the drift</h3>
+                  <p>Find where the file already lies to the code. Pick one surface, not the whole kit.</p>
+                  <ul>
+                    <li>Diff Figma variables against what ships.</li>
+                    <li>Mark unnamed sediment: hex, magic space, one-off type.</li>
+                    <li>Choose the surface closest to being assembled later.</li>
+                  </ul>
+                </article>
+                <article class="sys-phase">
+                  <p class="sys-phase-kicker">Stake 02</p>
+                  <h3>Name the bedrock</h3>
+                  <p>Only the tokens that surface actually stands on. A short dictionary beats a theme file nobody uses.</p>
+                  <ul>
+                    <li>Color, type, space, radius — named for meaning, not for a page.</li>
+                    <li>Publish the same names into CSS custom properties and Tailwind.</li>
+                    <li>Prove a renamed token moves in both files the same afternoon.</li>
+                  </ul>
+                </article>
+                <article class="sys-phase">
+                  <p class="sys-phase-kicker">Stake 03</p>
+                  <h3>Cut the paths</h3>
+                  <p>Primitives with states, contents, and an accessibility contract. Agents and humans pick from this set. They do not invent a new one.</p>
+                  <ul>
+                    <li>Ten primitives, fully stated — not a hundred half-drawn.</li>
+                    <li>Wrong composition fails a check in review, then in CI.</li>
+                    <li>The second component costs a fraction of the first.</li>
+                  </ul>
+                </article>
+                <article class="sys-phase">
+                  <p class="sys-phase-kicker">Stake 04</p>
+                  <h3>Let the weather in</h3>
+                  <p>Patterns and product UI can change. The ground does not. Keep the trail open so drift has nowhere to settle.</p>
+                  <ul>
+                    <li>MCP both ways, so the canvas cannot silently fork.</li>
+                    <li>A dashboard leadership already watches: drift, checks, time-to-sync.</li>
+                    <li>Hand the transect to the team. We leave a map, not a dependency.</li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+
+            <section class="about-section" aria-labelledby="proof-title">
+              <h2 id="proof-title" class="about-section-title font-serif">On shipped ground</h2>
+              <p class="sys-prose">
+                This is not a slide. It is how the recent work was held together — incident surfaces
+                that have to stay legible under load, and an operations V1 that had six months to
+                become a system instead of a pile of screens.
+              </p>
+              <div class="sys-proof">
+                <a href="work/performance-monitoring.html">
+                  <p>Microsoft 365</p>
+                  <h3>Performance Monitoring</h3>
+                  <p>Adaptive incident cards, named states, and a visual system dense enough for admin work without becoming noise.</p>
+                </a>
+                <a href="work/sbi.html">
+                  <p>Oil &amp; gas</p>
+                  <h3>SBI</h3>
+                  <p>A dark, data-heavy system cut for predictive operations — tokens first, then the dashboard that sits on them.</p>
+                </a>
+                <a href="work/armada.html">
+                  <p>Armada</p>
+                  <h3>Atlas — Fleet Map</h3>
+                  <p>Shipped V2: Google-mapped fleet paths and a live feed that files incidents with real-time AI.</p>
+                </a>
+              </div>
+            </section>
+
+            <section id="contact" class="about-section" aria-labelledby="contact-title">
+              <h2 id="contact-title" class="about-section-title font-serif">Walk the cut</h2>
+              <div class="about-contact">
+                <p class="font-serif text-2xl leading-snug md:text-3xl">
+                  If the file and the code have stopped agreeing, that’s the engagement.
+                </p>
+                <div class="flex flex-wrap items-center gap-4">
+                  <a class="js-mail btn-accent inline-flex items-center rounded-full px-5 py-2.5 text-sm font-medium" href="#contact" rel="nofollow" data-mail-label>Email me →</a>
+                  <button class="js-agent-open accent-link text-sm font-medium" type="button" aria-controls="agent-panel" aria-expanded="false">
+                    Or ask Oslo →
+                  </button>
+                </div>
+              </div>
+            </section>
+            <footer class="mt-16 border-t pt-6" style="border-color: var(--color-border)">
+              <p class="font-mono text-xs" style="color: var(--color-text-muted)">
+                This website is handmade · © 2026 UX Terrain
+                · <a href="https://www.linkedin.com/in/jimmyvangalder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                · <a href="https://github.com/uxterrain" target="_blank" rel="noopener noreferrer">GitHub</a>
+                · <a href="https://www.instagram.com/uxterrain" target="_blank" rel="noopener noreferrer">Instagram</a>
+              </p>
+            </footer>
+          </article>
+        </main>
+      </div>
+
+      <aside
+        id="agent-panel"
+        class="agent-panel flex h-full w-0 max-w-0 shrink-0 flex-col overflow-hidden"
+        role="complementary"
+        aria-labelledby="agent-title"
+        aria-hidden="true"
+        inert
+      >
+        <div class="flex h-full min-h-0 w-full flex-col">
+          <header class="flex shrink-0 items-start justify-between gap-4 border-b px-6 py-5" style="border-color: var(--color-border)">
+            <div>
+              <h2 id="agent-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
+              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Questions written for this page</p>
+            </div>
+            <button id="agent-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </header>
+
+          <div id="chat-log" class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-6 py-5" aria-live="polite">
+            <article class="chat-turn chat-turn-agent">
+              <p class="chat-turn-label">Oslo</p>
+              <p class="chat-turn-body">Greetings, I'm Oslo an AI Agent. I'm designed to help answer questions about our AI experiences here at UX Terrain.</p>
+            </article>
+          </div>
+
+          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Quick inquiries">
+            <p class="font-mono mb-2 px-1 text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">
+              Quick inquiry
+            </p>
+            <div class="flex flex-col gap-2">
+              <button type="button" class="js-quick-inquiry agent-inquiry">What is the ground layer in a design system?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you take Figma to production code with MCP?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you manage handover and design systems sync between design and development teams?</button>
+            </div>
+          </div>
+
+          <form id="chat-form" class="flex shrink-0 gap-2 border-t p-4" style="border-color: var(--color-border)">
+            <label class="sr-only" for="chat-input">Message</label>
+            <input
+              id="chat-input"
+              class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+              type="text"
+              name="message"
+              autocomplete="off"
+              placeholder="Write a message…"
+            />
+            <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Send</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+    <script src="js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SBI — UX Terrain</title>
+    <meta
+      name="description"
+      content="Case study: a six-month V1 for SBI that turned inventory, maintenance, and market signals into predictive operations for oil and gas."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var key = "ux-terrain-theme";
+          var stored = localStorage.getItem(key);
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Lora", "Palatino", "serif"],
+              sans: ['"Source Sans 3"', "system-ui", "sans-serif"],
+              mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="../css/design-system.css" />
+  </head>
+  <body class="h-full overflow-hidden antialiased">
+    <div id="app-shell" class="flex h-full w-full overflow-hidden">
+      <div
+        id="site-column"
+        class="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
+      >
+        <header
+          class="sticky top-0 z-40 border-b backdrop-blur-md"
+          style="
+            background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
+            border-color: var(--color-border);
+          "
+        >
+          <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+            <a href="../index.html" class="site-lockup font-serif text-xl" style="color: var(--color-text)">UX Terrain</a>
+            <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../index.html#work" style="color: var(--color-text-muted)">Work</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../systems.html" style="color: var(--color-text-muted)">Systems</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../walk.html" style="color: var(--color-text-muted)">Walk</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../about.html" style="color: var(--color-text-muted)">About</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="../index.html#contact" style="color: var(--color-text-muted)">Contact</a>
+            </nav>
+            <div class="flex items-center gap-3">
+              <button class="js-agent-open agent-trigger" type="button" aria-controls="agent-panel" aria-expanded="false">Ask <span class="oslo-word">Oslo</span></button>
+              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                <svg class="icon-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z" />
+                </svg>
+                <svg class="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4" />
+                  <path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.93 4.93l1.06 1.06M17.99 17.99l1.06 1.06M3 12h1.5M19.5 12H21M4.93 19.07l1.06-1.06M17.99 6.01l1.06-1.06" />
+                </svg>
+              </button>
+              <button id="nav-toggle" class="theme-toggle md:hidden" type="button" aria-controls="nav-menu" aria-expanded="false" aria-label="Open menu">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="nav-menu" class="hidden border-t px-5 py-3 md:hidden" style="border-color: var(--color-border)">
+            <nav class="flex flex-col gap-3" aria-label="Mobile">
+              <a class="text-sm font-medium" href="../index.html#work" style="color: var(--color-text)">Work</a>
+              <a class="text-sm font-medium" href="../systems.html" style="color: var(--color-text)">Systems</a>
+              <a class="text-sm font-medium" href="../walk.html" style="color: var(--color-text)">Walk</a>
+              <a class="text-sm font-medium" href="../about.html" style="color: var(--color-text)">About</a>
+              <a class="text-sm font-medium" href="../index.html#contact" style="color: var(--color-text)">Contact</a>
+            </nav>
+          </div>
+        </header>
+
+        <main class="min-h-0 flex-1 overflow-y-auto">
+          <article class="mx-auto max-w-6xl px-5 pb-24 pt-10 md:px-8 md:pt-14">
+            <a class="case-back inline-block" href="../index.html#work">← All projects</a>
+
+            <p class="font-mono mt-10 text-xs uppercase tracking-[0.22em]" style="color: var(--color-accent)">
+              SBI · Oil &amp; gas
+            </p>
+            <h1 class="font-serif mt-4 max-w-4xl text-4xl leading-[1.12] tracking-tight md:text-6xl">
+              Predictive operations for a physical supply chain.
+            </h1>
+            <p class="mt-6 max-w-2xl text-lg leading-relaxed" style="color: var(--color-text-muted)">
+              SBI is a North American oil-and-gas supplier. The work was to make inventory, maintenance,
+              and market weather readable enough to act on — then ship a V1 in six months that could
+              grow into AI-assisted forecasting without pretending the data was already clean.
+            </p>
+
+            <dl class="case-meta mt-12 border-y py-8" style="border-color: var(--color-border)">
+              <div>
+                <dt>Role</dt>
+                <dd>Product designer</dd>
+              </div>
+              <div>
+                <dt>Timeline</dt>
+                <dd>Six months to V1</dd>
+              </div>
+              <div>
+                <dt>Product</dt>
+                <dd>SBI admin dashboard</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>Shipped V1</dd>
+              </div>
+            </dl>
+
+            <figure class="case-figure mt-12 rounded-2xl">
+              <img
+                src="../images/work/sbi-hero.png"
+                alt="SBI admin dashboard on a tablet showing prediction models, inventory KPIs, and a model-summary panel"
+              />
+              <figcaption>
+                The V1 admin surface: prediction-model data, drilling activity, and a model-summary
+                drawer that makes accuracy and data gaps explicit.
+              </figcaption>
+            </figure>
+
+            <section class="case-prose mt-20">
+              <h2 class="font-serif text-3xl tracking-tight">What shipped</h2>
+              <p class="mt-5 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                A tailored design system and a first operations dashboard — prediction models,
+                inventory and purchase views, and simulations that could hold environmental and policy
+                change. The point of V1 was not a finished AI platform. It was a surface executives
+                and operators could trust enough to plan production, hold buffer stock, and stay
+                ahead of regulation.
+              </p>
+              <p class="mt-4 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                Measurable inventory performance followed from the unglamorous work: optimized
+                production, proactive compliance, and a shared picture of what the numbers actually
+                meant. Financial and environmental sustainability sat in the same view, not in two
+                reports.
+              </p>
+            </section>
+
+            <section class="case-prose mt-16">
+              <h2 class="font-serif text-3xl tracking-tight">Why this product exists</h2>
+              <p class="mt-5 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                Oil-and-gas inventory is not a warehouse problem. Unplanned maintenance stops
+                production. Lead times do not wait for a meeting. Market index, competitor posture,
+                and purchase history all argue at once — and none of them live in the same spreadsheet
+                an operator has open at 6 a.m.
+              </p>
+              <p class="case-callout mt-8 text-xl leading-snug" style="color: var(--color-text)">
+                If the model cannot show its gaps, nobody will let it set a purchase order.
+              </p>
+            </section>
+
+            <section class="mt-16">
+              <h2 class="font-serif text-3xl tracking-tight">What I owned</h2>
+              <ul class="mt-6 max-w-2xl space-y-3 text-base leading-relaxed" style="color: var(--color-text-muted)">
+                <li>Research into inventory turnover, marketplace index, competitor posture, and purchase models — then turning those into dashboard jobs, not a metrics dump.</li>
+                <li>The information architecture for supply-chain flow: signals, KPIs, and market activity as a navigable map instead of a slide deck.</li>
+                <li>Collaborative visualization with executives — rig count as the consistent focal point across otherwise competing layouts.</li>
+                <li>Filter logic that fills missing dependencies (the “drilling clockwise” automation), map-based environmental context, and a design system built for dark, data-dense screens.</li>
+              </ul>
+            </section>
+
+            <section class="mt-20 grid gap-16">
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">01</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">Four questions the dashboard has to answer</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Inventory turnover: are we selling and replenishing, or paying to hold? Marketplace
+                  index: what is the industry weather? Competitor analysis: what are others stocking?
+                  Purchase models: what does history actually predict? Those four became the spine of
+                  the V1 — each one a view that could change a production schedule.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img
+                    src="../images/work/sbi-insights.png"
+                    alt="Predicted inventory gap drill-down and BLPS operations dashboard with financial and inventory modules"
+                  />
+                  <figcaption>
+                    Predicted inventory gap sits next to cash, receivables, and on-hand stock — so a
+                    fill-order is a decision, not a surprise.
+                  </figcaption>
+                </figure>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">02</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">Maintenance as inventory risk</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Unplanned downtime is a stock-out with a delay attached. The work was to forecast
+                  the inventory consequence of a maintenance calendar: predictive sensors for
+                  equipment, buffer math that includes lead time, and scenario plans so a shutdown
+                  is a rehearsal instead of a scramble.
+                </p>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">03</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">A flow before a screen</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Before pixels, a map of signals — oil-and-gas future, KPIs, market activity. That
+                  layout was the first honest look at user navigation: where supply chain actually
+                  moves, and which branch is an exception versus the daily path.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img src="../images/work/sbi-02.png" alt="SBI Steel rig count application flow map" />
+                  <figcaption>Application flow for rig-count: real-time signals into the product structure.</figcaption>
+                </figure>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">04</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">Rig count as the shared language</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Executive workshops produced many layouts. Rig count survived all of them. Paper
+                  graphing of conditions versus simulation became dashboard modules: forecast
+                  extensions as horizontal bars, KPI tiles that can be scanned, inventory and purchase
+                  in a list that does not hide the next order.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img src="../images/work/sbi-04.png" alt="Paper workshop mapping rig conditions and simulation onto a dashboard sketch" />
+                  <figcaption>Graphing on paper first: rig conditions and simulation as two jobs on one sheet.</figcaption>
+                </figure>
+                <div class="case-figure-pair">
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/sbi-06.png" alt="Early SBI dashboard with rig count, simulation forecast, and operations tables" />
+                    <figcaption>Dashboard A: live series beside a five-day simulation.</figcaption>
+                  </figure>
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/sbi-07.png" alt="Chart module explorations for oil rig count, simulation, and value analysis" />
+                    <figcaption>Module tests: downtime windows, overlays, and measurement toggles.</figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">05</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">Filters that complete the sentence</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  A filter combination is a claim about the world. If someone picks Well deepening and
+                  Actively exploring, and asks for a Producing measurement, the system still needs
+                  drilling-clockwise data — even if they never selected it. Automation fills the gap
+                  so the measurement is true, not just requested.
+                </p>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Clockwise drilling itself is a three-phase story: setup (attachments and location),
+                  completion (angle and depth — including a well being repurposed), activity (the bit
+                  is in the ground). Monitoring “active” is not a toggle. It is a phase change.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img src="../images/work/sbi-08.png" alt="Filter combinations that auto-add drilling clockwise data to reach a Producing measurement" />
+                  <figcaption>
+                    Filter combo 2: Well deepening + Actively exploring auto-adds clockwise data to
+                    unlock Producing.
+                  </figcaption>
+                </figure>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">06</p>
+                <h2 class="font-serif mt-2 text-3xl tracking-tight">Environment is not a layer you add later</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Soil, hydrocarbons, contaminants, and equipment phase all decide where you can drill
+                  and what you can run. Things change over months and years — that is what simulation
+                  had to hold. Maps and satellite data turned density and distribution into purchasing
+                  language: where demand will be, not only what last quarter sold.
+                </p>
+                <div class="case-figure-pair">
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/sbi-11.png" alt="Early map exploration with regional KPIs and a state-level overlay" />
+                    <figcaption>Map as a KPI surface, not a decoration.</figcaption>
+                  </figure>
+                  <figure class="case-figure rounded-2xl">
+                    <img src="../images/work/sbi-13.png" alt="Production map with well detail, filters, and drilling activity breakdown" />
+                    <figcaption>
+                      Rig detail beside the map: environment, activity, and a table that still behaves
+                      like an operations tool.
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+            </section>
+
+            <p class="mt-16">
+              <a class="accent-link text-sm font-medium" href="../index.html#work">← Back to selected work</a>
+            </p>
+          </article>
+        </main>
+
+        <footer class="mx-auto w-full max-w-6xl px-5 pb-10 pt-4 md:px-8">
+          <p class="font-mono text-xs" style="color: var(--color-text-muted)">
+            This website is handmade · © 2026 UX Terrain
+            · <a href="https://www.linkedin.com/in/jimmyvangalder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            · <a href="https://github.com/uxterrain" target="_blank" rel="noopener noreferrer">GitHub</a>
+            · <a href="https://www.instagram.com/uxterrain" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </p>
+        </footer>
+      </div>
+
+      <aside
+        id="agent-panel"
+        class="agent-panel flex h-full w-0 max-w-0 shrink-0 flex-col overflow-hidden"
+        role="complementary"
+        aria-labelledby="agent-title"
+        aria-hidden="true"
+        inert
+      >
+        <div class="flex h-full min-h-0 w-full flex-col">
+          <header class="flex shrink-0 items-start justify-between gap-4 border-b px-6 py-5" style="border-color: var(--color-border)">
+            <div>
+              <h2 id="agent-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
+              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Questions written for this page</p>
+            </div>
+            <button id="agent-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </header>
+
+          <div id="chat-log" class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-6 py-5" aria-live="polite">
+            <article class="chat-turn chat-turn-agent">
+              <p class="chat-turn-label">Oslo</p>
+              <p class="chat-turn-body">Greetings, I'm Oslo an AI Agent. I'm designed to help answer questions about our AI experiences here at UX Terrain.</p>
+            </article>
+          </div>
+
+          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Quick inquiries">
+            <p class="font-mono mb-2 px-1 text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">
+              Quick inquiry
+            </p>
+            <div class="flex flex-col gap-2">
+              <button type="button" class="js-quick-inquiry agent-inquiry">How did you design the AI-powered Incident Cards for M365?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you take Figma to production code with MCP?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you manage handover and design systems sync between design and development teams?</button>
+            </div>
+          </div>
+
+          <form id="chat-form" class="flex shrink-0 gap-2 border-t p-4" style="border-color: var(--color-border)">
+            <label class="sr-only" for="chat-input">Message</label>
+            <input
+              id="chat-input"
+              class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+              type="text"
+              name="message"
+              autocomplete="off"
+              placeholder="Write a message…"
+            />
+            <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Send</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+    <script src="../js/app.js"></script>
+  </body>
+</html>
