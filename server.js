@@ -29,6 +29,9 @@ app.use(
 );
 app.use(express.json({ limit: "48kb" }));
 app.use(express.static(ROOT));
+app.get("/", function (req, res) {
+  res.sendFile(path.join(ROOT, "index.html"));
+});
 
 function logOpenAIError(error) {
   console.error("OpenAI /api/chat error:");
