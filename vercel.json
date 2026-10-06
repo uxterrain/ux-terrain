@@ -1,0 +1,4 @@
+{
+  "framework": "express",
+  "buildCommand": "node scripts/copy-static.js"
+}

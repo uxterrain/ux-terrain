@@ -89,6 +89,7 @@ function sendJsonError(res, status, error) {
 
 app.post("/api/chat", async function (req, res) {
   try {
+    await ready;
     const message = typeof req.body?.message === "string" ? req.body.message.trim() : "";
     const context = req.body && req.body.context && typeof req.body.context === "object" ? req.body.context : null;
 
@@ -194,18 +195,25 @@ app.post("/api/chat", async function (req, res) {
   }
 });
 
-async function start() {
-  try {
-    instructionText.oslo = await fs.readFile(INSTRUCTIONS.oslo, "utf8");
-    instructionText.eda = await fs.readFile(INSTRUCTIONS.eda, "utf8");
-  } catch (error) {
-    console.error("Failed to read an agent instruction file:", error.message);
-    process.exit(1);
-  }
+const ready = Promise.all([
+  fs.readFile(INSTRUCTIONS.oslo, "utf8"),
+  fs.readFile(INSTRUCTIONS.eda, "utf8"),
+]).then(function (texts) {
+  instructionText.oslo = texts[0];
+  instructionText.eda = texts[1];
+});
 
-  app.listen(PORT, function () {
-    console.log("UX Terrain agent listening on http://localhost:" + PORT);
-  });
+if (require.main === module) {
+  ready
+    .then(function () {
+      app.listen(PORT, function () {
+        console.log("UX Terrain agent listening on http://localhost:" + PORT);
+      });
+    })
+    .catch(function (error) {
+      console.error("Failed to read an agent instruction file:", error.message);
+      process.exit(1);
+    });
 }
 
-start();
+module.exports = app;

@@ -5,7 +5,8 @@
   "description": "Claude Sepia portfolio with a streaming AI agent sidebar.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "vercel-build": "node scripts/copy-static.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
