@@ -89,27 +89,24 @@
       <div id="walk-picker" class="walk-picker">
         <div class="walk-picker-inner">
           <p class="walk-picker-kicker">Agent-led · Walk with Eda</p>
-          <h1 class="walk-picker-title">Pick a walk. Eda takes the trail.</h1>
+          <h1 class="walk-picker-title">Choose a topic. Explore it with Eda.</h1>
           <p class="walk-picker-lede">
-            Two trails, station by station. Eda names the foundation first, then reads one shipped case against it. No prior context required.
+            Choose a short introduction or a case-study walkthrough. Each stop explains one design choice and leaves room for your questions.
           </p>
-          <p class="walk-picker-meta">Choose your route. 5 stops per trail. ~4 minutes to walk.</p>
+          <p class="walk-picker-meta">Short explanations. Your questions. Your pace.</p>
           <div class="walk-choices">
-            <button class="walk-choice" type="button" data-walk="floor">
-              <span class="walk-choice-kicker">Accessibility</span>
-              <h2>The floor and the target</h2>
-              <p>Section 508 is the floor. WCAG 2.2 is the target. The practice holds both as a contract on the primitive, and declines anything that was not written down.</p>
-              <span class="walk-choice-go">Begin this walk →</span>
-            </button>
-            <button class="walk-choice" type="button" data-walk="m365">
-              <span class="walk-choice-kicker">Microsoft 365</span>
-              <h2>Performance Monitoring</h2>
-              <p>Status, impact, and the next action on a live admin surface. Named states, written steps, and the places color is not allowed to carry the meaning alone.</p>
-              <span class="walk-choice-go">Begin this walk →</span>
-            </button>
-          </div>
+<button class="walk-choice" type="button" data-walk="floor"><span class="walk-choice-kicker">Introduction</span><h2>Accessibility foundations</h2><p>Five short stops on standards, design targets, component behavior, and evidence.</p><span class="walk-choice-go">5 stops · Begin →</span></button>
+<button class="walk-choice" type="button" data-walk="m365"><span class="walk-choice-kicker">Case study</span><h2>Performance Monitoring</h2><p>Five short stops on readable incident states, actions, notifications, charts, and timelines.</p><span class="walk-choice-go">5 stops · Begin →</span></button>
+<button class="walk-choice" type="button" data-walk="zone"><span class="walk-choice-kicker">Case study</span><h2>Flotrak</h2><p>Four short stops on readable guidance, metering points, connection status, and frame records.</p><span class="walk-choice-go">4 stops · Begin →</span></button>
+<button class="walk-choice" type="button" data-walk="armada"><span class="walk-choice-kicker">Case study</span><h2>Atlas — Fleet Map</h2><p>Four stops on fleet context, equipment status, incident indicators, and the live panel.</p><span class="walk-choice-go">4 stops · Begin →</span></button>
+<button class="walk-choice" type="button" data-walk="sbi"><span class="walk-choice-kicker">Case study</span><h2>SBI</h2><p>Four stops on forecast context, inventory decisions, filters, and map details.</p><span class="walk-choice-go">4 stops · Begin →</span></button>
+<button class="walk-choice" type="button" data-walk="iqvia"><span class="walk-choice-kicker">Case study</span><h2>IQVIA ePromo</h2><p>Three stops on role-based navigation, document creation, and review comments.</p><span class="walk-choice-go">3 stops · Begin →</span></button>
+<button class="walk-choice" type="button" data-walk="oslo"><span class="walk-choice-kicker">Case study</span><h2>Oslo</h2><p>Three stops on choosing a walk, understanding answers, and controlling the pace.</p><span class="walk-choice-go">3 stops · Begin →</span></button>
+<button class="walk-choice" type="button" data-walk="eda"><span class="walk-choice-kicker">Case study</span><h2>Eda</h2><p>Three stops on the guide’s role, evidence, and visitor control.</p><span class="walk-choice-go">3 stops · Begin →</span></button>
+</div>
+          <p class="mt-6 text-sm" style="color:var(--color-text-muted)">Standards references: <a class="accent-link" href="https://www.access-board.gov/ict/">U.S. Access Board</a> · <a class="accent-link" href="https://www.w3.org/TR/WCAG22/">W3C WCAG 2.2</a></p>
           <p class="mt-10 text-sm" style="color: var(--color-text-muted)">
-            Design systems and the cases stay with Oslo.
+            Read <a class="accent-link" href="work/eda.html">how Eda was designed</a>. Product-design questions stay with Oslo.
             <a class="accent-link" href="walk.html">Walk with Oslo</a>
             or read <a class="accent-link" href="work/oslo.html">how Oslo was designed</a>.
           </p>
@@ -156,7 +153,7 @@
       </div>
     </div>
     <script src="js/app.js"></script>
-    <script src="js/eda-walks.js"></script>
+    <script src="js/eda-walks.js?v=20261102-copy2"></script>
     <script>
       window.UX_WALK_CONFIG = {
         agent: "eda",

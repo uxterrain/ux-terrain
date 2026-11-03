@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "vercel-build": "node scripts/copy-static.js"
+    "vercel-build": "node scripts/copy-static.js",
+    "test": "node tests/oslo.test.js && node tests/eda.test.js && node tests/endpoint.test.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

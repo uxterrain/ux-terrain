@@ -1,0 +1,434 @@
+{
+  "armada": {
+    "title": "Track multiple drones without losing sight of the mission.",
+    "path": "/work/armada.html",
+    "evidence": [
+      {
+        "id": "armada:1",
+        "title": "Cover a large area with a coordinated fleet",
+        "text": "The design problem was how to operate multiple drones across a large area while keeping track of each flight. Docking stations were part of that coverage model. The fleet map needed to show where drones were, how they were moving, and which incidents needed attention during a live mission. Live tracking See where each drone is during the mission. Fleet coverage Coordinate multiple drones and docking stations across a large area. Incident context Connect AI-synthesized incident information to its location on the route.",
+        "url": "/work/armada.html#oslo-evidence-1"
+      },
+      {
+        "id": "armada:2",
+        "title": "Make incidents understandable on the map",
+        "text": "An incident marker needs to tell more than where something happened. I connected the marker to the drone’s route and live panel, so operators could review the AI-synthesized summary without losing track of the flight. From a point on the map to a clear picture Interaction schematic Fleet map with a selected drone, incident, and docking stations Two drones cover an outlined site. An amber route tracer connects a docking station, a selected drone, and a triangular incident marker. The incident connects to the adjacent review panel. A second dashed route shows the wider fleet context. SITE / FLEET OVERVIEW DOCK A DOCK B SELECTED DRONE INCIDENT N Selected route Other flight △ Incident Incident / selected flight Understand what happened An AI-synthesized summary connects the event to its location on the route. Drone viewfinder Mechanical status Alongside the camera Mission status Alongside the route Context for the incident Type What was detected? Zone Where did it happen? Time When did it happen? Proximity How close is the asset? Persistence Is the detection continuing? Illustrative layout, not live telemetry. Route, incident, and camera stay connected; the operator keeps the wider fleet in view.",
+        "url": "/work/armada.html#oslo-evidence-2"
+      },
+      {
+        "id": "armada:3",
+        "title": "Keep the route, camera, and live status together",
+        "text": "The map panel was designed to work as the drone’s viewfinder while also showing mechanical and mission status. Keeping those views together lets the operator review an incident in the context of the flight, rather than treating the video and map as separate experiences. One selected drone. One connected view. Workspace schematic 01 Keep the flight in view Selected flight connected to the drone panel A selected drone follows an amber tracer between docking stations. Its camera view and two status areas remain beside the map. SELECTED FLIGHT FLEET MAP The tracer and incident locations stay visible while the operator reviews the drone. Selected drone / connected panel Same flight context 02 See what the drone sees Wireframe drone viewfinder A schematic camera view shows site buildings, a central reticle, and a marked area connected to an AI incident summary. INCIDENT CONTEXT Drone viewfinder Illustrative camera view 03 Mechanical status Aircraft condition alongside the camera view. 04 Mission status Flight progress alongside the route. Illustrative interaction layout. The map, camera, mechanical status, and mission status all refer to the same selected drone; no live values are shown.",
+        "url": "/work/armada.html#oslo-evidence-3"
+      },
+      {
+        "id": "armada:4",
+        "title": "What I owned",
+        "text": "The fleet-map tracking experience for multiple drones and docking stations covering large areas. The visual treatment of route tracers and incident indicators on the fleet map. The interaction design for AI-synthesized incidents and a live map panel combining the camera view, mechanical status, and mission status. 01",
+        "url": "/work/armada.html#oslo-evidence-4"
+      },
+      {
+        "id": "armada:5",
+        "title": "Check the equipment",
+        "text": "The inventory view lists drones, docks, and controllers, with device status and alerts available before an operator opens a live feed. Drone, dock, and controller cards appear above the device table and alerts. 02",
+        "url": "/work/armada.html#oslo-evidence-5"
+      },
+      {
+        "id": "armada:6",
+        "title": "Follow the fleet on the map",
+        "text": "I designed the route tracer to show a drone’s path on the fleet map, along with the visual indicators for incidents. These details make the selected flight readable within a map that also needs to support multiple drones. A selected drone and its incident activity remain visible within the fleet map. 03",
+        "url": "/work/armada.html#oslo-evidence-6"
+      },
+      {
+        "id": "armada:7",
+        "title": "A live viewfinder with mission and mechanical status",
+        "text": "I designed the map panel to serve as the drone’s live viewfinder and show mechanical and mission status. The operator can keep the camera, the flight route, and the drone’s status in view during a live situation. The live feed for Skydio C3 appears beside its flight route. ← Back to selected work",
+        "url": "/work/armada.html#oslo-evidence-7"
+      }
+    ]
+  },
+  "eda": {
+    "title": "Understand the accessibility decisions behind an interface.",
+    "path": "/work/eda.html",
+    "evidence": [
+      {
+        "id": "eda:1",
+        "title": "Give accessibility questions a clear place",
+        "text": "Eda is a separate AI accessibility guide within UX Terrain. The product organizes explanations of accessibility concepts and written interface decisions into short walks. Its purpose is to help visitors understand the reasoning and its limits, while keeping design-story questions with Oslo. Eda uses the same walkthrough layout as Oslo, with its own voice, subject, and authored material.",
+        "url": "/work/eda.html#oslo-evidence-1"
+      },
+      {
+        "id": "eda:2",
+        "title": "Separate guidance from a finding",
+        "text": "A standard, an interface description, and a test result serve different purposes. Eda’s instruction distinguishes them. A station can explain a concept or discuss a decision documented in a case; it cannot establish that a shipped screen meets a standard without the relevant testing. The current implementation uses authored guidance and station context. It does not inspect the page’s DOM or run an automated accessibility audit. Missing measurements and undocumented interaction behavior remain open questions.",
+        "url": "/work/eda.html#oslo-evidence-2"
+      },
+      {
+        "id": "eda:3",
+        "title": "Keep the explanation attached to the interface",
+        "text": "A visitor can choose an introductory walk or explore written decisions on a case-study screen. The case panel anchors the walkthrough to the relevant visual. Suggested questions stay with that topic, and the visitor can move back, continue, or ask a question before leaving. 01 Introduce Name the subject and what the walk can explain. 02 Show Keep the relevant interface or concept in view. 03 Question Offer prompts and a field for the visitor’s own question. 04 Continue Let the visitor control the pace.",
+        "url": "/work/eda.html#oslo-evidence-3"
+      },
+      {
+        "id": "eda:4",
+        "title": "Give the guide its own scope",
+        "text": "Eda has a separate instruction file and authored station material. Questions identify Eda explicitly, so the shared endpoint loads her guidance. The language is designed to be calm and specific about written evidence, with a clear boundary around claims that require an audit or additional information.",
+        "url": "/work/eda.html#oslo-evidence-4"
+      },
+      {
+        "id": "eda:5",
+        "title": "Share the player, keep the products distinct",
+        "text": "Oslo and Eda reuse the walkthrough player and chat endpoint. They have different names, visual accents, instructions, and subject matter. That shared structure supports consistent navigation and interaction states while keeping the purpose of each guide clear. Oslo helps visitors explore the product-design story. Eda explains accessibility concepts and the interface decisions written for her stations. Keeping those roles distinct helps visitors choose the right conversation.",
+        "url": "/work/eda.html#oslo-evidence-5"
+      },
+      {
+        "id": "eda:6",
+        "title": "What I designed",
+        "text": "Eda’s role within the portfolio; the separation from Oslo; the written scope and response boundaries; the station sequence, scripts, and questions; and the interaction between the case-study visual and the conversation panel. The work is the design of a bounded guide, including when it should acknowledge that the evidence is incomplete.",
+        "url": "/work/eda.html#oslo-evidence-6"
+      },
+      {
+        "id": "eda:7",
+        "title": "Evaluate the guide without overstating its reach",
+        "text": "The next evaluation should check whether visitors understand Eda’s role, can navigate the stations, and can distinguish an explanation from a verified finding. It should also test how reliably answers stay within the written material. The presence of the guide is not a conformance result for the portfolio or its case studies. ← Back to selected work",
+        "url": "/work/eda.html#oslo-evidence-7"
+      }
+    ]
+  },
+  "iqvia": {
+    "title": "Help teams create, review, and approve medical content.",
+    "path": "/work/iqvia.html",
+    "evidence": [
+      {
+        "id": "iqvia:1",
+        "title": "What shipped",
+        "text": "A purpose-built document system for pharma teams: create, collaborate, stay compliant, and get to market. Automated the work that had been tribal, tightened accuracy on claims, and made approval a conversation on the page. Secure data, fewer missed deadlines, and a measured 40% lift in workflow speed.",
+        "url": "/work/iqvia.html#oslo-evidence-1"
+      },
+      {
+        "id": "iqvia:2",
+        "title": "Why this product exists",
+        "text": "I watched people use the existing tools. The pattern was consistent: a labyrinth of features, a pause, then a call for support. Creative agencies, brand managers, project managers, and MLR reviewers all lived in the same hub — and 90% of them could not complete the journey without someone else in the room. Reviewers need to see the content, its supporting claims, and their comments together.",
+        "url": "/work/iqvia.html#oslo-evidence-2"
+      },
+      {
+        "id": "iqvia:3",
+        "title": "What I owned",
+        "text": "Discovery with the ePromo team: demographics, roles, and how each of them actually talks when a document is late. Persona-driven IA so MLR, marketing, agency, and PM are not forced through one dashboard. User flows, task flows, and sitemaps with product owners — estimates early, even when they were deliberately rough. The collaborative canvas: inline comments, threaded annotation cards, and a menu that only shows what you need first. 01",
+        "url": "/work/iqvia.html#oslo-evidence-3"
+      },
+      {
+        "id": "iqvia:4",
+        "title": "The first hour is the product",
+        "text": "An emotional map of first arrival and first task made the cost of the old IA visible: uncertainty, no self-identification, inability to complete, nowhere to find help. Excitement only showed up when setup was already done for them. That chart was the brief. Peaks of efficiency only after the product has already done the orientation work. 02",
+        "url": "/work/iqvia.html#oslo-evidence-4"
+      },
+      {
+        "id": "iqvia:5",
+        "title": "Two jobs, two dashboards",
+        "text": "An MLR reviewer needs which documents are in review, due date, file type, and a calendar of meetings. Marketing needs overdue pieces, WIP, expiring assets, campaigns, and claims. Same product. Different “needs to know.” Personas were not decoration — they were the permission to stop designing one home for everyone. 03",
+        "url": "/work/iqvia.html#oslo-evidence-5"
+      },
+      {
+        "id": "iqvia:6",
+        "title": "Give each role a relevant starting point",
+        "text": "Existing builds showed how each persona actually completed a task. Onboarding then split: unrecognized users register; recognized users get a role and land on the dashboard that matches — agency, brand, coordinator, or MLR — each with submissions, library, campaign, and inbox. Create, search, and the submission room sit off the header, not buried in a feature list. Use case 0: sign-in, role, then four parallel dashboard families. The header provides direct access to key areas, including Create. The working method: test against users and competitors before visual design is treated as done. 04",
+        "url": "/work/iqvia.html#oslo-evidence-6"
+      },
+      {
+        "id": "iqvia:7",
+        "title": "Break document creation into clear steps",
+        "text": "New documents used to dump every field at once. The redesigned sequence is identification, then categorization, then artifact, content, and metadata — with a progress bar that tells you what happens after the click. Templates are a library you customize, not a blank page you fear. Template gallery and a profile that names the role — coordinator, not a generic user. 05",
+        "url": "/work/iqvia.html#oslo-evidence-7"
+      },
+      {
+        "id": "iqvia:8",
+        "title": "Keep review comments with the content",
+        "text": "Review discussions often moved into email. The collaborative canvas keeps comments on the creative: real-time annotations, threaded replies with author and timestamp, targeted pins, and a history you can audit. Approve, request changes, or reject without leaving the document. Menus were cut to the tools people actually touch — labels in their language, not the platform’s. Wireframe: comment on the page, decide in the rail. Annotation cards as a design-system component, not a one-off modal. Visual design: claims, comments, and the creative in one review — MLR status visible without hunting. ← Back to selected work",
+        "url": "/work/iqvia.html#oslo-evidence-8"
+      }
+    ]
+  },
+  "oslo": {
+    "title": "Explore the work. Ask about the decisions.",
+    "path": "/work/oslo.html",
+    "evidence": [
+      {
+        "id": "oslo:1",
+        "title": "Help visitors ask about the work",
+        "text": "A case study can explain a project without answering every question a visitor brings to it. Oslo gives hiring managers, design leaders, and peers a way to ask about the decisions, inspect the supporting material, and choose where to go next. The design challenge is making that conversation useful without turning missing information into a convincing story. The original walkthrough picker introduced two short, authored routes through the work.",
+        "url": "/work/oslo.html#oslo-evidence-1"
+      },
+      {
+        "id": "oslo:2",
+        "title": "Two ways into the same material",
+        "text": "Ask Oslo starts from the visitor’s question. It uses the current case study as context and offers questions about decisions, tradeoffs, and outcomes. Walk with Oslo starts from an authored sequence: one visual, one explanation, two questions, then a choice to continue. 01 Ask Start with a question about the case you are reading. 02 Inspect Follow an evidence link to the supporting section. 03 Walk Choose a guided route when you want an introduction. 04 Continue The visitor decides when to move to another station.",
+        "url": "/work/oslo.html#oslo-evidence-2"
+      },
+      {
+        "id": "oslo:3",
+        "title": "Make the status of an answer visible",
+        "text": "The current answer design separates three kinds of statement: what the case documents, an interpretation of a design choice, and information the case does not provide. Evidence references open named sections of the portfolio. The server resolves those links from known source IDs, keeping the destinations under the site’s control. This distinction matters most for hard questions. A tradeoff can be a useful interpretation without being the designer’s documented rationale. A missing measurement should remain a gap rather than become an invented result.",
+        "url": "/work/oslo.html#oslo-evidence-3"
+      },
+      {
+        "id": "oslo:4",
+        "title": "Keep the conversation in context",
+        "text": "The panel identifies the current project. A walk sends a project and station identifier, which the server resolves to the authored station content. Temporary follow-up context supports questions such as “Why that approach?” without treating earlier answers as evidence. That context is bounded to three exchanges per project or station on the current page and clears on reload.",
+        "url": "/work/oslo.html#oslo-evidence-4"
+      },
+      {
+        "id": "oslo:5",
+        "title": "Design the pacing of a walk",
+        "text": "The two Oslo walks each have five authored stations. A station pairs its visual with a short script and two suggested questions. Back, Next, and station selection remain visitor controls; an answer does not automatically advance the walk. This keeps the introduction predictable while leaving room to question a decision. The station layout keeps the visual and conversation together. This capture shows an earlier version of the station copy.",
+        "url": "/work/oslo.html#oslo-evidence-5"
+      },
+      {
+        "id": "oslo:6",
+        "title": "A useful failure changed the answer design",
+        "text": "In an early test, Oslo suggested that incident cards sacrificed historical context, even though the Performance Monitoring case includes historic timelines. The response had references, but its interpretation still overreached. That exposed a limitation: a valid source link does not prove that a conclusion follows from it. The current version adds an evidence-review pass before displaying an answer and a source-linked correction for that known mistake. These are improvements to the procedure, not proof that every generated answer is correct. The content still needs evaluation across a wider range of questions.",
+        "url": "/work/oslo.html#oslo-evidence-6"
+      },
+      {
+        "id": "oslo:7",
+        "title": "How the current implementation works",
+        "text": "The sidebar and guided walk share a chat endpoint. For current Oslo answers, the server selects published case-study evidence and trusted station content, prepares a draft, and requests an evidence review. It then validates the returned source IDs and sends a structured answer for the interface to display. The current Oslo response appears after that review rather than streaming token by token. A waiting indicator keeps the request visible. While it is pending, the question controls are disabled. The API key stays on the server. Eda and the older text-response format retain their separate response behavior.",
+        "url": "/work/oslo.html#oslo-evidence-7"
+      },
+      {
+        "id": "oslo:8",
+        "title": "What I designed",
+        "text": "The product concept and two entry points; the authored walkthrough structure; the prompts and scope; project and station context; the answer categories and evidence navigation; and the interaction states for waiting, follow-ups, and errors. The work connects the written guidance to what a visitor can actually see and control.",
+        "url": "/work/oslo.html#oslo-evidence-8"
+      },
+      {
+        "id": "oslo:9",
+        "title": "Keep evaluating the conversation",
+        "text": "Automated checks cover source destinations, invalid context, unsupported reference IDs, and response compatibility. Conversation checks also need human review: did the answer address the question, use the whole case, distinguish interpretation from fact, and acknowledge what was missing? Those are the next quality questions for Oslo. The product goal is a portfolio that helps people understand and question the work. The case studies remain the evidence; the agent helps visitors find their way through them. ← Back to selected work",
+        "url": "/work/oslo.html#oslo-evidence-9"
+      }
+    ]
+  },
+  "performance-monitoring": {
+    "title": "Performance Monitoring",
+    "path": "/work/performance-monitoring.html",
+    "evidence": [
+      {
+        "id": "performance-monitoring:1",
+        "title": "What shipped",
+        "text": "Performance Monitoring brings incidents, advisories, and impact information into one tenant-facing view. The aim was to help admins understand an issue, assess who might be affected, and find the next action within the console they already use. The work included tenant and VIP research, iterative prototypes, user feedback, and collaboration with the M365 Creative Studio. A central focus was the day-to-day incident scenarios: what information admins needed and how they would use a recommendation to manage the issue.",
+        "url": "/work/performance-monitoring.html#oslo-evidence-1"
+      },
+      {
+        "id": "performance-monitoring:2",
+        "title": "Why this product exists",
+        "text": "Admins needed to make sense of tenant-level issues and Microsoft-level incidents while an investigation was still developing. Information was spread across status pages, email, and team knowledge. The design brought that context closer to the incident and distinguished actions the tenant could take from repair work handled by Microsoft. The hardest design work was connecting the recommendation to the admin’s actual situation. VIP research focused on how incident details could support a practical response, with enough infrastructure context to make the next step understandable. What is happening, who is affected, and what can I do next?",
+        "url": "/work/performance-monitoring.html#oslo-evidence-2"
+      },
+      {
+        "id": "performance-monitoring:3",
+        "title": "What I owned",
+        "text": "End-to-end product design for the V1 monitoring surface — overview, incident cards, advisories, and impact charts. Tenant and VIP research, followed by clickable prototypes of investigation states and transitions. Data-visualization design for affected-user counts, impact duration, and historic timelines, with overview and detail views for investigating an incident. The interaction model for investigation: status-aware actions, notification channels, and Outlook-native crash signals. Collaboration with the M365 Creative Studio and Outlook team on the monitoring and client experiences.",
+        "url": "/work/performance-monitoring.html#oslo-evidence-3"
+      },
+      {
+        "id": "performance-monitoring:10",
+        "title": "Machine learning behind the recommendations",
+        "text": "AI in this project meant machine learning applied to monitoring data. Signals about Exchange, packet traffic, and data loss across Microsoft and third-party infrastructure informed impact estimates, scenario predictions, and advisories. My design work focused on making the resulting information and recommendations usable in the investigation flow. 01",
+        "url": "/work/performance-monitoring.html#oslo-evidence-10"
+      },
+      {
+        "id": "performance-monitoring:4",
+        "title": "Incident cards",
+        "text": "The incident card brings together a problem description, AI-assisted impact estimates, timestamps, and investigation updates. Its available actions change with the status. The design keeps the current information and the next step together as the investigation develops. Actions adapt to status. Under Investigation offers False Alarm or Service Restored; restored incidents let you add detail or move on. 02",
+        "url": "/work/performance-monitoring.html#oslo-evidence-4"
+      },
+      {
+        "id": "performance-monitoring:5",
+        "title": "Advisories that users can act on",
+        "text": "The advisory flow distinguishes the responsibility for the next step. Tenant-level problems can include actions the admin can take. Microsoft-level incidents show information about repair work in progress. This gives admins a way to understand both what they can do and which updates they need to follow. 03",
+        "url": "/work/performance-monitoring.html#oslo-evidence-5"
+      },
+      {
+        "id": "performance-monitoring:6",
+        "title": "Compare how many people are affected and for how long",
+        "text": "The chart presents affected-user count and duration of impact together. Named series distinguish the measures, and hover reveals point details. The design gives admins an overview of the incident window with a way to examine a particular moment. Two named series compare affected-user count and duration of impact. Notification setup includes email, phone, and SMS, with severity and tenant filters. 04",
+        "url": "/work/performance-monitoring.html#oslo-evidence-6"
+      },
+      {
+        "id": "performance-monitoring:7",
+        "title": "Bring crash signals into Outlook",
+        "text": "The Outlook collaboration brought crash and performance signals into the client experience. This extended the monitoring story beyond the Admin Center, connecting the information to another place where the issue was being encountered. 05",
+        "url": "/work/performance-monitoring.html#oslo-evidence-7"
+      },
+      {
+        "id": "performance-monitoring:8",
+        "title": "Historic timelines",
+        "text": "The historic timeline gives admins another view of an incident period. Incidents and advisories have named categories, with color separating them and larger marks representing stacked scenarios. The overview provides a way to locate activity over time and inspect a more detailed view. Red for incidents, blue for advisories. Scale encodes multiple scenarios at the same moment.",
+        "url": "/work/performance-monitoring.html#oslo-evidence-8"
+      },
+      {
+        "id": "performance-monitoring:9",
+        "title": "Use prototypes to review the whole flow",
+        "text": "The prototypes included clickable flows, investigation states, conditional copy, and page transitions. Research participants and engineering partners could review how the experience changed through an investigation, rather than respond only to isolated screens. A clickable state: hover count, incident key, and a zoom into the week. A related prototype view showing the chart at another time scale. Outcome · qualitative",
+        "url": "/work/performance-monitoring.html#oslo-evidence-9"
+      },
+      {
+        "id": "performance-monitoring:11",
+        "title": "Clearer infrastructure context, a more practical response",
+        "text": "The work gave admins more insight into the infrastructure affected by an incident and a more practical path to remediation. Keeping the recommendation with the incident details helped connect monitoring information to the work of managing the issue. ← Back to selected work",
+        "url": "/work/performance-monitoring.html#oslo-evidence-11"
+      }
+    ]
+  },
+  "sbi": {
+    "title": "Forecasting for sales and inventory decisions.",
+    "path": "/work/sbi.html",
+    "evidence": [
+      {
+        "id": "sbi:1",
+        "title": "What shipped",
+        "text": "V1 brought prediction-model information, inventory and purchasing views, and scenario exploration into a shared dashboard. The design work focused on helping leadership understand the information behind a forecast and connect it to a planning decision. The team shipped V1 in six months. My focus was to make the relationship between operating activity, forecasts, and inventory clear enough for leadership to examine and discuss.",
+        "url": "/work/sbi.html#oslo-evidence-1"
+      },
+      {
+        "id": "sbi:2",
+        "title": "The forecasting question behind the dashboard",
+        "text": "SBI could use rig activity and hardware-sensor data, including publicly available operating data, to assess equipment condition and anticipate demand for replacement parts. For leadership, those two questions were connected: an estimate of remaining equipment life could inform what to stock and when to buy it. When might this equipment need replacing—and what should we have in stock when it does?",
+        "url": "/work/sbi.html#oslo-evidence-2"
+      },
+      {
+        "id": "sbi:3",
+        "title": "What I owned",
+        "text": "Research into inventory turnover, market indicators, competitor activity, and purchasing needs to inform the dashboard structure. The information architecture connecting operating signals, forecasts, and the sales and inventory questions leadership needed to explore. Dashboard and chart explorations with executives, using rig count as a shared reference for discussing activity and forecasts. Filter interactions, map-based context, and the visual system for a dashboard with dense operational and financial information. 01",
+        "url": "/work/sbi.html#oslo-evidence-3"
+      },
+      {
+        "id": "sbi:4",
+        "title": "Bring the forecast into the business decision",
+        "text": "A forecast needed to be considered alongside inventory, purchasing, and financial information. The dashboard brought these views together so executives and sales stakeholders could examine potential demand in the context of stock on hand and the business’s purchasing position. Forecast inventory gaps alongside cash, receivables, and stock on hand. 02",
+        "url": "/work/sbi.html#oslo-evidence-4"
+      },
+      {
+        "id": "sbi:5",
+        "title": "From equipment use to replacement-part demand",
+        "text": "A drill bit makes the opportunity concrete. Usage data could help estimate wear and remaining useful life. That estimate could then inform when a replacement might be needed—and when SBI’s leadership should consider buying stock. Leadership could weigh that estimate alongside current inventory and purchasing information. 01 Read the operating data Use rig activity and equipment-usage signals as inputs. 02 Estimate equipment life Assess wear and when a part might need replacement. 03 Anticipate demand Consider the replacement parts that may be needed. 04 Plan the stock Leadership weighs the forecast alongside inventory and purchasing information. 03",
+        "url": "/work/sbi.html#oslo-evidence-5"
+      },
+      {
+        "id": "sbi:6",
+        "title": "Organize the questions before the screens",
+        "text": "I mapped the relationships between operating signals, market activity, and business measures before working through the dashboard layouts. The flow helped organize how stakeholders could move from a broad view of activity into the information behind a forecast. Application-flow exploration connecting rig activity, business measures, and dashboard navigation. 04",
+        "url": "/work/sbi.html#oslo-evidence-6"
+      },
+      {
+        "id": "sbi:7",
+        "title": "Use rig activity as a shared reference",
+        "text": "Workshops with executives explored how current rig activity and simulated conditions could be understood together. Rig count remained a consistent reference across the layouts. Paper sketches developed into forecast bars, summary measures, and inventory and purchasing views. Workshop sketches comparing rig conditions with simulation ideas. Dashboard A: live series beside a five-day simulation. Chart explorations for downtime windows, overlays, and measurement controls. 05",
+        "url": "/work/sbi.html#oslo-evidence-7"
+      },
+      {
+        "id": "sbi:8",
+        "title": "Include the data a filter combination needs",
+        "text": "Some requested views depended on additional operating data. The filter exploration mapped those dependencies so a selection could include the inputs needed for the requested measure. The design question was how to support that relationship without asking stakeholders to reconstruct it themselves. The diagram records the original filter terminology and relationships. It illustrates the interaction logic; it is not a specification of how equipment life was calculated. A filter-dependency exploration showing the additional data needed for a selected measure. 06",
+        "url": "/work/sbi.html#oslo-evidence-8"
+      },
+      {
+        "id": "sbi:9",
+        "title": "Keep location and operating context with the forecast",
+        "text": "The map explorations brought regional measures, well details, and drilling activity into the planning view. Alongside the forecasts, that context gave stakeholders another way to examine where activity and potential equipment demand were concentrated. Regional measures and a state-level overlay in an early map exploration. Well details, filters, and drilling activity alongside the map. ← Back to selected work",
+        "url": "/work/sbi.html#oslo-evidence-9"
+      }
+    ]
+  },
+  "zone-focus": {
+    "title": "Learn photography by making the choices yourself.",
+    "path": "/work/zone-focus.html",
+    "evidence": [
+      {
+        "id": "zone-focus:1",
+        "title": "Make the fundamentals visible",
+        "text": "I wanted to build a tool for learning photography. Automated camera settings and filters can produce an image while leaving the choices behind it unclear. FloTrak brings those choices into the interface: where to focus, which shadows to read, and how to approach exposure. Coach brings that learning into the tool: students can ask a photography question, open a focused lesson, and use “Show me” to return to the relevant control. AI supports the explanation while the student makes the adjustment. 01 / BEFORE THE SHOT Understand the settings Ask Coach about a setting and connect its explanation to the control. 02 / IN THE VIEWFINDER Place the points yourself Follow “Show me,” change one control, and observe the wedge or exposure reading. 03 / WITH THE ROLL Learn from the roll Keep frame settings and notes together so you can return to the choices you made. Ask Coach. Try the control. See what changes. Integrated AI Coach",
+        "url": "/work/zone-focus.html#oslo-evidence-1"
+      },
+      {
+        "id": "zone-focus:6",
+        "title": "Teach the idea, then bring it to the control",
+        "text": "Coach is part of the photography workspace. A student can ask about focus, aperture, shutter speed, ISO, or the two metering points. The prototype pairs short replies with expandable lesson notes and a “Show me” action that returns to the relevant control with an explanation. 01 / ASK “How does aperture affect focus?” The aperture lesson explains what to watch on the focus wedge. 02 / SHOW ME Find the aperture control The lesson takes the student back to the control and displays its teaching callout. 03 / TRY Change one setting Adjust the aperture and observe how the indicated sharp range changes. The explanation now has something visible to refer to. The learning material moves from individual controls to practice with points A and B, then to creative decisions and experiments with expired film. Point A is the tone the photographer exposes for; point B helps them assess the shadow they want to retain. Those choices stay with the student. The current implementation combines authored photography lessons, setting-based guidance, and AI-generated replies to broader questions when the AI connection is available. This gives Coach a defined foundation for the core lessons while leaving room for questions about the picture a student wants to make. 01",
+        "url": "/work/zone-focus.html#oslo-evidence-6"
+      },
+      {
+        "id": "zone-focus:2",
+        "title": "Keep guidance beside the exposure reading",
+        "text": "This earlier Standard-mode exploration groups focus, aperture, shutter speed, and film into a compact reading. An inline Coach prompt suggests a next adjustment. It explores how to connect a numerical reading to something the photographer can try, before the fuller question-and-lesson experience described above. Earlier prototype: the exposure reading is paired with a Coach prompt suggesting a smaller aperture for this example. 02",
+        "url": "/work/zone-focus.html#oslo-evidence-2"
+      },
+      {
+        "id": "zone-focus:3",
+        "title": "Explore focus and shadows in the viewfinder",
+        "text": "The viewfinder exploration uses a focus wedge and labeled distance bands to give the reading a spatial reference. Points A and B let the photographer choose an exposure reference and a shadow to compare. Focal length, format, and film remain visible below the viewfinder. Viewfinder exploration with labeled distances, metering points A and B, and a focus readout. 03",
+        "url": "/work/zone-focus.html#oslo-evidence-3"
+      },
+      {
+        "id": "zone-focus:4",
+        "title": "Explore flash controls beside the scene",
+        "text": "This flash-control exploration keeps the viewfinder in place and changes the controls below it. Connection status, target output, subject distance, and group adjustments share the workspace. The Godox connection is shown as a design exploration; the screen is not evidence of a tested hardware integration. Earlier flash-control exploration showing connection status, output, distance, and adjustments for groups A, B, and C. 04",
+        "url": "/work/zone-focus.html#oslo-evidence-4"
+      },
+      {
+        "id": "zone-focus:5",
+        "title": "Keep a record for each frame",
+        "text": "The earlier archive exploration groups frame records by roll, with film and format named in the header. Each record brings together exposure, focus, flash information, location, and a note. The design explores how a photographer could return to the choices made for each frame. Earlier roll-ledger exploration with example frame settings and notes organized by film roll. ← Back to selected work",
+        "url": "/work/zone-focus.html#oslo-evidence-5"
+      }
+    ]
+  },
+  "systems": {
+    "title": "The ground layer",
+    "path": "/systems.html",
+    "evidence": [
+      {
+        "id": "systems:shifts-title",
+        "title": "Three things the system needs",
+        "text": "Shared decisions, a maintained connection to code, and a way to catch inconsistencies. Shared values Define the tokens Give color, typography, spacing, and motion meaningful names. Map those names between design variables and code so the team can see which values belong together. A maintained connection Connect design and code Agree where changes originate, how they reach the other environment, and who reviews them. MCP can be part of that workflow; the integration and ownership need to be defined for the project. Practical checks Catch inconsistencies early Choose checks for the requirements that can be tested, such as token usage or defined component states. Keep human review for interaction quality and decisions that need context.",
+        "url": "/systems.html#shifts-title"
+      },
+      {
+        "id": "systems:cut-title",
+        "title": "How the layers fit together",
+        "text": "Tokens define shared values. Components give those values behavior and structure. Patterns combine components for recurring tasks, and product screens use them to meet a specific need. The terrain diagram shows how those layers depend on one another. Sky Products Screens for specific tasks Weather Patterns Recurring task flows Paths Primitives States, access, contents Bedrock Tokens Shared values and names Survey drill Review each layer Read from the foundation up: tokens, components, patterns, and product screens.",
+        "url": "/systems.html#cut-title"
+      },
+      {
+        "id": "systems:core-title",
+        "title": "Make the decisions explicit",
+        "text": "This illustrative comparison shows the same kinds of interface decisions described in two ways. On the left, values and component boundaries are ambiguous. On the right, shared names make them easier to discuss, implement, and check. Example A · unspecified Unspecified values blue without a token 13px? 14? gap: 7px / 11px / “a bit more” card, or panel, or both #333-ish The visual may look complete, but several implementation decisions are still unclear. Example B · defined Shared definitions --color-accent --type-body / 16 · 1.6 --space-300 / --space-400 primitive.card --color-text Named values and component rules give design and engineering a shared reference.",
+        "url": "/systems.html#core-title"
+      },
+      {
+        "id": "systems:trail-title",
+        "title": "Keep design and code connected",
+        "text": "Shared token definitions provide a reference between Figma and production code. The team also needs an agreed process for publishing changes, reviewing differences, and resolving conflicts. Where automation is useful, the integration should make those responsibilities explicit. Drift values without a shared name Studio Figma variables and components Shared reference tokens.json Publish and review changes Ship Code CSS · Tailwind · checks An illustrative workflow: shared definitions, reviewed changes, and a clear connection between design and code.",
+        "url": "/systems.html#trail-title"
+      },
+      {
+        "id": "systems:lay-title",
+        "title": "Start with one surface",
+        "text": "A focused engagement makes the work easier to assess. Start with a surface the team uses, agree on what needs to become shared, and document how the team will maintain it. These four steps describe my proposed approach. Steps in the approach 01 Compare 02 Tokens 03 Components 04 Maintain Four steps for one surface, with clear definitions and ownership for the team. Step 01 Compare design and implementation Choose one surface and identify the differences that matter to its users and the team. Compare Figma variables with the values used in production. Identify one-off colors, spacing, and typography. Agree which differences to address first. Step 02 Define shared tokens Start with the values this surface needs and give them names the team understands. Name color, typography, spacing, and radius by purpose. Map design variables to the project’s code conventions. Test how a change is published, reviewed, and applied. Step 03 Define components and their states Specify how the components behave, what they contain, and which access requirements they need to meet. Prioritize the components used on the selected surface. Document states and identify suitable automated checks. Review interactions and edge cases with design and engineering. Step 04 Make maintenance part of the work Define how the system will change as the product grows, including ownership and review. Document where changes start and how they reach design and code. Choose useful measures, such as unresolved differences or update time. Leave the team with documentation and a process it can maintain.",
+        "url": "/systems.html#lay-title"
+      },
+      {
+        "id": "systems:proof-title",
+        "title": "Related work",
+        "text": "These case studies show the product contexts behind this point of view: incident investigation, operational planning, and fleet monitoring. Each describes the interface work; the approach above describes how I would structure a design-systems engagement. Microsoft 365 Performance Monitoring Status-aware incident cards, advisories, and impact views for Microsoft 365 admins. Oil & gas SBI An operations dashboard bringing inventory, maintenance, and forecasting information together. Armada Atlas — Fleet Map Fleet tracking, route tracers, and AI-synthesized incidents alongside a drone’s live view.",
+        "url": "/systems.html#proof-title"
+      },
+      {
+        "id": "systems:contact-title",
+        "title": "Talk about your system",
+        "text": "Where are design and implementation becoming harder to keep aligned? Email me → Or ask Oslo → This website is handmade · © 2026 UX Terrain · LinkedIn · GitHub · Instagram",
+        "url": "/systems.html#contact-title"
+      }
+    ]
+  }
+}

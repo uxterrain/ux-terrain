@@ -754,32 +754,18 @@ html.is-eda-open #site-column {
   overflow: visible;
 }
 
-.hero-orbit path {
+.hero-orbit .orbit-expand {
+  stroke: var(--orbit-gold);
   transform-box: view-box;
-  transform-origin: 50% 50%;
-  transition:
-    stroke 900ms ease,
-    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: 300.5px 302.5px;
+  transform: scale(1);
+  transition: stroke 900ms ease, transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
-html.is-agent-open .hero-orbit path {
+html.is-agent-open .hero-orbit .orbit-expand {
   stroke: var(--orbit-listen);
-}
-
-html.is-agent-open .hero-orbit .orbit-cw path:nth-child(3n) {
-  transform: scale(1.16);
-}
-
-html.is-agent-open .hero-orbit .orbit-cw path:nth-child(3n + 1) {
-  transform: scale(1.07);
-}
-
-html.is-agent-open .hero-orbit .orbit-ccw path:nth-child(3n) {
-  transform: scale(1.22);
-}
-
-html.is-agent-open .hero-orbit .orbit-ccw path:nth-child(3n + 2) {
-  transform: scale(1.1);
+  transform: scale(var(--orbit-open-scale));
 }
 
 .hero-orbit .orbit-cw,
@@ -820,8 +806,8 @@ html.is-agent-open .hero-orbit .orbit-ccw path:nth-child(3n + 2) {
     animation: none;
   }
 
-  .hero-orbit path,
-  html.is-agent-open .hero-orbit path {
+  .hero-orbit .orbit-expand,
+  html.is-agent-open .hero-orbit .orbit-expand {
     transform: none;
     transition: stroke 900ms ease;
   }
@@ -2262,3 +2248,227 @@ html[data-theme="dark"] .walk-nav .walk-next {
 html[data-theme="dark"] .walk-nav .walk-next:hover:not(:disabled) {
   color: #1a1a1a;
 }
+
+/* Oslo evidence stays in the existing reading column and follows the site theme. */
+.oslo-claim { display: block; margin-bottom: 1rem; }
+.oslo-evidence { display: block; margin-top: .4rem; font-size: .875rem; }
+.oslo-evidence:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+[id^="oslo-evidence-"] { scroll-margin-top: 1.5rem; }
+
+/* Atlas interaction schematic: a wireframe explanation, not a live map. */
+.atlas-diagram { margin-top: 2rem; border: 1px solid var(--color-border-strong); border-radius: 12px; overflow: hidden; background: var(--color-bg-elevated); }
+.atlas-diagram-heading { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: .5rem 1.5rem; padding: 1.1rem 1.4rem; border-bottom: 1px solid var(--color-border); font-size: 1rem; }
+.atlas-diagram-note, .atlas-panel-kicker { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .08em; font-size: .65rem; color: var(--color-text-muted); }
+.atlas-diagram-layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(260px, 1fr); }
+.atlas-wire-map { display: flex; flex-direction: column; justify-content: center; min-width: 0; background: var(--color-bg); }
+.atlas-wire-map > svg { display: block; width: 100%; height: auto; }
+.atlas-map-grid { color: var(--color-border); opacity: .4; }
+.atlas-site-outline { color: var(--color-border-strong); stroke-width: 1.3; }
+.atlas-map-neutral, .atlas-other-route { color: var(--color-text-muted); }
+.atlas-active-route, .atlas-route-ahead { color: var(--color-accent); }
+.atlas-route-ahead { stroke: var(--color-bg); }
+.atlas-marker-bg { fill: var(--color-bg-elevated); stroke: var(--color-border-strong); stroke-width: 1; }
+.atlas-map-label { font: 14px var(--font-mono); letter-spacing: 1px; fill: var(--color-text-muted); }
+.atlas-incident-label { fill: var(--color-accent); }
+.atlas-map-legend { display: flex; flex-wrap: wrap; gap: .65rem 1.3rem; align-items: center; padding: 1rem 1.4rem; font-size: .8rem; color: var(--color-text-muted); }
+.atlas-map-legend span { display: inline-flex; align-items: center; gap: .5rem; }
+.atlas-legend-line { display: inline-block; width: 24px; border-top: 2px solid var(--color-accent); }
+.atlas-legend-dashed { border-color: var(--color-text-muted); border-top-style: dashed; }
+.atlas-review-panel { border-left: 1px solid var(--color-border-strong); padding: 1.5rem; }
+.atlas-review-panel h3 { margin-top: .6rem; font-size: 1.35rem; line-height: 1.25; }
+.atlas-panel-summary { color: var(--color-text-muted); font-size: .9rem; line-height: 1.55; margin-top: .65rem; }
+.atlas-viewfinder { margin-top: 1.2rem; border: 1px solid var(--color-border-strong); background: var(--color-bg); color: var(--color-text-muted); padding: .45rem .6rem; }
+.atlas-viewfinder svg { width: 100%; max-height: 100px; }
+.atlas-viewfinder span { display: block; font-family: var(--font-mono); font-size: .65rem; text-align: center; padding-bottom: .35rem; }
+.atlas-panel-status { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: .9rem; font-size: .75rem; line-height: 1.45; }
+.atlas-panel-status dt { font-weight: 600; }
+.atlas-panel-status dd { color: var(--color-text-muted); margin-top: .25rem; }
+.atlas-context-heading { margin-top: 1.5rem; }
+.atlas-context-list { margin-top: .55rem; padding: 0; list-style: none; font-size: .8rem; }
+.atlas-context-list li { display: flex; justify-content: space-between; gap: 1rem; padding: .5rem 0; border-top: 1px solid var(--color-border); }
+.atlas-context-list strong { font-weight: 600; }
+.atlas-context-list span { color: var(--color-text-muted); text-align: right; }
+.atlas-diagram .atlas-diagram-caption { padding: 1rem 1.4rem; border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: .8rem; line-height: 1.5; }
+@media (max-width: 760px) {
+  .atlas-diagram-layout { grid-template-columns: 1fr; }
+  .atlas-review-panel { border-left: 0; border-top: 1px solid var(--color-border-strong); padding: 1.25rem; }
+  .atlas-map-label { font-size: 17px; }
+  .atlas-diagram-heading { padding: 1rem 1.25rem; }
+  .atlas-map-legend { padding: .75rem 1.25rem; }
+}
+
+/* Atlas's second schematic explains the workspace around one selected flight. */
+.atlas-operations-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); }
+.atlas-operations-map { min-width: 0; background: var(--color-bg); padding-top: 1.4rem; display: flex; flex-direction: column; justify-content: center; }
+.atlas-operations-map > .atlas-panel-kicker { padding: 0 1.4rem; }
+.atlas-operations-map > svg { width: 100%; height: auto; display: block; margin: 1.3rem 0; }
+.atlas-step-number { color: var(--color-accent); font: .7rem var(--font-mono); margin-right: .45rem; }
+.atlas-operations-map-note { color: var(--color-text-muted); font-size: .85rem; line-height: 1.6; padding: 0 1.4rem 1.4rem; max-width: 27rem; }
+.atlas-operations-console { padding: 1.4rem; border-left: 1px solid var(--color-border-strong); }
+.atlas-console-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .6rem; padding-bottom: 1.1rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--color-border); }
+.atlas-connection-label { display: inline-flex; gap: .4rem; align-items: center; color: var(--color-text-muted); font-size: .7rem; }
+.atlas-connection-label i { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); }
+.atlas-console-title { font-size: .95rem; font-weight: 600; }
+.atlas-camera-scene { background: var(--color-bg); border: 1px solid var(--color-border-strong); color: var(--color-text-muted); margin-top: .8rem; }
+.atlas-camera-scene > svg { width: 100%; height: auto; display: block; }
+.atlas-camera-caption { padding: .65rem .8rem; border-top: 1px solid var(--color-border); display: flex; flex-wrap: wrap; justify-content: space-between; gap: .3rem; font-family: var(--font-mono); font-size: .6rem; }
+.atlas-operations-status { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 1.4rem; }
+.atlas-operations-status > div { padding-top: .9rem; border-top: 1px solid var(--color-border); }
+.atlas-operations-status svg { width: 32px; height: 32px; color: var(--color-text-muted); margin: .7rem 0; }
+.atlas-operations-status p:last-child { color: var(--color-text-muted); font-size: .8rem; line-height: 1.55; }
+@media (max-width: 760px) {
+  .atlas-operations-layout { grid-template-columns: 1fr; }
+  .atlas-operations-console { border-left: 0; border-top: 1px solid var(--color-border-strong); padding: 1.25rem; }
+  .atlas-operations-map > svg { margin: .5rem 0; }
+  .atlas-operations-status { gap: .8rem; }
+  .atlas-operations-status .atlas-console-title { font-size: .85rem; }
+}
+
+.atlas-camera-scene .atlas-map-label { stroke: none; }
+
+/* Device presentation from the existing FloTrak case. */
+.case-figure-phone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 34rem);
+  margin-inline: auto;
+  overflow: visible;
+  padding: 2.5rem 1.5rem 0.25rem;
+}
+
+.case-figure-phone figcaption {
+  align-self: stretch;
+}
+
+/* iPhone 16 Plus: 77.8 × 160.9 mm, Dynamic Island, thin titanium bezel. */
+.iphone-16 {
+  position: relative;
+  width: min(268px, 72vw);
+  margin-inline: auto;
+  padding: 9px;
+  border-radius: 46px;
+  background:
+    linear-gradient(155deg, #f2f2f4 0%, #c5c5c9 7%, #6d6d72 24%, #2a2a2c 52%, #141416 78%, #8d8d92 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.62),
+    inset 0 0 0 3px #0c0c0d,
+    0 22px 44px rgba(40, 28, 12, 0.16);
+}
+
+.iphone-16-action,
+.iphone-16-volume,
+.iphone-16-power {
+  position: absolute;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(#4a4a4e, #1a1a1c);
+}
+
+.iphone-16-action {
+  left: -2px;
+  top: 17%;
+  height: 20px;
+}
+
+.iphone-16-volume {
+  left: -2px;
+  top: 25%;
+  height: 58px;
+}
+
+.iphone-16-power {
+  right: -2px;
+  top: 27%;
+  height: 72px;
+}
+
+.iphone-16-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 38px;
+  background: #000;
+}
+
+.iphone-16-status {
+  position: relative;
+  height: 40px;
+  background: #000;
+}
+
+.iphone-16-island {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  width: 92px;
+  height: 26px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #000;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.2);
+}
+
+.iphone-16-screen img,
+.walk-visual .iphone-16-screen img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  border: 0;
+  background: transparent;
+}
+
+
+/* FloTrak uses the same dark stage as the other project thumbnails. */
+.work-card-media.flotrak-thumbnail { position: relative; background: #0a0a0a; }
+/* Earlier upright phone artwork, cropped to the wedge and metering points. */
+.work-card-media img.work-card-zone { display: block; width: 76%; height: 100%; margin-inline: auto; object-fit: cover; object-position: center 44%; }
+.flotrak-story-flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin-top: 2rem; padding: 1.5rem 0; border-block: 1px solid var(--color-border); }
+.flotrak-story-flow span { font: .7rem var(--font-mono); color: var(--color-accent); }
+.flotrak-story-flow h3 { margin: .6rem 0; font-size: 1.15rem; }
+.flotrak-story-flow p { font-size: .875rem; line-height: 1.6; color: var(--color-text-muted); }
+@media (max-width: 640px) { .flotrak-story-flow { grid-template-columns: 1fr; gap: 1.25rem; } }
+
+/* Keep the hero's geometry stable while the mobile Oslo panel opens. */
+@media (max-width: 767px) {
+  #app-shell { position: relative; }
+  #agent-panel {
+    position: absolute;
+    inset: 0;
+    z-index: 60;
+    width: 100%;
+    max-width: 100%;
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 300ms ease-in-out, visibility 0s linear 300ms;
+  }
+  html.is-agent-open #agent-panel {
+    transform: translateX(0);
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  html.is-agent-open #site-column {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 0%;
+  }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  #agent-panel { transition: none; }
+}
+
+/* Hold panel content at its final width while the outer reveal animates. */
+.agent-panel-content { display: flex; flex-direction: column; flex: 1 1 0%; min-height: 0; height: 100%; width: 100%; contain: layout style; }
+@media (min-width: 768px) {
+  .agent-panel-content { width: calc(var(--agent-width) - 1px); flex-shrink: 0; transform: translateX(24px); opacity: 0; transition: transform 300ms ease-in-out, opacity 200ms ease; }
+  html.is-agent-open .agent-panel-content { transform: translateX(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .agent-panel-content { transition: none; transform: none; } }
+
+/* The original portrait footprint, with no card surface or frame. */
+.about-data-portrait { position: relative; width: 100%; aspect-ratio: 440 / 644; }
+.about-data-portrait canvas { display: block; width: 100%; height: 100%; }
+
+.sys-foundation-art { margin: 2.5rem 0 0; }
+.sys-foundation-art svg { display: block; width: 100%; height: auto; color: var(--color-text-muted); overflow: visible; }
+.sys-foundation-art figcaption { margin-top: .85rem; font: .75rem var(--font-mono); color: var(--color-text-muted); line-height: 1.6; }

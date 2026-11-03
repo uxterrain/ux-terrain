@@ -1,6 +1,44 @@
 (function () {
   "use strict";
 
+  // Shared by the sidebar and Oslo walks. No model-provided HTML or URLs execute.
+  const osloConversations = new Map();
+  window.UX_OSLO = {
+    async answer(message, body, context, signal) {
+      const scope = context.walkId ? "walk:" + context.walkId + ":" + context.stationIndex : "project:" + (context.projectId || "portfolio");
+      const history = osloConversations.get(scope) || [];
+      const response = await fetch("/api/chat", {
+        method: "POST", headers: { "Content-Type": "application/json" }, signal: signal,
+        body: JSON.stringify({ message: message, responseFormat: "grounded-v1", context: context, history: history })
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Oslo could not answer. Please try again.");
+      if (signal && signal.aborted) return;
+      if (!Array.isArray(result.claims)) throw new Error("Oslo returned an incomplete answer. Please try again.");
+      const answerText = result.claims.map(claim => claim.kind + ": " + claim.text).join("\n");
+      // Memory lives only in this page, is bounded, and is isolated by project/station.
+      osloConversations.set(scope, history.concat([{role: "user", content: message}, {role: "assistant", content: answerText}]).slice(-6));
+      body.replaceChildren();
+      (result.claims || []).forEach(function (claim) {
+        const item = document.createElement("span");
+        item.className = "oslo-claim";
+        const label = document.createElement("strong");
+        label.textContent = { documented: "From the case study. ", interpretation: "Design interpretation. ", gap: "Not documented. " }[claim.kind] || "";
+        item.append(label, document.createTextNode(claim.text));
+        (claim.evidence || []).forEach(function (source) {
+          // Defense in depth: only local authored case-study section destinations.
+          if (!/^\/(?:work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda)|systems)\.html#(?:oslo-evidence-\d+|(?:shifts|cut|core|trail|lay|proof|contact)-title)$/.test(source.url)) return;
+          const link = document.createElement("a");
+          link.className = "oslo-evidence accent-link";
+          link.href = source.url;
+          link.textContent = "View evidence: " + source.title;
+          item.appendChild(link);
+        });
+        body.appendChild(item);
+      });
+    }
+  };
+
   const THEME_KEY = "ux-terrain-theme";
 
   function getPreferredTheme() {
@@ -123,16 +161,6 @@
       }
     });
 
-    function toPlainReply(text) {
-      return String(text || "")
-        .replace(/^#{1,6}\s+/gm, "")
-        .replace(/\*\*(.+?)\*\*/g, "$1")
-        .replace(/__(.+?)__/g, "$1")
-        .replace(/(^|[\s(])\*(?!\s)([^*\n]+)\*(?=[\s).,;:!?]|$)/g, "$1$2")
-        .replace(/`+/g, "")
-        .replace(/^\s*[-*]\s+/gm, "");
-    }
-
     function appendMessage(role, text) {
       const turn = document.createElement("article");
       turn.className =
@@ -178,50 +206,11 @@
     }
 
     async function streamAgentReply(message, body) {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: message }),
-      });
-
-      if (!response.ok) {
-        let detail = "The agent could not reply.";
-        try {
-          const payload = await response.json();
-          if (payload && payload.error) detail = payload.error;
-        } catch (parseError) {
-          /* non-JSON error body */
-        }
-        throw new Error(detail);
-      }
-
-      if (!response.body) {
-        throw new Error("Streaming is not available in this browser.");
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let reply = "";
-      let started = false;
-
-      while (true) {
-        const chunk = await reader.read();
-        if (chunk.done) break;
-        reply += decoder.decode(chunk.value, { stream: true });
-        const plain = toPlainReply(reply);
-        if (!started && plain) {
-          hideAgentLoader(body);
-          started = true;
-        }
-        if (started) {
-          body.textContent = plain;
-          log.scrollTop = log.scrollHeight;
-        }
-      }
-
-      reply += decoder.decode();
+      const match = window.location.pathname.match(/\/work\/([^/]+)\.html$/);
+      const context = match ? { projectId: match[1] } :
+        window.location.pathname === "/systems.html" ? { projectId: "systems" } : {};
+      await window.UX_OSLO.answer(message, body, context);
       hideAgentLoader(body);
-      body.textContent = toPlainReply(reply) || "The agent returned an empty reply.";
     }
 
     async function sendUserMessage(message) {
@@ -253,6 +242,14 @@
       await sendUserMessage(message);
     });
 
+    if (/\/work\/[^/]+\.html$/.test(window.location.pathname)) {
+      const questions = ["Which design decision matters most here, and what evidence supports it?",
+        "What tradeoff does this design make, and when might another approach work better?",
+        "What outcomes were measured, and what is still undocumented?"];
+      panel.querySelectorAll(".js-quick-inquiry").forEach(function (button, index) {
+        (button.querySelector(".js-inquiry-label") || button).textContent = questions[index % questions.length];
+      });
+    }
     panel.querySelectorAll(".js-quick-inquiry").forEach(function (button) {
       button.addEventListener("click", function () {
         const label = button.querySelector(".js-inquiry-label");
@@ -393,7 +390,7 @@
       pulseGen += 1;
       pulsing = 0;
       paths.forEach(function (path) {
-        path.setAttribute("stroke", "#FFAF34");
+        path.removeAttribute("stroke");
         path.removeAttribute("data-orbit-pulse");
       });
     }
@@ -460,7 +457,7 @@
         })
         .then(function () {
           if (gen !== pulseGen) return;
-          path.setAttribute("stroke", "#FFAF34");
+          path.removeAttribute("stroke");
           path.removeAttribute("data-orbit-pulse");
           pulsing = Math.max(0, pulsing - 1);
         });
@@ -476,7 +473,7 @@
 
     paths.forEach(function (path) {
       path.setAttribute("stroke-width", "0.3");
-      path.setAttribute("stroke", "#FFAF34");
+      path.removeAttribute("stroke");
     });
 
     window.setTimeout(loop, 1600 + Math.random() * 1200);

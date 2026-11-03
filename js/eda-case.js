@@ -13,7 +13,8 @@
   const backBtn = document.getElementById("eda-back");
   const nextBtn = document.getElementById("eda-next");
   const dots = document.getElementById("eda-dots");
-  const walk = window.EDA_WALKS && window.EDA_WALKS.m365;
+  const walkId = openBtn && openBtn.getAttribute("data-eda-walk") || "m365";
+  const walk = window.EDA_WALKS && Object.hasOwn(window.EDA_WALKS, walkId) ? window.EDA_WALKS[walkId] : null;
   if (!panel || !openBtn || !log || !form || !input || !walk) return;
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -272,9 +273,8 @@
           message: message,
           agent: "eda",
           context: {
-            walk: walk.title,
-            station: st.title,
-            brief: st.lede,
+            walkId: walk.id,
+            stationIndex: index,
           },
         }),
       });

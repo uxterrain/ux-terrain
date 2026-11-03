@@ -93,7 +93,7 @@
           </div>
         </header>
 
-        <main class="min-h-0 flex-1 overflow-y-auto">
+        <main class="about-main min-h-0 flex-1 overflow-y-auto">
           <article class="mx-auto max-w-6xl px-5 pb-24 pt-10 md:px-8 md:pt-14">
             <a class="case-back inline-block" href="index.html">← Index</a>
 
@@ -106,15 +106,9 @@
             </header>
 
             <div class="about-intro mt-12">
-              <figure class="about-portrait">
-                <img
-                  src="images/about/owner.jpg"
-                  alt="Jimmy Van Galder, standing on a fogged shore"
-                  width="440"
-                  height="644"
-                />
-                <figcaption>Jimmy Van Galder</figcaption>
-              </figure>
+              <div class="about-data-portrait">
+                <canvas id="about-data-curtain" aria-hidden="true"></canvas>
+              </div>
               <div>
                 <p class="about-lede font-serif">
                   A decade of experience designing trust-first AI across conversational, voice, and touch
@@ -254,7 +248,7 @@
           <header class="flex shrink-0 items-start justify-between gap-4 border-b px-6 py-5" style="border-color: var(--color-border)">
             <div>
               <h2 id="agent-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
-              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Questions written for this page</p>
+              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Your guide to the work</p>
             </div>
             <button id="agent-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -266,13 +260,13 @@
           <div id="chat-log" class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-6 py-5" aria-live="polite">
             <article class="chat-turn chat-turn-agent">
               <p class="chat-turn-label">Oslo</p>
-              <p class="chat-turn-body">Greetings, I'm Oslo an AI Agent. I'm designed to help answer questions about our AI experiences here at UX Terrain.</p>
+              <p class="chat-turn-body">Hi, I’m Oslo. Ask me about the projects, the design decisions, or the evidence behind them.</p>
             </article>
           </div>
 
-          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Quick inquiries">
+          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Suggested questions">
             <p class="font-mono mb-2 px-1 text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">
-              Quick inquiry
+              Try a question
             </p>
             <div class="flex flex-col gap-2">
               <button type="button" class="js-quick-inquiry agent-inquiry">How did you design the AI-powered Incident Cards for M365?</button>
@@ -289,7 +283,7 @@
               type="text"
               name="message"
               autocomplete="off"
-              placeholder="Write a message…"
+              placeholder="Ask about a project…"
             />
             <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Send</button>
           </form>
@@ -297,5 +291,6 @@
       </aside>
     </div>
     <script src="js/app.js"></script>
+    <script src="js/about-curtain.js?v=20261102-placement"></script>
   </body>
 </html>

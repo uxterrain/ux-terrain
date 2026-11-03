@@ -67,34 +67,34 @@
     if (st.visual === "holds") {
       return (
         '<div class="walk-holds">' +
-        '<article class="walk-hold"><p>The decision</p><h3>Wiki → tokens</h3><p>If it is not named, it is sediment.</p></article>' +
-        '<article class="walk-hold"><p>The trail</p><h3>Handoff → two-way sync</h3><p>Figma and code share one map.</p></article>' +
-        '<article class="walk-hold"><p>The edge</p><h3>Meeting → a check</h3><p>Wrong composition fails before a user sees it.</p></article>' +
+        '<article class="walk-hold"><p>Shared values</p><h3>Define the tokens</h3><p>Map meaningful names between design and code.</p></article>' +
+        '<article class="walk-hold"><p>A maintained connection</p><h3>Connect design and code</h3><p>Agree how changes are published and reviewed.</p></article>' +
+        '<article class="walk-hold"><p>Practical checks</p><h3>Catch inconsistencies early</h3><p>Automate suitable checks and keep contextual review.</p></article>' +
         "</div>"
       );
     }
     if (st.visual === "cut") {
       return (
         '<div class="walk-cut" role="img" aria-label="Four strata: products, patterns, primitives, tokens">' +
-        '<div class="walk-cut-band walk-cut-sky"><p>Sky</p><h3>Products</h3><p>Runtime UI — assembled later</p></div>' +
-        '<div class="walk-cut-band walk-cut-weather"><p>Weather</p><h3>Patterns</h3><p>Recipes that may change</p></div>' +
-        '<div class="walk-cut-band walk-cut-paths"><p>Paths</p><h3>Primitives</h3><p>States, a11y, allowed contents</p></div>' +
-        '<div class="walk-cut-band walk-cut-bedrock"><p>Bedrock</p><h3>Tokens</h3><p>Named once. Shared by both files.</p></div>' +
+        '<div class="walk-cut-band walk-cut-sky"><p>Sky</p><h3>Products</h3><p>Screens for specific tasks</p></div>' +
+        '<div class="walk-cut-band walk-cut-weather"><p>Weather</p><h3>Patterns</h3><p>Recurring task flows</p></div>' +
+        '<div class="walk-cut-band walk-cut-paths"><p>Paths</p><h3>Primitives</h3><p>States, access, allowed contents</p></div>' +
+        '<div class="walk-cut-band walk-cut-bedrock"><p>Bedrock</p><h3>Tokens</h3><p>Shared values and names</p></div>' +
         "</div>"
       );
     }
     if (st.visual === "cores") {
       return (
         '<div class="sys-cores" style="margin-top:0">' +
-        '<figure class="sys-core sys-core-unlogged"><p class="sys-core-label">Core A · unlogged</p>' +
-        '<div class="sys-core-tube"><div class="sys-core-cap">Admin · unnamed</div>' +
-        '<div class="sys-core-band" style="background: color-mix(in srgb, #8a7a62 55%, var(--color-bg)); min-height: 3.1rem">that blue from last quarter</div>' +
+        '<figure class="sys-core sys-core-unlogged"><p class="sys-core-label">Example A · unspecified</p>' +
+        '<div class="sys-core-tube"><div class="sys-core-cap">Unspecified values</div>' +
+        '<div class="sys-core-band" style="background: color-mix(in srgb, #8a7a62 55%, var(--color-bg)); min-height: 3.1rem">blue without a token</div>' +
         '<div class="sys-core-band" style="background: color-mix(in srgb, #c4b49a 40%, var(--color-bg)); min-height: 2.4rem">13px? 14?</div>' +
         '<div class="sys-core-band" style="background: color-mix(in srgb, #6d5c45 35%, var(--color-bg)); min-height: 3.4rem">gap: 7px / 11px / “a bit more”</div>' +
         '<div class="sys-core-band" style="background: color-mix(in srgb, #b08948 30%, var(--color-bg)); min-height: 2.6rem">card, or panel, or both</div>' +
         "</div></figure>" +
-        '<figure class="sys-core sys-core-logged"><p class="sys-core-label">Core B · logged</p>' +
-        '<div class="sys-core-tube"><div class="sys-core-cap">Admin · named</div>' +
+        '<figure class="sys-core sys-core-logged"><p class="sys-core-label">Example B · defined</p>' +
+        '<div class="sys-core-tube"><div class="sys-core-cap">Shared definitions</div>' +
         '<div class="sys-core-band" style="background: var(--color-accent-soft); min-height: 3.1rem; color: var(--color-accent)">--color-accent</div>' +
         '<div class="sys-core-band" style="background: var(--color-bg-muted); min-height: 2.4rem">--type-body / 16 · 1.6</div>' +
         '<div class="sys-core-band" style="background: color-mix(in srgb, var(--color-text) 6%, var(--color-bg)); min-height: 3.4rem">--space-300 / --space-400</div>' +
@@ -107,7 +107,7 @@
         '<div class="walk-trail">' +
         '<div class="walk-trail-node"><p>Studio</p><h3>Figma</h3></div>' +
         '<span class="walk-trail-arrow" aria-hidden="true">↔</span>' +
-        '<div class="walk-trail-node"><p>Cairn</p><h3>tokens.json</h3></div>' +
+        '<div class="walk-trail-node"><p>Shared reference</p><h3>tokens.json</h3></div>' +
         '<span class="walk-trail-arrow" aria-hidden="true">↔</span>' +
         '<div class="walk-trail-node"><p>Ship</p><h3>Code</h3></div>' +
         "</div>"
@@ -367,6 +367,11 @@
 
     abort = new AbortController();
     try {
+      if (walkConfig.agent === "oslo") {
+        await window.UX_OSLO.answer(message, body, { walkId: walk.id, stationIndex: index }, abort.signal);
+        hideLoader(body);
+        return;
+      }
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -375,9 +380,8 @@
           message: message,
           agent: walkConfig.agent,
           context: {
-            walk: walk.title,
-            station: st.title,
-            brief: st.lede
+            walkId: walk.id,
+            stationIndex: index
           }
         })
       });

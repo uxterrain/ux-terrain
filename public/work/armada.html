@@ -6,7 +6,7 @@
     <title>Armada Atlas — UX Terrain</title>
     <meta
       name="description"
-      content="Shipped V2: Armada Atlas — Google-mapped fleet paths, inventory, and a live feed that records incidents with real-time AI diagnostic."
+      content="Atlas V2 brings drone inventory, flight routes, live video, and AI-assisted incident reporting into one workspace."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -104,13 +104,12 @@
               Armada · Atlas
             </p>
             <h1 class="font-serif mt-4 max-w-4xl text-4xl leading-[1.12] tracking-tight md:text-6xl">
-              A fleet map that treats a drone like an operation, not a pin.
+              Track multiple drones without losing sight of the mission.
             </h1>
             <p class="mt-6 max-w-2xl text-lg leading-relaxed" style="color: var(--color-text-muted)">
-              Atlas V2 is the drone cut of Armada’s operational picture: inventory you can scan,
-              every active path on a Google map, and a live feed that does not just play — it
-              writes the incident while AI reads the frame.
+              I designed the fleet-map experience for operating multiple drones across large areas with docking stations. The work connected live tracking, route tracers, AI-synthesized incidents, and a panel that brings the drone’s camera view, mechanical status, and mission status onto the map.
             </p>
+            <p class="case-walks mt-6"><button class="eda-link text-sm font-medium" id="eda-open" type="button" data-eda-walk="armada" aria-controls="eda-panel" aria-expanded="false">Explore accessibility with Eda →</button></p>
 
             <dl class="case-meta mt-12 border-y py-8" style="border-color: var(--color-border)">
               <div>
@@ -131,166 +130,242 @@
               </div>
             </dl>
 
-            <figure class="case-figure mt-12 rounded-2xl">
+            <figure class="case-figure mt-12 rounded-2xl" data-eda-screen="overview">
               <img
                 src="../images/work/armada/fleet-paths.png"
                 alt="Armada Atlas Fleet Map showing multiple drones on active paths around Seattle, Bellevue, and Tacoma"
               />
               <figcaption>
-                Fleet Map, V2: every bird on its line — Seattle, Bellevue, Tacoma — instead of a
-                single pin you hunt.
+                The fleet map shows active drone routes across Seattle, Bellevue, and Tacoma.
               </figcaption>
             </figure>
 
             <section class="mt-20">
-              <h2 class="font-serif text-3xl tracking-tight">A patrol that does not need a person on the roof.</h2>
+              <h2 id="oslo-evidence-1" class="font-serif text-3xl tracking-tight">Cover a large area with a coordinated fleet</h2>
               <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                Facilities use drones where a ground patrol is slow or unsafe: flare stacks,
-                rooftops, confined yards, a perimeter after a storm. The aerial view and a
-                thermal sensor see heat, leaks, and a breach a fixed camera misses. The flight
-                is already scheduled. Atlas is the surface that flight reports to.
+                The design problem was how to operate multiple drones across a large area while keeping track of each flight. Docking stations were part of that coverage model. The fleet map needed to show where drones were, how they were moving, and which incidents needed attention during a live mission.
               </p>
               <div class="case-reasons">
                 <article class="case-reason">
-                  <h3 class="font-serif">Hazardous ground</h3>
-                  <p>Inspect the structure without putting someone on it.</p>
+                  <h3 class="font-serif">Live tracking</h3>
+                  <p>See where each drone is during the mission.</p>
                 </article>
                 <article class="case-reason">
-                  <h3 class="font-serif">A site in minutes</h3>
-                  <p>Cover the perimeter before a ground team can start the loop.</p>
+                  <h3 class="font-serif">Fleet coverage</h3>
+                  <p>Coordinate multiple drones and docking stations across a large area.</p>
                 </article>
                 <article class="case-reason">
-                  <h3 class="font-serif">Heat the eye misses</h3>
-                  <p>Thermal finds overheating, insulation failure, and fluid the daylight lens will not.</p>
+                  <h3 class="font-serif">Incident context</h3>
+                  <p>Connect AI-synthesized incident information to its location on the route.</p>
                 </article>
               </div>
             </section>
 
             <section class="mt-20">
-              <h2 class="font-serif text-3xl tracking-tight">An alert has to clear a threshold.</h2>
+              <h2 id="oslo-evidence-2" class="font-serif text-3xl tracking-tight">Make incidents understandable on the map</h2>
               <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                Animals and blowing debris are not incidents. Before the path changes, the
-                system classifies what it saw. Five checks decide whether the map should care.
+                An incident marker needs to tell more than where something happened. I connected the marker to the drone’s route and live panel, so operators could review the AI-synthesized summary without losing track of the flight.
               </p>
-              <div class="case-checks">
-                <article class="case-check">
-                  <span>01</span>
-                  <h3 class="font-serif">Type</h3>
-                  <p>A person, a vehicle, heat on a transformer, a broken fence line.</p>
-                </article>
-                <article class="case-check">
-                  <span>02</span>
-                  <h3 class="font-serif">Zone</h3>
-                  <p>Perimeter is not the data hall. A critical zone escalates faster.</p>
-                </article>
-                <article class="case-check">
-                  <span>03</span>
-                  <h3 class="font-serif">Time</h3>
-                  <p>Scheduled maintenance, or 2 a.m. in a sterile zone.</p>
-                </article>
-                <article class="case-check">
-                  <span>04</span>
-                  <h3 class="font-serif">Proximity</h3>
-                  <p>How close it is to the asset, and how fast it is closing.</p>
-                </article>
-                <article class="case-check">
-                  <span>05</span>
-                  <h3 class="font-serif">Persistence</h3>
-                  <p>A pool forming in place, or someone walking the yard.</p>
-                </article>
-              </div>
+              <figure class="atlas-diagram" aria-labelledby="atlas-diagram-title">
+                <div class="atlas-diagram-heading">
+                  <span id="atlas-diagram-title">From a point on the map to a clear picture</span>
+                  <span class="atlas-diagram-note">Interaction schematic</span>
+                </div>
+                <div class="atlas-diagram-layout">
+                  <div class="atlas-wire-map">
+                    <svg viewBox="0 0 660 440" role="img" aria-labelledby="atlas-map-title atlas-map-desc">
+                      <title id="atlas-map-title">Fleet map with a selected drone, incident, and docking stations</title>
+                      <desc id="atlas-map-desc">Two drones cover an outlined site. An amber route tracer connects a docking station, a selected drone, and a triangular incident marker. The incident connects to the adjacent review panel. A second dashed route shows the wider fleet context.</desc>
+                      <defs>
+                        <pattern id="atlas-map-grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 H 0 V 28" fill="none" stroke="currentColor" stroke-width=".7"/></pattern>
+                        <g id="atlas-drone-icon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M-9-9 9 9M9-9-9 9"/><rect x="-4" y="-5" width="8" height="10" rx="2"/>
+                          <circle cx="-12" cy="-12" r="5"/><circle cx="12" cy="-12" r="5"/><circle cx="12" cy="12" r="5"/><circle cx="-12" cy="12" r="5"/>
+                        </g>
+                        <g id="atlas-dock-icon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M-17-3 0-14 17-3V16H-17ZM-8 16V2H8V16M-5-3H5"/>
+                        </g>
+                      </defs>
+                      <rect width="660" height="440" fill="url(#atlas-map-grid)" class="atlas-map-grid"/>
+                      <g class="atlas-site-outline" fill="none" stroke="currentColor">
+                        <path d="M38 74 130 40H489L620 115V344L510 402H117L38 327Z" stroke-dasharray="5 6"/>
+                        <path d="M67 145H587M67 283H587M234 69V372M453 69V372" stroke-width="10" opacity=".25"/>
+                        <path d="M80 91H197V120H80ZM277 90H409V166H277ZM488 172H573V248H488ZM280 320H407V364H280ZM82 186H176V249H82Z"/>
+                        <path d="M307 110H379M307 127H379M308 144H357M300 339H385"/>
+                      </g>
+                      <text x="43" y="28" class="atlas-map-label">SITE / FLEET OVERVIEW</text>
+                      <path d="M115 338 198 338 198 201 438 201 538 115" class="atlas-other-route" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 7"/>
+                      <path d="M115 338H253V255H352V214L432 153H535" fill="none" class="atlas-active-route" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                      <path d="M432 153H535" fill="none" class="atlas-route-ahead" stroke="currentColor" stroke-width="3" stroke-dasharray="5 6"/>
+                      <g transform="translate(115 338)" class="atlas-map-neutral"><circle r="28" class="atlas-marker-bg"/><use href="#atlas-dock-icon"/></g>
+                      <text x="77" y="388" class="atlas-map-label">DOCK A</text>
+                      <g transform="translate(538 115)" class="atlas-map-neutral"><circle r="28" class="atlas-marker-bg"/><use href="#atlas-dock-icon"/></g>
+                      <text x="498" y="65" class="atlas-map-label">DOCK B</text>
+                      <g transform="translate(198 201)" class="atlas-map-neutral"><circle r="26" class="atlas-marker-bg"/><use href="#atlas-drone-icon"/></g>
+                      <g transform="translate(352 255)" class="atlas-active-route"><circle r="34" fill="var(--color-bg-elevated)" stroke="currentColor" stroke-width="1.5"/><use href="#atlas-drone-icon"/></g>
+                      <path d="M350 298V315H433" fill="none" stroke="currentColor" class="atlas-map-neutral"/>
+                      <text x="444" y="322" class="atlas-map-label">SELECTED DRONE</text>
+                      <g transform="translate(432 153)" class="atlas-active-route" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                        <circle r="31" fill="var(--color-bg-elevated)" stroke="none"/>
+                        <path d="M0-19 20 16H-20Z" fill="var(--color-accent-soft)"/><path d="M0-6V3M0 9V10" stroke-linecap="round"/>
+                      </g>
+                      <path d="M460 153H596L625 182H660" class="atlas-active-route" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <text x="475" y="192" class="atlas-map-label atlas-incident-label">INCIDENT</text>
+                      <g transform="translate(598 371)" class="atlas-map-neutral" fill="none" stroke="currentColor"><path d="M0 17V-13M-5-5 0-13 5-5"/><text x="-6" y="-23" class="atlas-map-label" fill="currentColor" stroke="none">N</text></g>
+                    </svg>
+                    <div class="atlas-map-legend" aria-label="Map legend">
+                      <span><i class="atlas-legend-line"></i>Selected route</span>
+                      <span><i class="atlas-legend-line atlas-legend-dashed"></i>Other flight</span>
+                      <span>△ Incident</span>
+                    </div>
+                  </div>
+                  <div class="atlas-review-panel">
+                    <p class="atlas-panel-kicker">Incident / selected flight</p>
+                    <h3 class="font-serif">Understand what happened</h3>
+                    <p class="atlas-panel-summary">An AI-synthesized summary connects the event to its location on the route.</p>
+                    <div class="atlas-viewfinder" aria-label="Schematic drone camera view">
+                      <svg viewBox="0 0 240 92" aria-hidden="true" fill="none" stroke="currentColor"><path d="M10 25V10H25M215 10H230V25M230 67V82H215M25 82H10V67M113 46H127M120 39V53"/><path d="M40 69V35L70 19 100 35V69ZM143 69V44H196V69M40 69H198" opacity=".35"/><rect x="61" y="29" width="28" height="38" stroke-dasharray="3 3"/></svg>
+                      <span>Drone viewfinder</span>
+                    </div>
+                    <dl class="atlas-panel-status"><div><dt>Mechanical status</dt><dd>Alongside the camera</dd></div><div><dt>Mission status</dt><dd>Alongside the route</dd></div></dl>
+                    <p class="atlas-panel-kicker atlas-context-heading">Context for the incident</p>
+                    <ul class="atlas-context-list">
+                      <li><strong>Type</strong><span>What was detected?</span></li>
+                      <li><strong>Zone</strong><span>Where did it happen?</span></li>
+                      <li><strong>Time</strong><span>When did it happen?</span></li>
+                      <li><strong>Proximity</strong><span>How close is the asset?</span></li>
+                      <li><strong>Persistence</strong><span>Is the detection continuing?</span></li>
+                    </ul>
+                  </div>
+                </div>
+                <figcaption class="atlas-diagram-caption">Illustrative layout, not live telemetry. Route, incident, and camera stay connected; the operator keeps the wider fleet in view.</figcaption>
+              </figure>
             </section>
 
             <section class="mt-20">
-              <h2 class="font-serif text-3xl tracking-tight">Then the path changes.</h2>
+              <h2 id="oslo-evidence-3" class="font-serif text-3xl tracking-tight">Keep the route, camera, and live status together</h2>
               <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                A cleared incident interrupts the patrol. The drone leaves the waypoint, the
-                map flashes, and the live feed is the same object as the point on the line.
-                AI watches that frame, clips the scenario, and writes a diagnostic back onto
-                the path — not into a log someone opens later.
+                The map panel was designed to work as the drone’s viewfinder while also showing mechanical and mission status. Keeping those views together lets the operator review an incident in the context of the flight, rather than treating the video and map as separate experiences.
               </p>
-              <ol class="case-flow">
-                <li class="case-flow-step">
-                  <span>01</span>
-                  <h3 class="font-serif">Steer</h3>
-                  <p>Leave the scheduled loop. Fly to the coordinate and hold a standoff.</p>
-                </li>
-                <li class="case-flow-step">
-                  <span>02</span>
-                  <h3 class="font-serif">Look</h3>
-                  <p>Point the gimbal. Switch to thermal when daylight is not enough.</p>
-                </li>
-                <li class="case-flow-step">
-                  <span>03</span>
-                  <h3 class="font-serif">Alert</h3>
-                  <p>Flash the asset on the map and open the live stream for the people on the ground.</p>
-                </li>
-                <li class="case-flow-step">
-                  <span>04</span>
-                  <h3 class="font-serif">File</h3>
-                  <p>AI records the clip and returns a diagnostic on that point of the path.</p>
-                </li>
-              </ol>
-              <p class="case-callout mt-8 max-w-2xl text-xl leading-snug">
-                If the incident is not on the path, it is not in the operation.
-              </p>
+              <figure class="atlas-diagram atlas-operations" aria-labelledby="atlas-operations-title">
+                <div class="atlas-diagram-heading">
+                  <span id="atlas-operations-title">One selected drone. One connected view.</span>
+                  <span class="atlas-diagram-note">Workspace schematic</span>
+                </div>
+                <div class="atlas-operations-layout">
+                  <div class="atlas-operations-map">
+                    <p class="atlas-panel-kicker"><span class="atlas-step-number">01</span> Keep the flight in view</p>
+                    <svg viewBox="0 0 480 350" role="img" aria-labelledby="atlas-ops-map-title atlas-ops-map-desc">
+                      <title id="atlas-ops-map-title">Selected flight connected to the drone panel</title>
+                      <desc id="atlas-ops-map-desc">A selected drone follows an amber tracer between docking stations. Its camera view and two status areas remain beside the map.</desc>
+                      <defs><pattern id="atlas-ops-grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="currentColor" stroke-width=".6"/></pattern></defs>
+                      <rect width="480" height="350" fill="url(#atlas-ops-grid)" class="atlas-map-grid"/>
+                      <g fill="none" stroke="currentColor" class="atlas-site-outline">
+                        <path d="M35 63 115 26H367L448 86V279L375 323H90L35 270Z" stroke-dasharray="5 5"/>
+                        <path d="M69 72H166V127H69ZM293 70H393V118H293ZM75 204H179V272H75ZM306 209H397V276H306Z"/>
+                        <path d="M209 48V297M58 166H419" stroke-width="9" opacity=".3"/>
+                      </g>
+                      <path d="M91 282H208V168H290L374 107" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" class="atlas-active-route"/>
+                      <path d="M290 168H395" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 6" class="atlas-other-route"/>
+                      <g transform="translate(91 282)" class="atlas-map-neutral"><circle r="24" class="atlas-marker-bg"/><use href="#atlas-dock-icon"/></g>
+                      <g transform="translate(374 107)" class="atlas-map-neutral"><circle r="24" class="atlas-marker-bg"/><use href="#atlas-dock-icon"/></g>
+                      <g transform="translate(290 168)" class="atlas-active-route"><circle r="34" fill="var(--color-bg-elevated)" stroke="currentColor" stroke-width="1.5"/><use href="#atlas-drone-icon"/></g>
+                      <path d="M327 168H480" fill="none" stroke="currentColor" class="atlas-active-route" stroke-width="1.5"/>
+                      <text x="252" y="229" class="atlas-map-label">SELECTED FLIGHT</text>
+                      <text x="43" y="46" class="atlas-map-label">FLEET MAP</text>
+                    </svg>
+                    <p class="atlas-operations-map-note">The tracer and incident locations stay visible while the operator reviews the drone.</p>
+                  </div>
+                  <div class="atlas-operations-console">
+                    <div class="atlas-console-heading">
+                      <p class="atlas-panel-kicker">Selected drone / connected panel</p>
+                      <span class="atlas-connection-label"><i></i>Same flight context</span>
+                    </div>
+                    <p class="atlas-console-title"><span class="atlas-step-number">02</span> See what the drone sees</p>
+                    <div class="atlas-camera-scene">
+                      <svg viewBox="0 0 520 240" role="img" aria-labelledby="atlas-camera-title atlas-camera-desc" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                        <title id="atlas-camera-title">Wireframe drone viewfinder</title>
+                        <desc id="atlas-camera-desc">A schematic camera view shows site buildings, a central reticle, and a marked area connected to an AI incident summary.</desc>
+                        <g opacity=".35"><path d="M0 174 520 142M0 203 520 170M60 240 246 100M167 240 302 95M291 240 367 91M421 240 427 87"/>
+                        <path d="M58 156V85L153 50 242 78V146L148 180ZM58 85 148 110 242 78M148 110V180M83 99V143M111 106V151M170 113V162M202 102V153"/>
+                        <path d="M340 137V85L404 64 470 81V130L407 151ZM340 85 407 104 470 81M407 104V151"/></g>
+                        <path d="M22 43V20H45M475 20H498V43M498 197V220H475M45 220H22V197"/>
+                        <path d="M249 120H271M260 109V131"/>
+                        <g class="atlas-active-route" stroke="currentColor"><path d="M294 125V109H310M347 109H363V125M363 162V178H347M310 178H294V162"/><path d="M330 178V195H408" stroke-dasharray="3 4"/></g>
+                        <text x="319" y="213" class="atlas-map-label atlas-incident-label">INCIDENT CONTEXT</text>
+                      </svg>
+                      <div class="atlas-camera-caption"><span>Drone viewfinder</span><span>Illustrative camera view</span></div>
+                    </div>
+                    <div class="atlas-operations-status">
+                      <div>
+                        <p class="atlas-console-title"><span class="atlas-step-number">03</span> Mechanical status</p>
+                        <svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="9" width="24" height="14" rx="2"/><path d="M27 13H30V19H27M8 13V19M13 13V19M18 13V19"/></svg>
+                        <p>Aircraft condition alongside the camera view.</p>
+                      </div>
+                      <div>
+                        <p class="atlas-console-title"><span class="atlas-step-number">04</span> Mission status</p>
+                        <svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="24" r="3"/><circle cx="25" cy="7" r="3"/><path d="M10 24H20V13H12V7H22" stroke-dasharray="3 3"/></svg>
+                        <p>Flight progress alongside the route.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <figcaption class="atlas-diagram-caption">Illustrative interaction layout. The map, camera, mechanical status, and mission status all refer to the same selected drone; no live values are shown.</figcaption>
+              </figure>
             </section>
 
             <section class="mt-16">
-              <h2 class="font-serif text-3xl tracking-tight">What I owned</h2>
+              <h2 id="oslo-evidence-4" class="font-serif text-3xl tracking-tight">What I owned</h2>
               <ul class="mt-6 max-w-2xl space-y-3 text-base leading-relaxed" style="color: var(--color-text-muted)">
-                <li>The drone module as Atlas — inventory, map, and live view in one chrome.</li>
-                <li>Google Maps as the fleet ground, so every active path and selected airframe share one coordinate system.</li>
-                <li>Live video on that map, with AI that records the scenario the moment it clears the threshold.</li>
+                <li>The fleet-map tracking experience for multiple drones and docking stations covering large areas.</li>
+                <li>The visual treatment of route tracers and incident indicators on the fleet map.</li>
+                <li>The interaction design for AI-synthesized incidents and a live map panel combining the camera view, mechanical status, and mission status.</li>
               </ul>
             </section>
 
             <section class="mt-20 grid gap-16">
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">01</p>
-                <h2 class="font-serif mt-2 text-3xl tracking-tight">The hangar</h2>
+                <h2 id="oslo-evidence-5" class="font-serif mt-2 text-3xl tracking-tight">Check the equipment</h2>
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                  Airframe, dock, and controller before anyone opens a feed. You pick a bird
-                  because the row said it is ready.
+                  The inventory view lists drones, docks, and controllers, with device status and alerts available before an operator opens a live feed.
                 </p>
-                <figure class="case-figure mt-8 rounded-2xl">
+                <figure class="case-figure mt-8 rounded-2xl" data-eda-screen="hangar">
                   <img
                     src="../images/work/armada/inventory.png"
                     alt="Armada Atlas Drones inventory with Skydio A, Dock S2, and a controller as cards above a device table and alerts"
                   />
-                  <figcaption>Skydio A, Dock S2, CTRL 01.</figcaption>
+                  <figcaption>Drone, dock, and controller cards appear above the device table and alerts.</figcaption>
                 </figure>
               </div>
 
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">02</p>
-                <h2 class="font-serif mt-2 text-3xl tracking-tight">The Google ground</h2>
+                <h2 id="oslo-evidence-6" class="font-serif mt-2 text-3xl tracking-tight">Follow the fleet on the map</h2>
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                  Fleet Map is the Google Maps API under a night skin. Many paths, one
-                  selected drone, incidents sitting on the line.
+                  I designed the route tracer to show a drone’s path on the fleet map, along with the visual indicators for incidents. These details make the selected flight readable within a map that also needs to support multiple drones.
                 </p>
-                <figure class="case-figure mt-8 rounded-2xl">
+                <figure class="case-figure mt-8 rounded-2xl" data-eda-screen="pin">
                   <img
                     src="../images/work/armada/fleet-map.png"
                     alt="Armada Atlas Fleet Map with a selected drone and incident activity on the path"
                   />
-                  <figcaption>One drone in context, on the same ground as the rest of the fleet.</figcaption>
+                  <figcaption>A selected drone and its incident activity remain visible within the fleet map.</figcaption>
                 </figure>
               </div>
 
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">03</p>
-                <h2 class="font-serif mt-2 text-3xl tracking-tight">The frame that files</h2>
+                <h2 id="oslo-evidence-7" class="font-serif mt-2 text-3xl tracking-tight">A live viewfinder with mission and mechanical status</h2>
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                  Live view stays in the panel. The path does not leave. That frame is what
-                  the model reads, and what it writes back.
+                  I designed the map panel to serve as the drone’s live viewfinder and show mechanical and mission status. The operator can keep the camera, the flight route, and the drone’s status in view during a live situation.
                 </p>
-                <figure class="case-figure mt-8 rounded-2xl">
+                <figure class="case-figure mt-8 rounded-2xl" data-eda-screen="feed">
                   <img
                     src="../images/work/armada/live-view.png"
                     alt="Armada Atlas Fleet Map with live view open beside the route"
                   />
-                  <figcaption>Skydio C3 in flight. The feed and the path in one view.</figcaption>
+                  <figcaption>The live feed for Skydio C3 appears beside its flight route.</figcaption>
                 </figure>
               </div>
             </section>
@@ -323,7 +398,7 @@
           <header class="flex shrink-0 items-start justify-between gap-4 border-b px-6 py-5" style="border-color: var(--color-border)">
             <div>
               <h2 id="agent-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
-              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Questions written for this page</p>
+              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Your guide to the work</p>
             </div>
             <button id="agent-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -335,13 +410,13 @@
           <div id="chat-log" class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-6 py-5" aria-live="polite">
             <article class="chat-turn chat-turn-agent">
               <p class="chat-turn-label">Oslo</p>
-              <p class="chat-turn-body">Greetings, I'm Oslo an AI Agent. I'm designed to help answer questions about our AI experiences here at UX Terrain.</p>
+              <p class="chat-turn-body">Hi, I’m Oslo. Ask me about the projects, the design decisions, or the evidence behind them.</p>
             </article>
           </div>
 
-          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Quick inquiries">
+          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Suggested questions">
             <p class="font-mono mb-2 px-1 text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">
-              Quick inquiry
+              Try a question
             </p>
             <div class="flex flex-col gap-2">
               <button type="button" class="js-quick-inquiry agent-inquiry">How did Atlas use Google Maps and live-feed AI to record incidents?</button>
@@ -358,13 +433,57 @@
               type="text"
               name="message"
               autocomplete="off"
-              placeholder="Write a message…"
+              placeholder="Ask about a project…"
             />
             <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Send</button>
           </form>
         </div>
       </aside>
+    <aside
+        id="eda-panel"
+        class="eda-panel flex h-full w-0 max-w-0 shrink-0 flex-col overflow-hidden"
+        role="complementary"
+        aria-labelledby="eda-title"
+        aria-hidden="true"
+        inert
+      >
+        <header class="walk-rail-head">
+          <div>
+            <h2 id="eda-title" class="font-serif text-2xl tracking-tight">Eda</h2>
+            <p id="eda-status" class="walk-rail-status mt-1" data-state="idle">On this screen</p>
+          </div>
+          <button id="eda-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </header>
+        <p id="eda-station" class="eda-station"></p>
+        <div id="eda-log" class="walk-log" aria-live="polite"></div>
+        <div id="eda-asks" class="walk-asks" aria-label="Suggested questions"></div>
+        <form id="eda-form" class="walk-form">
+          <label class="sr-only" for="eda-input">Ask Eda</label>
+          <input
+            id="eda-input"
+            class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+            type="text"
+            name="message"
+            autocomplete="off"
+            placeholder="Ask about this screen…"
+          />
+          <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Ask</button>
+        </form>
+        <div class="walk-foot">
+          <div id="eda-dots" class="walk-dots" role="navigation" aria-label="Screens"></div>
+          <div class="walk-nav">
+            <button id="eda-back" type="button">← Back</button>
+            <button id="eda-next" class="walk-next" type="button">Next →</button>
+          </div>
+        </div>
+      </aside>
     </div>
     <script src="../js/app.js"></script>
+    <script src="../js/eda-walks.js?v=20261102-copy2"></script>
+    <script src="../js/eda-case.js"></script>
   </body>
 </html>

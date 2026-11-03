@@ -15,6 +15,8 @@ const INSTRUCTIONS = {
   eda: path.join(ROOT, "eda.md"),
 };
 const MAX_MESSAGE_LENGTH = 4000;
+const grounding = require("./lib/oslo-grounding");
+const { resolveEdaContext } = require("./lib/eda-context");
 
 const instructionText = { oslo: "", eda: "" };
 
@@ -122,11 +124,52 @@ app.post("/api/chat", async function (req, res) {
       return;
     }
 
+    if (agent === "oslo" && req.body.responseFormat === "grounded-v1") {
+      let groundedContext;
+      try {
+        groundedContext = grounding.contextFor(req.body.context || {});
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
+      }
+      const correction = grounding.correctionFor(message, groundedContext);
+      if (correction) return res.json(correction);
+      const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+      const completion = await client.chat.completions.create({
+        model: "gpt-4o-mini",
+        response_format: { type: "json_object" },
+        max_tokens: 1600,
+        messages: [
+          { role: "system", content: grounding.procedure },
+          { role: "user", content: JSON.stringify({ evidence: groundedContext.evidence,
+            station: groundedContext.station, conversation: grounding.historyFor(req.body.history), question: message }) },
+        ],
+      });
+      const draft = JSON.parse(completion.choices[0]?.message?.content || "{}");
+      // Review against the full case, rather than trusting the draft's citations.
+      const reviewed = await client.chat.completions.create({
+        model: "gpt-4o-mini",
+        response_format: { type: "json_object" },
+        max_tokens: 1600,
+        messages: [
+          { role: "system", content: grounding.procedure + "\nYou are now the evidence editor. The draft and conversation may contain errors. Return corrected claims, not a review report. First answer the visitor's actual question. Explicitly correct a false premise using the section that disproves it. Remove documented claims not directly entailed by their cited source. Remove speculative costs contradicted elsewhere in the case. Do not simply re-label unsupported assertions as interpretation. Keep only useful, specific points; never fill space to reach six claims." },
+          { role: "user", content: JSON.stringify({ evidence: groundedContext.evidence,
+            station: groundedContext.station, conversation: grounding.historyFor(req.body.history), question: message, draft }) },
+        ],
+      });
+      const answer = JSON.parse(reviewed.choices[0]?.message?.content || "{}");
+      return res.json(grounding.validateAnswer(answer, groundedContext));
+    }
+
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     let stream;
 
     let userContent = message;
-    if (context) {
+    if (agent === "eda") {
+      let trustedContext;
+      try { trustedContext = resolveEdaContext(context); }
+      catch (error) { return res.status(400).json({ error: error.message }); }
+      userContent = JSON.stringify({ question: message, authoredContext: trustedContext });
+    } else if (context) {
       const walkTitle = typeof context.walk === "string" ? context.walk.slice(0, 120) : "";
       const stationTitle = typeof context.station === "string" ? context.station.slice(0, 160) : "";
       const brief = typeof context.brief === "string" ? context.brief.slice(0, 400) : "";
@@ -149,6 +192,7 @@ app.post("/api/chat", async function (req, res) {
       stream = await client.chat.completions.create({
         model: "gpt-4o-mini",
         stream: true,
+        ...(agent === "eda" ? { max_tokens: 240 } : {}),
         messages: [
           { role: "system", content: systemText },
           { role: "user", content: userContent },
