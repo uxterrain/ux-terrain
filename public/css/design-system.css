@@ -2544,3 +2544,22 @@ html[data-theme="dark"].is-eda-open #eda-panel {
 .sbi-map-items { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; padding: 0; list-style: none; }
 .sbi-map-items li { padding: .45rem .65rem; border: 1px solid var(--color-border-strong); border-radius: .65rem; font-size: .85rem; line-height: 1.4; }
 @media (max-width: 760px) { .sbi-map-branches-two { grid-template-columns: 1fr; } }
+
+/* Match the dedicated walkthrough sidebar to the agent drawers. */
+.walk-rail {
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  box-shadow: -10px 0 32px rgba(31, 31, 31, .12), -2px 0 8px rgba(31, 31, 31, .06);
+  border-left-color: transparent;
+}
+html[data-theme="dark"] .walk-rail {
+  box-shadow: -12px 0 40px rgba(0, 0, 0, .35), -2px 0 10px rgba(0, 0, 0, .2);
+}
+.walk-rail .walk-rail-head,
+.walk-rail .walk-form {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
