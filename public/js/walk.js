@@ -442,9 +442,24 @@
     return { id: id, index: n > 0 ? n - 1 : 0 };
   }
 
+  function slideRailIn() {
+    const rail = stage.querySelector(".walk-rail");
+    if (reduceMotion || !rail) return;
+    const root = document.documentElement;
+    const done = function () {
+      root.classList.remove("is-walk-entering");
+    };
+    root.classList.remove("is-walk-entering");
+    void rail.offsetWidth;
+    root.classList.add("is-walk-entering");
+    rail.addEventListener("animationend", done, { once: true });
+    window.setTimeout(done, 700);
+  }
+
   picker.querySelectorAll("[data-walk]").forEach(function (button) {
     button.addEventListener("click", function () {
       startWalk(button.getAttribute("data-walk"), 0);
+      slideRailIn();
     });
   });
 

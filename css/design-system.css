@@ -2563,3 +2563,23 @@ html[data-theme="dark"] .walk-rail {
   border-top-color: transparent;
   border-bottom-color: transparent;
 }
+
+/* Oslo arrives with the walk; reloads and station changes keep the rail still. */
+html.is-walk-entering .walk-split { overflow: clip; }
+html.is-walk-entering .walk-stage .walk-rail {
+  animation: walk-rail-rise 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (min-width: 960px) {
+  html.is-walk-entering .walk-stage .walk-rail { animation-name: walk-rail-slide; }
+}
+@keyframes walk-rail-slide {
+  from { transform: translateX(100%); }
+  to { transform: none; }
+}
+@keyframes walk-rail-rise {
+  from { transform: translateY(1.5rem); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.is-walk-entering .walk-stage .walk-rail { animation: none; }
+}
