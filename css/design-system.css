@@ -2472,3 +2472,75 @@ html[data-theme="dark"] .walk-nav .walk-next:hover:not(:disabled) {
 .sys-foundation-art { margin: 2.5rem 0 0; }
 .sys-foundation-art svg { display: block; width: 100%; height: auto; color: var(--color-text-muted); overflow: visible; }
 .sys-foundation-art figcaption { margin-top: .85rem; font: .75rem var(--font-mono); color: var(--color-text-muted); line-height: 1.6; }
+
+/* Agent drawers: soft depth and an open edge toward the page. */
+#agent-panel,
+#eda-panel {
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+}
+html.is-agent-open #agent-panel,
+html.is-eda-open #eda-panel {
+  z-index: 50;
+  border-left-color: transparent;
+  box-shadow: -10px 0 32px rgba(31, 31, 31, .12), -2px 0 8px rgba(31, 31, 31, .06);
+}
+html[data-theme="dark"].is-agent-open #agent-panel,
+html[data-theme="dark"].is-eda-open #eda-panel {
+  box-shadow: -12px 0 40px rgba(0, 0, 0, .35), -2px 0 10px rgba(0, 0, 0, .2);
+}
+/* Transparent borders retain the existing section spacing and dimensions. */
+#agent-panel header,
+#agent-panel .agent-inquiries,
+#agent-panel #chat-form,
+#eda-panel .walk-rail-head,
+#eda-panel .walk-asks,
+#eda-panel .walk-form,
+#eda-panel .walk-foot {
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+}
+
+/* Shared card corners across route pickers, walkthroughs, and systems. */
+:root { --radius-card: 1rem; }
+.work-card,
+.walk-choice,
+.walk-hold,
+.case-figure,
+.case-flow-step,
+.case-check,
+.walk-cut,
+.walk-trail-node,
+.sys-shift,
+.sys-core,
+.sys-figure,
+.sys-proof a,
+.atlas-diagram {
+  border-radius: var(--radius-card);
+}
+.walk-choice,
+.walk-cut,
+.atlas-diagram {
+  overflow: hidden;
+}
+.walk-nav button { border-radius: .65rem; }
+
+/* SBI: a readable overview replaces the dense application-map thumbnail. */
+.sbi-tablet-figure > img { box-sizing: border-box; padding: clamp(1rem, 3vw, 2.5rem); }
+.sbi-question-map { padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--color-border); border-radius: var(--radius-card); background: var(--color-bg-muted); }
+.sbi-map-label { display: block; font: .7rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--color-accent); }
+.sbi-map-root { max-width: 34rem; margin: auto; padding: 1.4rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-card); background: var(--color-bg-elevated); text-align: center; }
+.sbi-map-root h3 { margin-top: .6rem; font-size: clamp(1.25rem, 2vw, 1.6rem); line-height: 1.35; }
+.sbi-map-branches { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; padding-top: 2.5rem; position: relative; }
+.sbi-map-branches::before { content: ''; position: absolute; top: 0; left: 50%; height: 2.5rem; border-left: 1px solid var(--color-border-strong); }
+.sbi-map-branch { position: relative; padding: 1.35rem; background: var(--color-bg-elevated); border: 1px solid var(--color-border-strong); border-radius: var(--radius-card); }
+.sbi-map-branch h4 { margin-top: .75rem; font-size: 1.1rem; line-height: 1.4; }
+.sbi-map-branch p, .sbi-map-result p { margin-top: .6rem; font-size: .95rem; line-height: 1.6; color: var(--color-text-muted); }
+.sbi-map-result { margin-top: 1.5rem; padding: 1.25rem; text-align: center; border: 1px solid var(--color-border-strong); border-radius: var(--radius-card); }
+.sbi-question-map figcaption { margin-top: 1.25rem; font-size: .8rem; line-height: 1.6; color: var(--color-text-muted); }
+@media (max-width: 760px) { .sbi-map-branches { grid-template-columns: 1fr; gap: .85rem; } }
+
+.sbi-map-branches-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sbi-map-items { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; padding: 0; list-style: none; }
+.sbi-map-items li { padding: .45rem .65rem; border: 1px solid var(--color-border-strong); border-radius: .65rem; font-size: .85rem; line-height: 1.4; }
+@media (max-width: 760px) { .sbi-map-branches-two { grid-template-columns: 1fr; } }

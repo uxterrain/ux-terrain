@@ -130,7 +130,7 @@
               </div>
             </dl>
 
-            <figure class="case-figure mt-12 rounded-2xl" data-eda-screen="overview">
+            <figure class="case-figure sbi-tablet-figure mt-12 rounded-2xl" data-eda-screen="overview">
               <img
                 src="../images/work/sbi-hero.png"
                 alt="SBI forecasting dashboard on a tablet showing prediction models, inventory measures, and a model-summary panel"
@@ -204,13 +204,18 @@
 
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">03</p>
-                <h2 id="oslo-evidence-6" class="font-serif mt-2 text-3xl tracking-tight">Organize the questions before the screens</h2>
+                <h2 id="oslo-evidence-6" class="font-serif mt-2 text-3xl tracking-tight">Separate what needs attention from what needs watching</h2>
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                  I mapped the relationships between operating signals, market activity, and business measures before working through the dashboard layouts. The flow helped organize how stakeholders could move from a broad view of activity into the information behind a forecast.
+                  The real-time section of the application map separated two jobs. “Action Flow” grouped alerts and recommendations. “My Indicators” grouped KPIs, market prices, market activity, and competitor information. That distinction shaped how I organized the dashboard: give leadership a place to notice an issue, then the context to examine what it could mean for sales, purchasing, and inventory.
                 </p>
-                <figure class="case-figure mt-8 rounded-2xl">
-                  <img src="../images/work/sbi-02.png" alt="SBI Steel rig count application flow map" />
-                  <figcaption>Application-flow exploration connecting rig activity, business measures, and dashboard navigation.</figcaption>
+                <figure class="sbi-question-map mt-8" aria-labelledby="sbi-map-caption">
+                  <div class="sbi-map-root"><span class="sbi-map-label">Real-time signals</span><h3 class="font-serif">What needs attention—and what should we keep watching?</h3></div>
+                  <div class="sbi-map-branches sbi-map-branches-two">
+                    <div class="sbi-map-branch"><span class="sbi-map-label">Action Flow</span><h4>Bring attention to a change</h4><ul class="sbi-map-items"><li>Alerts</li><li>Recommendations</li></ul><p>The map gives items that may need a response their own route.</p></div>
+                    <div class="sbi-map-branch"><span class="sbi-map-label">My Indicators</span><h4>Keep the business context close</h4><ul class="sbi-map-items"><li>KPI indicators</li><li>Market prices</li><li>Market activity</li><li>Competitor information</li></ul><p>A separate route supports monitoring and investigation.</p></div>
+                  </div>
+                  <div class="sbi-map-result"><span class="sbi-map-label">Why the distinction matters</span><p>An alert raises a question. The surrounding indicators help leadership judge what it means before making a purchasing or inventory decision.</p></div>
+                  <figcaption id="sbi-map-caption">Simplified detail of the original map’s real-time branches; the business interpretation explains the design rationale. <a class="accent-link" href="../images/work/sbi-02.png" target="_blank" rel="noopener">Open the original detailed map ↗</a></figcaption>
                 </figure>
               </div>
 

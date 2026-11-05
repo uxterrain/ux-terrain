@@ -317,8 +317,8 @@
       },
       {
         "id": "sbi:6",
-        "title": "Organize the questions before the screens",
-        "text": "I mapped the relationships between operating signals, market activity, and business measures before working through the dashboard layouts. The flow helped organize how stakeholders could move from a broad view of activity into the information behind a forecast. Application-flow exploration connecting rig activity, business measures, and dashboard navigation. 04",
+        "title": "Separate what needs attention from what needs watching",
+        "text": "The real-time section of the application map separated two jobs. “Action Flow” grouped alerts and recommendations. “My Indicators” grouped KPIs, market prices, market activity, and competitor information. That distinction shaped how I organized the dashboard: give leadership a place to notice an issue, then the context to examine what it could mean for sales, purchasing, and inventory. Real-time signals What needs attention—and what should we keep watching? Action Flow Bring attention to a change Alerts Recommendations The map gives items that may need a response their own route. My Indicators Keep the business context close KPI indicators Market prices Market activity Competitor information A separate route supports monitoring and investigation. Why the distinction matters An alert raises a question. The surrounding indicators help leadership judge what it means before making a purchasing or inventory decision. Simplified detail of the original map’s real-time branches; the business interpretation explains the design rationale. Open the original detailed map ↗ 04",
         "url": "/work/sbi.html#oslo-evidence-6"
       },
       {
