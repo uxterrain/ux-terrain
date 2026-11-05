@@ -61,9 +61,7 @@
           <div
             class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8"
           >
-            <a href="#top" class="site-lockup font-serif text-xl" style="color: var(--color-text)">
-              UX Terrain
-            </a>
+            <a href="#top" class="site-lockup font-serif text-xl" style="color: var(--color-text)"><svg class="site-mark" viewBox="8 7 84 84" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M66 76C42 89 15 73 15 48 15 26 33 11 52 13 76 15 89 34 84 54"/><path d="M65 65C49 77 28 67 27 49 26 32 39 24 52 25 68 26 77 39 73 52"/><path d="M62 54C56 64 41 60 40 50 38 41 45 36 52 37 60 38 64 45 62 49"/></svg><span>UX Terrain</span></a>
 
             <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
               <a class="text-sm font-medium hover:underline underline-offset-4" href="#work" style="color: var(--color-text-muted)">Work</a>
@@ -364,6 +362,15 @@
 
           </section>
 
+          <section id="posters" class="px-5 py-20 md:px-8" aria-labelledby="posters-title">
+            <div class="mx-auto max-w-6xl">
+              <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">Print &amp; music</p>
+              <h2 id="posters-title" class="font-serif mt-3 text-3xl tracking-tight">Posters with a different kind of energy.</h2>
+              <p class="mt-4 max-w-2xl" style="color: var(--color-text-muted)">Live music, expressive typography, and experiments beyond the screen. Select a piece to see it in full.</p>
+              <div class="poster-gallery"><figure class="poster-piece"><a href="images/posters/bobs-java-jive.jpg" target="_blank" rel="noopener" aria-label="Open Bob&rsquo;s Java Jive artwork at full size"><img src="images/posters/bobs-java-jive.jpg" alt="Concert poster combining a bison, geometric shapes, and a city silhouette in gold and teal." width="1080" height="1669" loading="lazy" decoding="async" /></a><figcaption><h3>Bob’s Java Jive</h3><p>Levels, Cambrian Explosion, Shrouded in Veils, and Myth of Progress.</p></figcaption></figure><figure class="poster-piece"><a href="images/posters/boardriders-music-series.jpg" target="_blank" rel="noopener" aria-label="Open 1st Ave. Boardriders artwork at full size"><img src="images/posters/boardriders-music-series.jpg" alt="Music Series poster with vivid orange, magenta, and cyan brushwork, angled type, and a schedule of shows." width="1080" height="1392" loading="lazy" decoding="async" /></a><figcaption><h3>1st Ave. Boardriders</h3><p>Music Series · Bands + boards + beer.</p></figcaption></figure><figure class="poster-piece"><a href="images/posters/cabin-tavern.jpg" target="_blank" rel="noopener" aria-label="Open Cabin Tavern artwork at full size"><img src="images/posters/cabin-tavern.jpg" alt="Orange concert poster featuring three elephants, curved band names, and large white Cabin Tavern lettering." width="1080" height="1528" loading="lazy" decoding="async" /></a><figcaption><h3>Cabin Tavern</h3><p>Shrouded in Veils, Gladiators Eat Fire, and Sources in Code.</p></figcaption></figure><figure class="poster-piece"><a href="images/posters/el-corazon.jpg" target="_blank" rel="noopener" aria-label="Open El Corazon artwork at full size"><img src="images/posters/el-corazon.jpg" alt="Black-and-white concert poster with two musicians, ornate Lucifer lettering, and bold condensed event details." width="373" height="576" loading="lazy" decoding="async" /></a><figcaption><h3>El Corazon</h3><p>Lucifer, Plaster, Vultures 2012, Shrouded in Veils, and Serial Hawk.</p></figcaption></figure><figure class="poster-piece"><a href="images/posters/josephine-body-art.jpg" target="_blank" rel="noopener" aria-label="Open The Josephine artwork at full size"><img src="images/posters/josephine-body-art.jpg" alt="Photographed back covered with a hand-drawn skull, flames, and band names including Into the Storm and Shrouded in Veils." width="720" height="960" loading="lazy" decoding="async" /></a><figcaption><h3>The Josephine</h3><p>Show announcement as body art.</p></figcaption></figure></div>
+            </div>
+          </section>
+
           <section id="about" class="border-y px-5 py-20 md:px-8" style="border-color: var(--color-border); background: var(--color-bg-muted)">
             <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.2fr_0.8fr]">
               <div>
@@ -421,7 +428,7 @@
           <header class="flex shrink-0 items-start justify-between gap-4 border-b px-6 py-5" style="border-color: var(--color-border)">
             <div>
               <h2 id="agent-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
-              <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Your guide to the work</p>
+              <div class="agent-caption"><p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Your guide to the work</p><span class="ai-guide-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m10 2 1.9 5.8L18 10l-6.1 2.2L10 18l-1.9-5.8L2 10l6.1-2.2L10 2Z" stroke-linejoin="round"/></svg>AI-powered</span></div>
             </div>
             <button id="agent-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">

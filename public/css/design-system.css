@@ -2583,3 +2583,25 @@ html.is-walk-entering .walk-stage .walk-rail {
 @media (prefers-reduced-motion: reduce) {
   html.is-walk-entering .walk-stage .walk-rail { animation: none; }
 }
+
+/* AI disclosure remains visible while the adjacent guide status changes. */
+.agent-caption { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .65rem; margin-top: .25rem; }
+.agent-caption > p { margin-top: 0; }
+.ai-guide-badge { display: inline-flex; align-items: center; gap: .3rem; font: .625rem var(--font-mono); letter-spacing: .025em; white-space: nowrap; color: var(--color-accent); }
+.ai-guide-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+.site-lockup { display: inline-flex; align-items: center; gap: .55rem; white-space: nowrap; }
+.site-mark { width: 1.75rem; height: 1.75rem; flex: 0 0 auto; }
+.site-lockup > span { word-spacing: -.12em; }
+
+/* Full compositions, with the original poster proportions preserved. */
+.poster-gallery { columns: 3; column-gap: 1.75rem; margin-top: 2.5rem; }
+.poster-piece { break-inside: avoid; margin: 0 0 2rem; }
+.poster-piece > a { display: block; border-radius: var(--radius-card); overflow: hidden; background: var(--color-bg-muted); box-shadow: var(--shadow-sm); }
+.poster-piece img { display: block; width: 100%; height: auto; }
+.poster-piece figcaption { padding: .85rem .15rem 0; }
+.poster-piece h3 { font-family: var(--font-serif); font-size: 1.15rem; }
+.poster-piece figcaption p { margin-top: .35rem; font-size: .85rem; line-height: 1.5; color: var(--color-text-muted); }
+.poster-piece > a:focus-visible { outline: 2px solid var(--oslo); outline-offset: 5px; }
+@media (max-width: 900px) { .poster-gallery { columns: 2; } }
+@media (max-width: 540px) { .poster-gallery { columns: 1; } }
