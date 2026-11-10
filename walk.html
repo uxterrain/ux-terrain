@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Walk with Oslo — UX Terrain</title>
+    <title>Walk with Oslo and Eda — UX Terrain</title>
     <meta
       name="description"
-      content="Oslo walks you through UX Terrain’s design systems point of view and the Microsoft 365 Performance Monitoring case, station by station."
+      content="Explore design decisions with Oslo or accessibility questions with Eda. Choose an AI-guided walkthrough and move at your own pace."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -88,31 +88,40 @@
 
       <div id="walk-picker" class="walk-picker">
         <div class="walk-picker-inner">
-          <p class="walk-picker-kicker">Agent-led · Walk with Oslo</p>
-          <h1 class="walk-picker-title">Pick a walk. Oslo takes the trail.</h1>
+          <p class="walk-picker-kicker">AI-powered guides · Oslo and Eda</p>
+          <h1 class="walk-picker-title">Choose what you want to explore.</h1>
           <p class="walk-picker-lede">
-            Two design-led scenarios, station by station. Oslo narrates the foundation; you interrogate the details before stepping forward. No prior context required.
+            Explore the design decisions with Oslo or the accessibility questions with Eda. Each walk pairs the work with a conversation, and you decide when to continue.
           </p>
-          <p class="walk-picker-meta">Choose your route. 5 stops per trail. ~4 minutes to walk.</p>
-          <div class="walk-choices">
+          <p class="walk-picker-meta">Short introductions. Room for questions. Your pace.</p>
+<section class="walk-guide-group" aria-labelledby="oslo-routes"><div class="walk-guide-heading"><h2 id="oslo-routes">Explore the design with Oslo</h2><span class="walk-guide-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg>AI-powered</span></div><p class="walk-guide-description">Decisions, tradeoffs, and the evidence behind the work.</p>          <div class="walk-choices">
             <button class="walk-choice" type="button" data-walk="ground">
               <span class="walk-choice-kicker">Design systems</span>
-              <h2>The ground layer</h2>
+              <h3>The ground layer</h3>
               <p>Shared tokens, component behavior, and a practical approach to keeping Figma and code aligned.</p>
-              <span class="walk-choice-go">Begin this walk →</span>
+              <span class="walk-choice-go">5 stops · Begin with Oslo →</span>
             </button>
             <button class="walk-choice" type="button" data-walk="m365">
               <span class="walk-choice-kicker">Microsoft 365</span>
-              <h2>Performance Monitoring</h2>
+              <h3>Performance Monitoring</h3>
               <p>Incident cards that change with the investigation, advisories people can act on, and impact you can scan under pressure.</p>
-              <span class="walk-choice-go">Begin this walk →</span>
+              <span class="walk-choice-go">5 stops · Begin with Oslo →</span>
             </button>
           </div>
+</section>
+<section class="walk-guide-group walk-guide-eda" aria-labelledby="eda-routes"><div class="walk-guide-heading"><h2 id="eda-routes">Explore accessibility with Eda</h2><span class="walk-guide-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg>AI-powered</span></div><p class="walk-guide-description">Interface choices, questions to investigate, and what still needs testing. These walks explain the material; they are not accessibility audits.</p><div class="walk-choices"><a class="walk-choice" href="eda.html#floor"><span class="walk-choice-kicker">Introduction</span><h3>Accessibility foundations</h3><p>Five short stops on standards, design targets, component behavior, and evidence.</p><span class="walk-choice-go">5 stops · Begin with Eda →</span></a>
+<a class="walk-choice" href="eda.html#m365"><span class="walk-choice-kicker">Case study</span><h3>Performance Monitoring</h3><p>Five short stops on readable incident states, actions, notifications, charts, and timelines.</p><span class="walk-choice-go">5 stops · Begin with Eda →</span></a>
+<a class="walk-choice" href="eda.html#zone"><span class="walk-choice-kicker">Case study</span><h3>Flotrak</h3><p>Four short stops on readable guidance, metering points, connection status, and frame records.</p><span class="walk-choice-go">4 stops · Begin with Eda →</span></a>
+<a class="walk-choice" href="eda.html#armada"><span class="walk-choice-kicker">Case study</span><h3>Atlas — Fleet Map</h3><p>Four stops on fleet context, equipment status, incident indicators, and the live panel.</p><span class="walk-choice-go">4 stops · Begin with Eda →</span></a>
+<a class="walk-choice" href="eda.html#sbi"><span class="walk-choice-kicker">Case study</span><h3>SBI</h3><p>Four stops on forecast context, inventory decisions, filters, and map details.</p><span class="walk-choice-go">4 stops · Begin with Eda →</span></a>
+<a class="walk-choice" href="eda.html#iqvia"><span class="walk-choice-kicker">Case study</span><h3>IQVIA ePromo</h3><p>Three stops on role-based navigation, document creation, and review comments.</p><span class="walk-choice-go">3 stops · Begin with Eda →</span></a>
+<a class="walk-choice" href="eda.html#oslo"><span class="walk-choice-kicker">Case study</span><h3>Oslo</h3><p>Three stops on choosing a walk, understanding answers, and controlling the pace.</p><span class="walk-choice-go">3 stops · Begin with Eda →</span></a>
+<a class="walk-choice" href="eda.html#eda"><span class="walk-choice-kicker">Case study</span><h3>Eda</h3><p>Three stops on the guide’s role, evidence, and visitor control.</p><span class="walk-choice-go">3 stops · Begin with Eda →</span></a></div></section>
           <p class="mt-10 text-sm" style="color: var(--color-text-muted)">
             Prefer to read? <a class="accent-link" href="systems.html">The ground layer</a>,
             <a class="accent-link" href="work/performance-monitoring.html">Performance Monitoring</a>,
             <a class="accent-link" href="work/oslo.html">how Oslo was designed</a>,
-            or the accessibility walk with <a class="accent-link" href="eda.html">Eda</a>.
+            or <a class="accent-link" href="work/eda.html">how Eda was designed</a>.
           </p>
         </div>
       </div>
@@ -159,6 +168,7 @@
     <script src="js/guide-session.js"></script>
     <script src="js/app.js"></script>
     <script src="js/walks.js"></script>
+    <script src="js/walk-evidence.js"></script>
     <script src="js/walk.js"></script>
   </body>
 </html>

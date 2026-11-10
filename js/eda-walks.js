@@ -34,6 +34,10 @@ window.EDA_WALKS = {
         "asks": [
           "Why distinguish a target from a verified result?",
           "What can this walk help me understand?"
+        ],
+        "followUps": [
+          "What would count as evidence for an accessibility claim?",
+          "How should a team communicate an untested design target?"
         ]
       },
       {
@@ -63,6 +67,10 @@ window.EDA_WALKS = {
         "asks": [
           "What is Section 508’s role?",
           "Where can I find the official requirements?"
+        ],
+        "followUps": [
+          "How does a team establish which requirements apply?",
+          "What should the team verify in the official standards?"
         ]
       },
       {
@@ -76,6 +84,10 @@ window.EDA_WALKS = {
         "asks": [
           "Which interaction questions does WCAG help frame?",
           "How do you connect a criterion to a test?"
+        ],
+        "followUps": [
+          "What does a useful test result need to record?",
+          "Which checks require someone to use the interface?"
         ]
       },
       {
@@ -105,6 +117,10 @@ window.EDA_WALKS = {
         "asks": [
           "What should a component specification include?",
           "Which checks need human review?"
+        ],
+        "followUps": [
+          "How should focus behavior be documented?",
+          "How can a team review errors and recovery?"
         ]
       },
       {
@@ -118,6 +134,10 @@ window.EDA_WALKS = {
         "asks": [
           "What can a screenshot tell us?",
           "What needs testing in the working product?"
+        ],
+        "followUps": [
+          "What would you prioritize in a working-product review?",
+          "How should unverified findings be presented?"
         ]
       }
     ],
@@ -153,6 +173,10 @@ window.EDA_WALKS = {
         "asks": [
           "What should an admin find first?",
           "How can hierarchy help during an incident?"
+        ],
+        "followUps": [
+          "How could an admin find the most important information quickly?",
+          "What would you test with an admin during an investigation?"
         ]
       },
       {
@@ -168,6 +192,10 @@ window.EDA_WALKS = {
         "asks": [
           "How do the labels help explain the state?",
           "What needs checking when the state changes?"
+        ],
+        "followUps": [
+          "How should a status change be announced?",
+          "What should remain stable when the incident updates?"
         ]
       },
       {
@@ -183,6 +211,10 @@ window.EDA_WALKS = {
         "asks": [
           "Why separate tenant actions from repair updates?",
           "What makes notification preferences easier to understand?"
+        ],
+        "followUps": [
+          "How can the next action identify who needs to act?",
+          "What would you check about notification preferences?"
         ]
       },
       {
@@ -198,6 +230,10 @@ window.EDA_WALKS = {
         "asks": [
           "How could someone distinguish the series without color?",
           "What would you check about the point details?"
+        ],
+        "followUps": [
+          "How could a keyboard user reach the chart details?",
+          "What text alternative would help explain the chart?"
         ]
       },
       {
@@ -213,6 +249,10 @@ window.EDA_WALKS = {
         "asks": [
           "What should a grouped event communicate?",
           "What would you test without relying on color?"
+        ],
+        "followUps": [
+          "How should a grouped event explain its contents?",
+          "How could someone navigate the timeline without a mouse?"
         ]
       }
     ]
@@ -238,6 +278,10 @@ window.EDA_WALKS = {
         "asks": [
           "Why place the guidance next to the reading?",
           "What would you check with a beginner?"
+        ],
+        "followUps": [
+          "How does Coach help a student understand the adjustment?",
+          "How could you check whether the guidance makes sense to a beginner?"
         ]
       },
       {
@@ -253,6 +297,10 @@ window.EDA_WALKS = {
         "asks": [
           "What do A and B help explain?",
           "How could someone use this without precise dragging?"
+        ],
+        "followUps": [
+          "How could the interface explain which point is selected?",
+          "What alternative to dragging would you explore?"
         ]
       },
       {
@@ -268,6 +316,10 @@ window.EDA_WALKS = {
         "asks": [
           "Why pair a status mark with words?",
           "What should happen when the connection changes?"
+        ],
+        "followUps": [
+          "How should a failed connection be explained?",
+          "What would you test before claiming reconnection works?"
         ]
       },
       {
@@ -283,6 +335,10 @@ window.EDA_WALKS = {
         "asks": [
           "Why group the details by roll?",
           "What would you test in the working archive?"
+        ],
+        "followUps": [
+          "How could a photographer find a particular frame?",
+          "What should stay understandable when a roll is expanded?"
         ]
       }
     ]
@@ -308,7 +364,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/armada/fleet-paths.png",
-        "alt": "Identify the selected flight — case-study illustration"
+        "alt": "Identify the selected flight — case-study illustration",
+        "followUps": [
+          "How could focus move from a drone to its details?",
+          "What should remain visible when the selected flight changes?"
+        ]
       },
       {
         "title": "Explain equipment status",
@@ -323,7 +383,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/armada/inventory.png",
-        "alt": "Explain equipment status — case-study illustration"
+        "alt": "Explain equipment status — case-study illustration",
+        "followUps": [
+          "How could a status change be communicated without color?",
+          "How would you check that device names remain clear?"
+        ]
       },
       {
         "title": "Connect an incident to its details",
@@ -338,7 +402,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/armada/fleet-map.png",
-        "alt": "Connect an incident to its details — case-study illustration"
+        "alt": "Connect an incident to its details — case-study illustration",
+        "followUps": [
+          "How could the map and incident panel show the same selection?",
+          "What should happen when someone closes the incident details?"
+        ]
       },
       {
         "title": "Keep live information understandable",
@@ -353,7 +421,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/armada/live-view.png",
-        "alt": "Keep live information understandable — case-study illustration"
+        "alt": "Keep live information understandable — case-study illustration",
+        "followUps": [
+          "How could live updates avoid interrupting an operator?",
+          "What should remain available if the video is unavailable?"
+        ]
       }
     ]
   },
@@ -378,7 +450,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/sbi-hero.png",
-        "alt": "Explain the forecast — case-study illustration"
+        "alt": "Explain the forecast — case-study illustration",
+        "followUps": [
+          "How should uncertainty affect a purchasing decision?",
+          "How could operating conditions help explain replacement demand?"
+        ]
       },
       {
         "title": "Give each measure a clear meaning",
@@ -393,7 +469,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/sbi-insights.png",
-        "alt": "Give each measure a clear meaning — case-study illustration"
+        "alt": "Give each measure a clear meaning — case-study illustration",
+        "followUps": [
+          "How could someone trace a forecast back to its inputs?",
+          "What should a comparison reveal about a change in demand?"
+        ]
       },
       {
         "title": "Explain a filter’s effect",
@@ -408,7 +488,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/sbi-08.png",
-        "alt": "Explain a filter’s effect — case-study illustration"
+        "alt": "Explain a filter’s effect — case-study illustration",
+        "followUps": [
+          "How could a user compare two forecasting scenarios?",
+          "How should the interface explain why another input is needed?"
+        ]
       },
       {
         "title": "Make map details reachable",
@@ -423,7 +507,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/sbi-13.png",
-        "alt": "Make map details reachable — case-study illustration"
+        "alt": "Make map details reachable — case-study illustration",
+        "followUps": [
+          "How could someone reach the same records through a list?",
+          "What context should stay visible when a record opens?"
+        ]
       }
     ]
   },
@@ -448,7 +536,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/iqvia/iqvia-03.png",
-        "alt": "Give each role a clear starting point — case-study illustration"
+        "alt": "Give each role a clear starting point — case-study illustration",
+        "followUps": [
+          "How should a user know which role they are working in?",
+          "What would you check when switching between tasks?"
+        ]
       },
       {
         "title": "Explain the next step",
@@ -463,7 +555,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/iqvia/iqvia-09.png",
-        "alt": "Explain the next step — case-study illustration"
+        "alt": "Explain the next step — case-study illustration",
+        "followUps": [
+          "How could the form help someone recover from an error?",
+          "What should be preserved when moving back a step?"
+        ]
       },
       {
         "title": "Keep comments connected to the content",
@@ -478,7 +574,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/iqvia/iqvia-14.png",
-        "alt": "Keep comments connected to the content — case-study illustration"
+        "alt": "Keep comments connected to the content — case-study illustration",
+        "followUps": [
+          "How could focus move between a comment and its target?",
+          "How should an unresolved annotation be identified?"
+        ]
       }
     ]
   },
@@ -503,7 +603,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/oslo/picker.png",
-        "alt": "Explain the route before it starts — case-study illustration"
+        "alt": "Explain the route before it starts — case-study illustration",
+        "followUps": [
+          "How could a visitor compare the available walks?",
+          "What should happen after a walk is selected?"
+        ]
       },
       {
         "title": "Make the answer’s status clear",
@@ -517,7 +621,11 @@ window.EDA_WALKS = {
           "What would you check when a reply arrives?"
         ],
         "visual": "quote",
-        "quote": "An answer needs understandable status and useful next steps."
+        "quote": "An answer needs understandable status and useful next steps.",
+        "followUps": [
+          "How should a source link keep the conversation in context?",
+          "How should an unsupported claim be handled?"
+        ]
       },
       {
         "title": "Let the visitor set the pace",
@@ -532,7 +640,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/oslo/station.png",
-        "alt": "Let the visitor set the pace — case-study illustration"
+        "alt": "Let the visitor set the pace — case-study illustration",
+        "followUps": [
+          "What should remain intact when viewing supporting detail?",
+          "How could you test returning to an earlier station?"
+        ]
       }
     ]
   },
@@ -557,7 +669,11 @@ window.EDA_WALKS = {
         ],
         "visual": "image",
         "src": "images/work/card-eda.png",
-        "alt": "Explain the guide’s role — case-study illustration"
+        "alt": "Explain the guide’s role — case-study illustration",
+        "followUps": [
+          "What should Eda avoid claiming without testing?",
+          "How can the guide explain its limits plainly?"
+        ]
       },
       {
         "title": "Make evidence and limits understandable",
@@ -571,7 +687,11 @@ window.EDA_WALKS = {
           "What needs the working interface rather than a screenshot?"
         ],
         "visual": "quote",
-        "quote": "Explain the decision first. Raise a test question when it matters."
+        "quote": "Explain the decision first. Raise a test question when it matters.",
+        "followUps": [
+          "How could a suggested check become a verified finding?",
+          "What evidence would you need for a stronger claim?"
+        ]
       },
       {
         "title": "Keep control with the visitor",
@@ -585,7 +705,11 @@ window.EDA_WALKS = {
           "What would you test when the panel closes?"
         ],
         "visual": "quote",
-        "quote": "A useful guide leaves room for the visitor’s question."
+        "quote": "A useful guide leaves room for the visitor’s question.",
+        "followUps": [
+          "How should a visitor resume after inspecting a source?",
+          "What should keyboard focus do when the guide closes?"
+        ]
       }
     ]
   }

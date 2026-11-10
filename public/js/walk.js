@@ -182,7 +182,7 @@
       button.className = "walk-ask";
       button.textContent = label;
       button.addEventListener("click", function () {
-        sendAsk(label);
+        sendAsk(button.textContent);
       });
       asks.appendChild(button);
     });
@@ -258,6 +258,7 @@
   }
 
   function renderStation() {
+    if (window.UX_WALK_EVIDENCE) window.UX_WALK_EVIDENCE.clear();
     if (walk) (walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA).reset({ walkId: walk.id, stationIndex: index });
     const st = station();
     if (!st) return;
@@ -300,7 +301,7 @@
     if (session) session.activate(walkConfig.agent, function () {
       const context = { walkId: walk.id, stationIndex: index };
       const agent = walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA;
-      return { context, turns: session.capture(log), history: agent.history(context), draft: input.value, scrollTop: log.scrollTop };
+      return { context, turns: session.capture(log), suggestions: session.captureSuggestions(asks), history: agent.history(context), draft: input.value, scrollTop: log.scrollTop };
     });
 
     backBtn.disabled = index === 0;
@@ -331,6 +332,7 @@
   }
 
   function showPicker() {
+    if (window.UX_WALK_EVIDENCE) window.UX_WALK_EVIDENCE.clear();
     if (session) session.clear(walkConfig.agent);
     stopTyping();
     if (abort) { abort.abort(); abort = null; }
@@ -383,12 +385,14 @@
       if (walkConfig.agent === "oslo") {
         await window.UX_OSLO.answer(message, body, { walkId: walk.id, stationIndex: index }, request.signal);
         hideLoader(body);
+        if (session && abort === request) session.advanceSuggestions(asks, message, st.followUps, (walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA).history({ walkId: walk.id, stationIndex: index }));
         return;
       }
       await window.UX_EDA.answer(message, body, { walkId: walk.id, stationIndex: index }, request.signal, function () {
         log.scrollTop = log.scrollHeight;
       });
       hideLoader(body);
+      if (session && abort === request) session.advanceSuggestions(asks, message, st.followUps, (walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA).history({ walkId: walk.id, stationIndex: index }));
     } catch (error) {
       if (error && error.name === "AbortError") {
         hideLoader(body);
@@ -489,6 +493,7 @@
     stopTyping();
     setStatus("idle", "With you");
     session.restore(log, carried.turns, appendTurn, walkConfig.agent === "oslo" ? window.UX_OSLO.render : null);
+    session.restoreSuggestions(asks, carried.suggestions);
     input.value = typeof carried.draft === "string" ? carried.draft.slice(0, 4000) : "";
     window.requestAnimationFrame(function () { log.scrollTop = carried.scrollTop || 0; });
     session.checkpoint();

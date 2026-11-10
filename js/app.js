@@ -180,7 +180,7 @@
     }
     function snapshot() {
       const context = conversationContext || currentContext();
-      return { context, turns: session.capture(log), history: window.UX_OSLO.history(context), draft: input.value, scrollTop: log.scrollTop };
+      return { context, turns: session.capture(log), suggestions: session.captureSuggestions(panel, ".js-quick-inquiry"), history: window.UX_OSLO.history(context), draft: input.value, scrollTop: log.scrollTop };
     }
 
     function setOpen(open) {
@@ -293,6 +293,23 @@
 
       try {
         await streamAgentReply(message, agentBody);
+        if (session) {
+          const context = conversationContext || currentContext();
+          const topics = {
+            systems: ["How would you know the design system is working?", "How should a team review a token change?", "What would you prioritize on the first surface?"],
+            ground: ["How would you know the design system is working?", "How should a team review a token change?", "What would you prioritize on the first surface?"],
+            "performance-monitoring": ["How did admin research shape the incident cards?", "How did the charts connect duration and impact?", "What did prototype reviews help the team assess?"],
+            m365: ["How did admin research shape the incident cards?", "How did the charts connect duration and impact?", "What did prototype reviews help the team assess?"],
+            sbi: ["How could operating conditions explain replacement demand?", "How did filter combinations explain forecasting scenarios?", "What should an executive understand before buying stock?"],
+            armada: ["How did the route tracer help operators track a flight?", "How were incidents connected to their map locations?", "Why keep the camera and mission status together?"],
+            "zone-focus": ["How does Coach help a student learn manual exposure?", "How do the wedge and metering points support learning?", "Which hardware capabilities still need verification?"],
+            oslo: ["How does Oslo connect an answer to supporting evidence?", "How should the Walk preserve a conversation?", "What happens when a question lacks supporting evidence?"],
+            eda: ["What can Eda establish from a screenshot?", "Which accessibility checks need the working product?", "How does the visitor control the pace of a walk?"],
+            iqvia: ["How did role-specific views organize the work?", "How did annotations stay connected to their content?", "What would you test in the multi-step forms?"]
+          };
+          const pool = topics[context.projectId || context.walkId] || ["How does the AI support decisions across these projects?", "How do Oslo and Eda serve different needs?", "Which project best shows the data visualization work?"];
+          session.advanceSuggestions(panel, message, pool, window.UX_OSLO.history(context), ".js-quick-inquiry");
+        }
       } catch (error) {
         hideAgentLoader(agentBody);
         agentBody.textContent =
@@ -338,6 +355,7 @@
         (button.querySelector(".js-inquiry-label") || button).textContent = questions[index % questions.length];
       });
     }
+    if (continuation && continuation.guide === "oslo") session.restoreSuggestions(panel, continuation.suggestions, ".js-quick-inquiry");
     panel.querySelectorAll(".js-quick-inquiry").forEach(function (button) {
       button.addEventListener("click", function () {
         const label = button.querySelector(".js-inquiry-label");
@@ -446,11 +464,7 @@
     links.forEach(function (link) {
       if (!link.hasAttribute("data-mail-label")) link.textContent = address;
       link.setAttribute("aria-label", "Email " + address);
-      link.setAttribute("href", "#contact");
-      link.addEventListener("click", function (event) {
-        event.preventDefault();
-        window.location.href = "mailto:" + address;
-      });
+      link.setAttribute("href", "mailto:" + address);
     });
   }
 

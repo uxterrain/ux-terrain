@@ -22,6 +22,10 @@ window.UX_WALKS = {
         "asks": [
           "Why start with one surface?",
           "What should a team get from a design system?"
+        ],
+        "followUps": [
+          "How do you choose the first surface to work on?",
+          "How would you know the design system is working?"
         ]
       },
       {
@@ -38,6 +42,10 @@ window.UX_WALKS = {
         "asks": [
           "Which checks can be automated?",
           "What does the team need to agree before connecting Figma and code?"
+        ],
+        "followUps": [
+          "Which decisions still need human review?",
+          "How should design and engineering resolve a mismatch?"
         ]
       },
       {
@@ -55,6 +63,10 @@ window.UX_WALKS = {
         "asks": [
           "What belongs in a token rather than a component?",
           "When should a product need a new pattern?"
+        ],
+        "followUps": [
+          "How does a token change affect the screens above it?",
+          "How do you avoid creating too many patterns?"
         ]
       },
       {
@@ -71,6 +83,10 @@ window.UX_WALKS = {
         "asks": [
           "How do you choose useful token names?",
           "How do you handle an exception on a real product?"
+        ],
+        "followUps": [
+          "When should an exception become a shared rule?",
+          "How would you document why a token exists?"
         ]
       },
       {
@@ -88,6 +104,10 @@ window.UX_WALKS = {
         "asks": [
           "Who should own a token change?",
           "What would the first engagement deliver?"
+        ],
+        "followUps": [
+          "How should a team review a proposed change?",
+          "What would you check before expanding to another surface?"
         ]
       }
     ]
@@ -116,6 +136,10 @@ window.UX_WALKS = {
         "asks": [
           "What did the product designer own?",
           "What information did an admin need during an open investigation?"
+        ],
+        "followUps": [
+          "How did admin research shape the incident view?",
+          "How did the design connect monitoring data to a next action?"
         ]
       },
       {
@@ -134,6 +158,10 @@ window.UX_WALKS = {
         "asks": [
           "How do the actions change with status?",
           "What is documented about the AI impact estimate?"
+        ],
+        "followUps": [
+          "How should the card explain uncertainty in an estimate?",
+          "What should remain visible as an investigation progresses?"
         ]
       },
       {
@@ -152,6 +180,10 @@ window.UX_WALKS = {
         "asks": [
           "How are tenant actions different from Microsoft repair updates?",
           "What notification controls are documented?"
+        ],
+        "followUps": [
+          "How can an admin tell who is responsible for the next step?",
+          "How should an update avoid creating more notification noise?"
         ]
       },
       {
@@ -170,6 +202,10 @@ window.UX_WALKS = {
         "asks": [
           "What can an admin compare in the chart?",
           "How do the historic timelines complement the incident cards?"
+        ],
+        "followUps": [
+          "How do duration and impact change the interpretation of an incident?",
+          "What information would you preserve when opening chart details?"
         ]
       },
       {
@@ -188,6 +224,10 @@ window.UX_WALKS = {
         "asks": [
           "What does the case document about Outlook?",
           "How were prototypes used in research and engineering reviews?"
+        ],
+        "followUps": [
+          "How does the Outlook detail help an admin investigate?",
+          "What could the prototype reveal before implementation?"
         ]
       }
     ]

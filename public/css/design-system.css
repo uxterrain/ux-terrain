@@ -227,7 +227,7 @@ button.accent-link {
 
 .eda-link {
   color: var(--eda);
-  text-decoration: underline;
+  text-decoration: none;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
@@ -243,6 +243,17 @@ button.eda-link {
 
 .eda-link:hover {
   color: var(--eda-hover);
+}
+
+.case-walks .accent-link,
+.case-walks .eda-link {
+  text-decoration: none;
+}
+.case-walks .accent-link:hover,
+.case-walks .eda-link:hover,
+.case-walks .accent-link:focus-visible,
+.case-walks .eda-link:focus-visible {
+  text-decoration-line: underline;
 }
 
 .case-walks {
@@ -1834,7 +1845,8 @@ html.is-walking .walk-picker {
   color: var(--color-accent);
 }
 
-.walk-choice h2 {
+.walk-choice h2,
+.walk-choice h3 {
   margin-top: 0.45rem;
   font-family: var(--font-serif);
   font-size: 1.55rem;
@@ -2594,11 +2606,40 @@ html.is-walk-entering .walk-stage .walk-rail {
 .site-mark { width: 1.75rem; height: 1.75rem; flex: 0 0 auto; }
 .site-lockup > span { word-spacing: -.12em; }
 
-/* Match the inset screenshot presentation already baked into Oslo’s thumbnail. */
-.work-card-media.eda-thumbnail { display: flex; align-items: center; justify-content: center; background: #000; }
-.work-card-media.eda-thumbnail img.work-card-eda { width: 74%; height: auto; max-height: 80%; object-fit: contain; border-radius: .65rem; }
+/* Companion guides use Oslo’s original, closer thumbnail framing. */
+.work-card-media.guide-thumbnail { position: relative; background: #000; }
+.guide-thumbnail-screen { position: relative; width: 100%; height: 100%; overflow: hidden; container-type: inline-size; }
+.guide-thumbnail-screen img.work-card-oslo { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
+/* Eda’s source has no outer margin: match the screen scale in Oslo’s capture. */
+.guide-thumbnail-screen img.work-card-eda { position: absolute; width: 74.12%; height: auto; aspect-ratio: 759 / 510; left: 12.89%; top: calc(22% - 7.32cqw); object-fit: fill; border-radius: .65rem; }
+
+
 .sbi-business-figure { width: 100%; max-width: 52rem; margin-inline: auto; }
 
 .guide-conversation-context { margin-top: .5rem; color: var(--color-text-muted); font: .7rem var(--font-mono); }
 
 .guide-context-link { display: inline-block; margin-top: .5rem; font-size: .8rem; line-height: 1.4; }
+
+.walk-evidence-back {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: .65rem 1rem;
+  margin-bottom: 2rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  cursor: pointer;
+}
+.walk-evidence-view { max-width: 70rem; margin-inline: auto; }
+.walk-evidence-view img, .walk-evidence-view svg { max-width: 100%; height: auto; }
+.walk-evidence-view .about-section { margin-top: 0; }
+
+/* The shared landing groups routes by the guide’s purpose. */
+.walk-guide-group { margin-top: 3rem; }
+.walk-guide-heading { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1rem; }
+.walk-guide-heading h2 { font-family: var(--font-serif); font-size: clamp(1.6rem, 3vw, 2rem); line-height: 1.2; }
+.walk-guide-ai { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--font-mono); font-size: .7rem; color: var(--oslo); }
+.walk-guide-ai svg { width: 1rem; height: 1rem; }
+.walk-guide-description { margin-top: .75rem; max-width: 42rem; line-height: 1.6; color: var(--color-text-muted); }
+.walk-guide-group .walk-choices { margin-top: 1.25rem; }
+a.walk-choice { text-decoration: none; }
+.walk-guide-eda .walk-choice-kicker, .walk-guide-eda .walk-choice-go, .walk-guide-eda .walk-guide-ai { color: var(--eda); }

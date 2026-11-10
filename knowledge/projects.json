@@ -70,6 +70,12 @@
         "url": "/work/eda.html#oslo-evidence-3"
       },
       {
+        "id": "eda:8",
+        "title": "Define the question, the check, and the return",
+        "text": "Eda’s scenarios start with what the visitor is trying to understand on the current screen. They may ask why a label matters, explore another way to operate a control, or ask whether a behavior has actually been tested. Those are different questions, and the guide needs to respond without losing the interface being discussed. I defined the interaction around that distinction: keep questions with their station, turn answered suggestions into relevant follow-ups, and separate an explanation from a proposed check or a verified finding. While an answer is pending, question controls pause; a failed request leaves the original question available to retry. The shared player can show supporting sections inside a walk and return to the same station without replacing the conversation. The review also identified work still needed: Eda’s cross-page “View this screen” link should locate the exact visual, and the closing experience should offer optional next steps after the showcase. A contact invitation should not stand in for accessibility evidence. Understand the decision Explain the written design choice beside the relevant screen, using the station as context. Explore a check Describe a specific way to investigate the concern. Keep a suggested test distinct from a result. Inspect and return Keep supporting material connected to the discussion and provide a clear return to the station. Finish at the visitor’s pace Keep station changes under visitor control. Reserve broader application or contact for an optional closing step.",
+        "url": "/work/eda.html#oslo-evidence-8"
+      },
+      {
         "id": "eda:4",
         "title": "Give the guide its own scope",
         "text": "Eda has a separate instruction file and authored station material. Questions identify Eda explicitly, so the shared endpoint loads her guidance. The language is designed to be calm and specific about written evidence, with a clear boundary around claims that require an audit or additional information.",
@@ -182,6 +188,12 @@
         "title": "Design the pacing of a walk",
         "text": "The two Oslo walks each have five authored stations. A station pairs its visual with a short script and two suggested questions. Back, Next, and station selection remain visitor controls; an answer does not automatically advance the walk. This keeps the introduction predictable while leaving room to question a decision. The station layout keeps the visual and conversation together. This capture shows an earlier version of the station copy.",
         "url": "/work/oslo.html#oslo-evidence-5"
+      },
+      {
+        "id": "oslo:10",
+        "title": "Define what happens between stations",
+        "text": "The walk needed more than Back and Next. I defined the moments when a visitor might pause: question a decision, inspect its evidence, explore another example, or connect the approach to their own team. Each interaction needed a clear purpose and a destination that fulfilled its label. Reviewing the working experience exposed a mismatch: “Talk about your system” appeared beneath an answer as supporting evidence, then opened a contact invitation. Keeping the panel open preserved the conversation, but the destination still interrupted the showcase. The review led to a clearer distinction between evidence, conversation, and an optional next step. The current player opens supporting sections inside the walk and restores the station when the visitor returns. Answered suggestions become relevant follow-ups, while failed requests remain available to retry. The next refinement is to exclude contact invitations from evidence and offer “Apply this to your team” at the end. That closing experience is a design decision still to implement. Question the decision Continue the discussion in Oslo. Replace a successfully answered prompt with a relevant follow-up. Inspect the evidence Show the named supporting section in the main viewing area. Keep the conversation and a return to the same station. Choose another example Make a change of walk explicit so the visitor knows they are starting a different route. Apply it to your team Reserve the invitation for the end of the showcase. Let the visitor choose whether to continue, explore another walk, or discuss their situation.",
+        "url": "/work/oslo.html#oslo-evidence-10"
       },
       {
         "id": "oslo:6",

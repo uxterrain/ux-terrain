@@ -103,7 +103,7 @@
       }
       if (session) session.activate("eda", function () {
         const context = { walkId: walk.id, stationIndex: index };
-        return { context, turns: session.capture(log), history: window.UX_EDA.history(context), draft: input.value, scrollTop: log.scrollTop };
+        return { context, turns: session.capture(log), suggestions: session.captureSuggestions(asks), history: window.UX_EDA.history(context), draft: input.value, scrollTop: log.scrollTop };
       });
       window.requestAnimationFrame(function () {
         input.focus();
@@ -212,7 +212,7 @@
       button.className = "walk-ask";
       button.textContent = label;
       button.addEventListener("click", function () {
-        sendAsk(label);
+        sendAsk(button.textContent);
       });
       asks.appendChild(button);
     });
@@ -295,6 +295,7 @@
         log.scrollTop = log.scrollHeight;
       });
       hideLoader(body);
+      if (session && abort === request) session.advanceSuggestions(asks, message, st.followUps, (window.UX_EDA).history({ walkId: walk.id, stationIndex: index }));
     } catch (error) {
       if (error && error.name === "AbortError") {
         hideLoader(body);
@@ -320,6 +321,7 @@
     const context = { walkId: walk.id, stationIndex: index };
     window.UX_EDA.resume(context, carried.history);
     session.restore(log, carried.turns, appendTurn);
+    session.restoreSuggestions(asks, carried.suggestions);
     stopTyping();
     setStatus("idle", idleLabel());
     input.value = typeof carried.draft === "string" ? carried.draft.slice(0, 4000) : "";
