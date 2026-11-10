@@ -1,0 +1,55 @@
+"use strict";
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+function setup(storage=new Map(),blocked=false) {
+ const clicks=[];const events={};const window={location:{href:'https://portfolio.test/index.html',origin:'https://portfolio.test',pathname:'/index.html',reload(){events.reloaded=true;}},addEventListener(name,fn){events[name]=fn;}};
+ const document={addEventListener(name,fn){if(name==='click')clicks.push(fn);}};
+ const sessionStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>{if(blocked)throw new Error('Storage blocked');storage.set(key,value);},removeItem:key=>storage.delete(key)};
+ vm.runInNewContext(fs.readFileSync(require.resolve('../js/guide-session.js'),'utf8'),{window,document,sessionStorage,URL,Array,JSON});
+ return {api:window.UX_GUIDE_SESSION,storage,events,click(href,modifiers={}){
+  const link={href,hasAttribute:()=>false};const event={button:0,target:{closest:()=>link},...modifiers};clicks.forEach(fn=>fn(event));return link;
+ }};
+}
+const first=setup();
+let draft='Why was that chosen?';
+const snapshot=()=>({context:{projectId:'performance-monitoring'},turns:[{role:'user',text:'What did Jimmy design?'},{role:'agent',text:'Incident cards.',answer:{claims:[]}}],history:[{role:'user',content:'What did Jimmy design?'},{role:'assistant',content:'Incident cards.'}],draft,scrollTop:123});
+first.api.activate('oslo',snapshot);
+draft='Continue this question';
+const internal=first.click('https://portfolio.test/work/performance-monitoring.html#oslo-evidence-4');
+assert.equal(internal.target,undefined,'local evidence should navigate in this tab');
+const next=setup(first.storage);const state=next.api.read();
+assert.equal(state.guide,'oslo');assert.equal(state.draft,draft);assert.equal(state.scrollTop,123);
+assert.equal(state.history[1].content,'Incident cards.');assert.equal(state.context.projectId,'performance-monitoring');
+assert.equal(first.click('https://external.test/reference').target,'_blank');
+assert.equal(first.click('https://portfolio.test/images/work/chart.png').target,'_blank');
+assert.equal(first.click('https://external.test/reference',{ctrlKey:true}).target,undefined,'modified clicks should keep native behavior');
+first.api.clear('oslo');assert.equal(next.api.read(),null,'explicit close must clear continuation');
+first.api.activate('eda',()=>({context:{walkId:'sbi',stationIndex:2},turns:[],history:[],draft:'A draft',scrollTop:42}));
+assert.equal(first.click('https://portfolio.test/eda.html#sbi/2').target,undefined,'returning to the same guide’s Walk should retain the session');
+const eda=setup(first.storage).api.read();assert.equal(eda.guide,'eda');assert.equal(eda.context.walkId,'sbi');assert.equal(eda.context.stationIndex,2);
+first.events.pagehide();assert.equal(first.api.read().draft,'A draft');
+first.api.clear('eda');assert.equal(first.api.read(),null);
+first.storage.set('ux-terrain-guide-session-v1','{bad json');assert.equal(first.api.read(),null);
+first.storage.set('ux-terrain-guide-session-v1',JSON.stringify({version:1,guide:'eda',context:{walkId:'__proto__'},turns:[]}));assert.equal(first.api.read(),null);
+first.api.activate('oslo',()=>({...snapshot(),turns:Array.from({length:24},()=>({role:'user',text:'x'.repeat(10000)}))}));
+assert.ok([...first.storage.values()][0].length<=140000,'stored transcript must remain bounded');
+console.log('PASS guide continuation: evidence navigation, history, draft, scroll position, Eda station, external references, close, malformed storage, and size bounds.');
+
+const blocked=setup(new Map(),true);blocked.api.activate('oslo',snapshot);
+assert.equal(blocked.click('https://portfolio.test/work/sbi.html#oslo-evidence-3').target,'_blank','blocked storage must keep the live guide in its original tab');
+const makeButton = text => ({textContent:text, querySelector(){return null;}, remove(){this.removed=true;}});
+const buttons = [makeButton('Why start with one surface?'), makeButton('What should a team get from a design system?')];
+const suggestions = {querySelectorAll(){return buttons.filter(button=>!button.removed);}};
+const pool = ['How do you choose the first surface?', 'How would you know the design system is working?'];
+first.api.advanceSuggestions(suggestions, buttons[1].textContent, pool, []);
+assert.equal(buttons[1].textContent,pool[1], 'successful prompt should get the relevant follow-up for its slot');
+first.api.advanceSuggestions(suggestions, pool[1], pool, [{role:'user',content:pool[1]}]);
+assert.equal(buttons[1].textContent,pool[0], 'remaining follow-up should be available without duplication');
+first.api.advanceSuggestions(suggestions, pool[0], pool, pool.map(content=>({role:'user',content})));
+assert.equal(buttons[1].removed,true,'exhausted suggestions should disappear rather than repeat');
+const savedSuggestions=first.api.captureSuggestions(suggestions);
+const restored=[makeButton('Original one'),makeButton('Original two')];
+first.api.restoreSuggestions({querySelectorAll(){return restored;}},savedSuggestions);
+assert.equal(restored[0].textContent,buttons[0].textContent);assert.equal(restored[1].removed,true);
+console.log('PASS relevant follow-ups replace answered prompts, avoid repeats, exhaust cleanly, and restore across navigation.');

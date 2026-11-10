@@ -212,6 +212,10 @@
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
                   The advisory flow distinguishes the responsibility for the next step. Tenant-level problems can include actions the admin can take. Microsoft-level incidents show information about repair work in progress. This gives admins a way to understand both what they can do and which updates they need to follow.
                 </p>
+                <figure class="case-figure mt-8 rounded-2xl" data-eda-screen="path">
+                  <img src="../images/work/outlook.png" alt="Advisory overview and detail panel with user impact, recommendations, and infrastructure context" />
+                  <figcaption>Move from an advisory to its impact, recommended action, and supporting details.</figcaption>
+                </figure>
               </div>
 
               <div>
@@ -230,13 +234,13 @@
                       Two named series compare affected-user count and duration of impact.
                     </figcaption>
                   </figure>
-                  <figure class="case-figure rounded-2xl" data-eda-screen="path">
+                  <figure class="case-figure rounded-2xl">
                     <img
                       src="../images/work/impact-metrics.png"
-                      alt="Impact metrics and notification setup for Performance Monitoring"
+                      alt="Impact-chart detail with a timestamp, incident ID, and affected-user count"
                     />
                     <figcaption>
-                      Notification setup includes email, phone, and SMS, with severity and tenant filters.
+                      A selected point reveals its timestamp, incident ID, and affected-user count.
                     </figcaption>
                   </figure>
                 </div>
@@ -244,29 +248,41 @@
 
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">04</p>
-                <h2 id="oslo-evidence-7" class="font-serif mt-2 text-3xl tracking-tight">Bring crash signals into Outlook</h2>
-                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                  The Outlook collaboration brought crash and performance signals into the client experience. This extended the monitoring story beyond the Admin Center, connecting the information to another place where the issue was being encountered.
-                </p>
+                <h2 id="oslo-evidence-12" class="font-serif mt-2 text-3xl tracking-tight">Get the right updates to the right admins</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">Monitoring only helps if the people responsible receive the update. The notification flow lets admins assign recipients to Office 365, third-party, and customer infrastructure groups, with a separate group for VIP customers. Email and SMS preferences sit alongside those assignments, making it clear who receives updates and how.</p>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">The design follows that setup through managing recipients, searching for someone to add, and confirming removal. It treats notification ownership as part of the incident workflow, so teams can maintain it as responsibilities change.</p>
                 <figure class="case-figure mt-8 rounded-2xl">
-                  <img src="../images/work/outlook.png" alt="Outlook integration showing crash and performance signals" />
+                  <img src="../images/work/admin-notifications.png" alt="Admin notification screens for infrastructure groups, email and SMS delivery, recipient search, and removal confirmation" />
+                  <figcaption>Assign notification recipients by infrastructure group, choose delivery channels, and manage membership.</figcaption>
                 </figure>
               </div>
 
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">05</p>
+                <h2 id="oslo-evidence-7" class="font-serif mt-2 text-3xl tracking-tight">Bring Outlook crash details into the investigation</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
+                  Working with the Outlook team, I explored how admins could investigate client crashes through the monitoring experience. The crash-detail view brings channel and build information, session counts, reliability measures, and a failure list together, giving admins context for narrowing down the affected environment.
+                </p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img src="../images/work/outlook-crash-detail.png" alt="Outlook crash-detail view with channel and build charts, reliability measures, and a failure list" />
+                  <figcaption>Connect the crash summary to the client versions, reliability data, and failure details behind it.</figcaption>
+                </figure>
+              </div>
+
+              <div>
+                <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">06</p>
                 <h2 id="oslo-evidence-8" class="font-serif mt-2 text-3xl tracking-tight">Historic timelines</h2>
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
                   The historic timeline gives admins another view of an incident period. Incidents and advisories have named categories, with color separating them and larger marks representing stacked scenarios. The overview provides a way to locate activity over time and inspect a more detailed view.
                 </p>
                 <div class="case-figure-pair">
                   <figure class="case-figure rounded-2xl" data-eda-screen="week">
-                    <img src="../images/work/historic-timeline.png" alt="Historical timeline of incidents and advisories" />
-                    <figcaption>Red for incidents, blue for advisories.</figcaption>
+                    <img src="../images/work/historic-overview.png" alt="Historical timeline of incidents and advisories" />
+                    <figcaption>A time-range overview connects incidents and advisories to a selected point in the chart.</figcaption>
                   </figure>
                   <figure class="case-figure rounded-2xl">
-                    <img src="../images/work/timeline-detail.png" alt="Detailed historic timeline with clustered events" />
-                    <figcaption>Scale encodes multiple scenarios at the same moment.</figcaption>
+                    <img src="../images/work/historic-detail.png" alt="Detailed historic timeline with clustered events" />
+                    <figcaption>A second exploration uses event markers and size to distinguish categories and grouped scenarios.</figcaption>
                   </figure>
                 </div>
               </div>
@@ -277,16 +293,12 @@
               <p class="mt-5 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
                 The prototypes included clickable flows, investigation states, conditional copy, and page transitions. Research participants and engineering partners could review how the experience changed through an investigation, rather than respond only to isolated screens.
               </p>
-              <div class="case-figure-pair">
-                <figure class="case-figure rounded-2xl">
-                  <img src="../images/work/prototypes.png" alt="Interactive prototype exploring Performance Monitoring states" />
-                  <figcaption>A clickable state: hover count, incident key, and a zoom into the week.</figcaption>
-                </figure>
-                <figure class="case-figure rounded-2xl">
-                  <img src="../images/work/prototype-flow.png" alt="Prototype flow showing page transitions and conditional interactions" />
-                  <figcaption>A related prototype view showing the chart at another time scale.</figcaption>
-                </figure>
-              </div>
+              <figure class="case-figure mt-8 rounded-2xl">
+                <a href="../images/work/monitoring-prototype-map.png" target="_blank" rel="noopener" aria-label="Open the complete Performance Monitoring prototype map">
+                  <img src="../images/work/monitoring-prototype-map.png" alt="Prototype map connecting monitoring dashboards to advisory and incident screens, detail panels, and investigation states with blue interaction links" />
+                </a>
+                <figcaption>The connected prototype maps the dashboard, advisory and incident views, and their detail panels into investigation paths. Select the image to inspect the full map.</figcaption>
+              </figure>
             </section>
 
             <section class="case-prose mt-16">
@@ -409,6 +421,7 @@
         </div>
       </aside>
     </div>
+    <script src="../js/guide-session.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/eda-walks.js?v=20261102-copy2"></script>
     <script src="../js/eda-case.js"></script>

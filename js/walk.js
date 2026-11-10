@@ -8,6 +8,9 @@
     walks: window.UX_WALKS,
   };
   const WALKS = walkConfig.walks;
+  const session = window.UX_GUIDE_SESSION;
+  const continuation = session && session.read();
+  const carried = continuation && continuation.guide === walkConfig.agent ? continuation : null;
   if (!WALKS) return;
 
   const picker = document.getElementById("walk-picker");
@@ -255,11 +258,14 @@
   }
 
   function renderStation() {
+    if (walk) (walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA).reset({ walkId: walk.id, stationIndex: index });
     const st = station();
     if (!st) return;
     stopTyping();
-    if (abort) abort.abort();
+    if (abort) { abort.abort(); abort = null; }
 
+    form.querySelector("button[type='submit']").disabled = false;
+    input.disabled = false;
     main.innerHTML =
       '<p class="walk-station-kicker">' +
       pad(index + 1) +
@@ -291,6 +297,11 @@
     typeNarration(st.say, body);
     renderAsks(st);
     renderDots();
+    if (session) session.activate(walkConfig.agent, function () {
+      const context = { walkId: walk.id, stationIndex: index };
+      const agent = walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA;
+      return { context, turns: session.capture(log), history: agent.history(context), draft: input.value, scrollTop: log.scrollTop };
+    });
 
     backBtn.disabled = index === 0;
     nextBtn.disabled = false;
@@ -320,8 +331,9 @@
   }
 
   function showPicker() {
+    if (session) session.clear(walkConfig.agent);
     stopTyping();
-    if (abort) abort.abort();
+    if (abort) { abort.abort(); abort = null; }
     walk = null;
     index = 0;
     setMode("pick");
@@ -365,64 +377,31 @@
     input.value = "";
     const body = appendTurn("agent", "");
 
-    abort = new AbortController();
+    const request = new AbortController();
+    abort = request;
     try {
       if (walkConfig.agent === "oslo") {
-        await window.UX_OSLO.answer(message, body, { walkId: walk.id, stationIndex: index }, abort.signal);
+        await window.UX_OSLO.answer(message, body, { walkId: walk.id, stationIndex: index }, request.signal);
         hideLoader(body);
         return;
       }
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: abort.signal,
-        body: JSON.stringify({
-          message: message,
-          agent: walkConfig.agent,
-          context: {
-            walkId: walk.id,
-            stationIndex: index
-          }
-        })
+      await window.UX_EDA.answer(message, body, { walkId: walk.id, stationIndex: index }, request.signal, function () {
+        log.scrollTop = log.scrollHeight;
       });
-      if (!response.ok) {
-        let detail = "The agent could not reply.";
-        try {
-          const payload = await response.json();
-          if (payload && payload.error) detail = payload.error;
-        } catch (parseError) {}
-        throw new Error(detail);
-      }
-      if (!response.body) throw new Error("Streaming is not available in this browser.");
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let reply = "";
-      let started = false;
-      while (true) {
-        const chunk = await reader.read();
-        if (chunk.done) break;
-        reply += decoder.decode(chunk.value, { stream: true });
-        const plain = toPlainReply(reply);
-        if (!started && plain) {
-          hideLoader(body);
-          started = true;
-        }
-        if (started) {
-          body.textContent = plain;
-          log.scrollTop = log.scrollHeight;
-        }
-      }
-      reply += decoder.decode();
       hideLoader(body);
-      body.textContent = toPlainReply(reply) || "The agent returned an empty reply.";
     } catch (error) {
-      if (error && error.name === "AbortError") return;
+      if (error && error.name === "AbortError") {
+        hideLoader(body);
+        body.textContent = "Reply stopped. You can ask again.";
+        return;
+      }
       hideLoader(body);
       body.textContent =
         error && error.message
           ? error.message
           : "Something went wrong sending that message. Please try again.";
     } finally {
+      if (abort !== request) return;
       asks.querySelectorAll("button").forEach(function (button) {
         button.disabled = false;
       });
@@ -498,7 +477,21 @@
     else showPicker();
   });
 
+  input.addEventListener("input", function () { if (walk && session) session.checkpoint(); });
+  log.addEventListener("scroll", function () { if (walk && session) session.checkpoint(); }, { passive: true });
+
   const parsed = parseHash();
-  if (parsed.id && WALKS[parsed.id]) startWalk(parsed.id, parsed.index);
+  if (carried && carried.context.walkId && Object.hasOwn(WALKS, carried.context.walkId)) {
+    startWalk(carried.context.walkId, carried.context.stationIndex);
+    const context = { walkId: walk.id, stationIndex: index };
+    const agent = walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA;
+    agent.resume(context, carried.history);
+    stopTyping();
+    setStatus("idle", "With you");
+    session.restore(log, carried.turns, appendTurn, walkConfig.agent === "oslo" ? window.UX_OSLO.render : null);
+    input.value = typeof carried.draft === "string" ? carried.draft.slice(0, 4000) : "";
+    window.requestAnimationFrame(function () { log.scrollTop = carried.scrollTop || 0; });
+    session.checkpoint();
+  } else if (parsed.id && WALKS[parsed.id]) startWalk(parsed.id, parsed.index);
   else setMode("pick");
 })();

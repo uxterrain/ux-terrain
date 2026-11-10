@@ -13,15 +13,20 @@
   const backBtn = document.getElementById("eda-back");
   const nextBtn = document.getElementById("eda-next");
   const dots = document.getElementById("eda-dots");
-  const walkId = openBtn && openBtn.getAttribute("data-eda-walk") || "m365";
-  const walk = window.EDA_WALKS && Object.hasOwn(window.EDA_WALKS, walkId) ? window.EDA_WALKS[walkId] : null;
+  const session = window.UX_GUIDE_SESSION;
+  const continuation = session && session.read();
+  const carried = continuation && continuation.guide === "eda" ? continuation : null;
+  const pageWalkId = openBtn && openBtn.getAttribute("data-eda-walk") || "m365";
+  const walkId = carried ? carried.context.walkId : openBtn && openBtn.getAttribute("data-eda-walk") || "m365";
+  let walk = window.EDA_WALKS && Object.hasOwn(window.EDA_WALKS, walkId) ? window.EDA_WALKS[walkId] : null;
   if (!panel || !openBtn || !log || !form || !input || !walk) return;
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const scroller = document.querySelector("#site-column main");
 
   let isOpen = false;
-  let index = 0;
+  let index = carried ? carried.context.stationIndex : 0;
+  if (!Number.isInteger(index) || index < 0 || index >= walk.stations.length) index = 0;
   let started = false;
   let typeTimer = 0;
   let abort = null;
@@ -33,6 +38,10 @@
 
   function station() {
     return walk.stations[index];
+  }
+
+  function idleLabel() {
+    return new URL(walk.readUrl, window.location.origin + "/").pathname === window.location.pathname ? "On this screen" : "Continuing " + walk.kicker;
   }
 
   function setStatus(state, label) {
@@ -57,7 +66,7 @@
   function anchorScreen(id) {
     const token = ++anchorToken;
     clearAnchor();
-    if (!id || !scroller) return;
+    if (!id || !scroller || new URL(walk.readUrl, window.location.origin + "/").pathname !== window.location.pathname) return;
     const target = scroller.querySelector('[data-eda-screen="' + id + '"]');
     if (!target) return;
     target.classList.add("is-eda-anchor");
@@ -92,13 +101,22 @@
       } else {
         anchorScreen(station().anchor);
       }
+      if (session) session.activate("eda", function () {
+        const context = { walkId: walk.id, stationIndex: index };
+        return { context, turns: session.capture(log), history: window.UX_EDA.history(context), draft: input.value, scrollTop: log.scrollTop };
+      });
       window.requestAnimationFrame(function () {
         input.focus();
       });
     } else {
+      if (session) session.clear("eda");
       clearAnchor();
-      if (abort) abort.abort();
-      if (panel.contains(document.activeElement)) openBtn.focus();
+      if (abort) { abort.abort(); abort = null; }
+      setBusy(false);
+      if (walk.id !== pageWalkId && Object.hasOwn(window.EDA_WALKS, pageWalkId)) {
+        walk = window.EDA_WALKS[pageWalkId]; index = 0; started = false;
+      }
+      if (panel.contains(document.activeElement)) (openBtn.hidden ? document.querySelector(".site-lockup") : openBtn).focus();
     }
   }
 
@@ -144,7 +162,7 @@
     if (reduceMotion) {
       hideLoader(body);
       body.textContent = text;
-      setStatus("idle", "On this screen");
+      setStatus("idle", idleLabel());
       return;
     }
     setStatus("walking", "Reading");
@@ -157,7 +175,7 @@
       log.scrollTop = log.scrollHeight;
       if (i >= text.length) {
         stopTyping();
-        setStatus("idle", "On this screen");
+        setStatus("idle", idleLabel());
       }
     }, 14);
     body.addEventListener(
@@ -165,7 +183,7 @@
       function () {
         stopTyping();
         body.textContent = text;
-        setStatus("idle", "On this screen");
+        setStatus("idle", idleLabel());
       },
       { once: true }
     );
@@ -204,14 +222,21 @@
     const st = station();
     if (!st) return;
     stopTyping();
-    if (abort) abort.abort();
+    if (abort) { abort.abort(); abort = null; }
 
+    window.UX_EDA.reset({ walkId: walk.id, stationIndex: index });
+    setBusy(false);
     stationEl.replaceChildren();
     const kicker = document.createElement("span");
-    kicker.textContent = pad(index + 1) + " / " + pad(walk.stations.length) + " · This screen";
+    kicker.textContent = pad(index + 1) + " / " + pad(walk.stations.length) + " · " + walk.kicker;
     const title = document.createElement("strong");
     title.textContent = st.title;
     stationEl.append(kicker, title);
+    if (new URL(walk.readUrl, window.location.origin + "/").pathname !== window.location.pathname) {
+      const source = document.createElement("a"); source.className = "guide-context-link accent-link";
+      source.href = walk.id === "floor" ? "/eda.html#floor/" + index : "/" + walk.readUrl; source.textContent = "View this screen →";
+      stationEl.appendChild(source);
+    }
 
     log.innerHTML = "";
     const body = appendTurn("agent", "");
@@ -263,64 +288,46 @@
     appendTurn("user", message);
     input.value = "";
     const body = appendTurn("agent", "");
-    abort = new AbortController();
+    const request = new AbortController();
+    abort = request;
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: abort.signal,
-        body: JSON.stringify({
-          message: message,
-          agent: "eda",
-          context: {
-            walkId: walk.id,
-            stationIndex: index,
-          },
-        }),
+      await window.UX_EDA.answer(message, body, { walkId: walk.id, stationIndex: index }, request.signal, function () {
+        log.scrollTop = log.scrollHeight;
       });
-      if (!response.ok) {
-        let detail = "The agent could not reply.";
-        try {
-          const payload = await response.json();
-          if (payload && payload.error) detail = payload.error;
-        } catch (parseError) {}
-        throw new Error(detail);
-      }
-      if (!response.body) throw new Error("Streaming is not available in this browser.");
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let reply = "";
-      let begun = false;
-      while (true) {
-        const chunk = await reader.read();
-        if (chunk.done) break;
-        reply += decoder.decode(chunk.value, { stream: true });
-        const plain = toPlainReply(reply);
-        if (!begun && plain) {
-          hideLoader(body);
-          begun = true;
-        }
-        if (begun) {
-          body.textContent = plain;
-          log.scrollTop = log.scrollHeight;
-        }
-      }
-      reply += decoder.decode();
       hideLoader(body);
-      body.textContent = toPlainReply(reply) || "The agent returned an empty reply.";
     } catch (error) {
-      if (error && error.name === "AbortError") return;
+      if (error && error.name === "AbortError") {
+        hideLoader(body);
+        body.textContent = "Reply stopped. You can ask again.";
+        return;
+      }
       hideLoader(body);
       body.textContent =
         error && error.message
           ? error.message
           : "Something went wrong sending that message. Please try again.";
     } finally {
+      if (abort !== request) return;
       setBusy(false);
-      setStatus("idle", "On this screen");
+      setStatus("idle", idleLabel());
       if (isOpen) input.focus();
     }
   }
+
+  if (carried) {
+    started = true;
+    renderStation();
+    const context = { walkId: walk.id, stationIndex: index };
+    window.UX_EDA.resume(context, carried.history);
+    session.restore(log, carried.turns, appendTurn);
+    stopTyping();
+    setStatus("idle", idleLabel());
+    input.value = typeof carried.draft === "string" ? carried.draft.slice(0, 4000) : "";
+    setOpen(true);
+    window.requestAnimationFrame(function () { log.scrollTop = carried.scrollTop || 0; });
+  }
+  input.addEventListener("input", function () { if (isOpen && session) session.checkpoint(); });
+  log.addEventListener("scroll", function () { if (isOpen && session) session.checkpoint(); }, { passive: true });
 
   openBtn.addEventListener("click", function () {
     setOpen(!isOpen);

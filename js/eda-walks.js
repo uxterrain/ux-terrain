@@ -175,8 +175,8 @@ window.EDA_WALKS = {
         "anchor": "path",
         "lede": "Distinguish tenant steps from Microsoft repair updates.",
         "visual": "image",
-        "src": "images/work/impact-metrics.png",
-        "alt": "Impact metrics and notification setup for Performance Monitoring",
+        "src": "images/work/outlook.png",
+        "alt": "Advisory overview and detail panel with impact and recommended action",
         "caption": "Distinguish tenant steps from Microsoft repair updates.",
         "tags": [],
         "say": "The advisory flow separates steps the tenant can take from repair information supplied by Microsoft. That distinction helps an admin understand their responsibility and what to follow next. Notification preferences also need clear labels and feedback, so choosing a channel or severity does not depend on interpreting an icon. Next is the impact chart.",
@@ -205,7 +205,7 @@ window.EDA_WALKS = {
         "anchor": "week",
         "lede": "Give incident categories and grouped events clear meaning.",
         "visual": "image",
-        "src": "images/work/historic-timeline.png",
+        "src": "images/work/historic-overview.png",
         "alt": "Historical timeline of incidents and advisories",
         "caption": "Give incident categories and grouped events clear meaning.",
         "tags": [],
@@ -401,7 +401,7 @@ window.EDA_WALKS = {
         "lede": "Make dependent selections and resulting changes understandable.",
         "caption": "Make dependent selections and resulting changes understandable.",
         "tags": [],
-        "say": "This exploration shows filter combinations that depend on additional data. If a selection adds an input, the interface needs to make that effect understandable. I’d check whether people can identify what changed, understand why, and adjust the selection. That is a question for the working interaction, beyond the flow diagram. Next is the map.",
+        "say": "These filters explain how a scenario depends on its inputs. Tougher soil and faster drill-bit wear make the business question concrete: could replacement parts be needed sooner? The original diagram maps drilling conditions to supporting data and a measurement. I’d check whether someone can identify the selected conditions, understand added inputs, and change the scenario. Next is the map.",
         "asks": [
           "What should happen when a filter adds another input?",
           "How could a user review or undo a selection?"

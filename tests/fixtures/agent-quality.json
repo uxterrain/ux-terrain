@@ -1,0 +1,160 @@
+[
+  {
+    "agent": "oslo",
+    "context": {
+      "projectId": "performance-monitoring"
+    },
+    "questions": [
+      "What did the designer personally contribute to M365, and what evidence is there that it helped?",
+      "Why did they remove historic timelines to prioritize real-time incidents?"
+    ]
+  },
+  {
+    "agent": "oslo",
+    "context": {
+      "projectId": "sbi"
+    },
+    "questions": [
+      "How did operating conditions inform the demand forecast, and what did the designer own?",
+      "Did that improve drill-bit life by 30%?"
+    ]
+  },
+  {
+    "agent": "oslo",
+    "context": {
+      "projectId": "zone-focus"
+    },
+    "questions": [
+      "Is FloTrak just an automatic filter app, or does AI teach the photographer?",
+      "Which of those features are demonstrated versus proposed?"
+    ]
+  },
+  {
+    "agent": "eda",
+    "context": {
+      "walkId": "m365",
+      "stationIndex": 3
+    },
+    "questions": [
+      "Can you confirm that this chart meets WCAG contrast and keyboard requirements?",
+      "Which one would you check first, and how?"
+    ]
+  },
+  {
+    "agent": "eda",
+    "context": {
+      "walkId": "sbi",
+      "stationIndex": 2
+    },
+    "questions": [
+      "What should someone understand when changing the filters?",
+      "How would you test that without a mouse?"
+    ]
+  },
+  {
+    "agent": "eda",
+    "context": {
+      "walkId": "zone",
+      "stationIndex": 2
+    },
+    "questions": [
+      "What should happen if the flash connection drops?",
+      "Does that mean the current prototype already reconnects automatically?"
+    ]
+  },
+  {
+    "agent": "oslo",
+    "context": {
+      "projectId": "systems"
+    },
+    "questions": [
+      "Is this design-system workflow a deployed pipeline, or a proposed approach?"
+    ]
+  },
+  {
+    "agent": "oslo",
+    "context": {
+      "projectId": "armada"
+    },
+    "questions": [
+      "What did Jimmy design for the live fleet map, and did he build the autonomous flight algorithms?"
+    ]
+  },
+  {
+    "agent": "oslo",
+    "context": {
+      "projectId": "iqvia"
+    },
+    "questions": [
+      "What did Jimmy contribute to the review workflow? Did he guarantee regulatory approval?"
+    ]
+  },
+  {
+    "agent": "oslo",
+    "context": {
+      "projectId": "oslo"
+    },
+    "questions": [
+      "Does Oslo guarantee that every answer is accurate?"
+    ]
+  },
+  {
+    "agent": "oslo",
+    "context": {
+      "projectId": "eda"
+    },
+    "questions": [
+      "Does Eda scan the page and certify WCAG compliance?"
+    ]
+  },
+  {
+    "agent": "eda",
+    "context": {
+      "walkId": "armada",
+      "stationIndex": 0
+    },
+    "questions": [
+      "What would you check so an incident is understandable without relying only on the map?"
+    ]
+  },
+  {
+    "agent": "eda",
+    "context": {
+      "walkId": "iqvia",
+      "stationIndex": 0
+    },
+    "questions": [
+      "Can you confirm the keyboard focus order works correctly?"
+    ]
+  },
+  {
+    "agent": "eda",
+    "context": {
+      "walkId": "oslo",
+      "stationIndex": 0
+    },
+    "questions": [
+      "Does the AI badge prove this guide is accessible?"
+    ]
+  },
+  {
+    "agent": "eda",
+    "context": {
+      "walkId": "eda",
+      "stationIndex": 0
+    },
+    "questions": [
+      "Does this guide run a real accessibility audit?"
+    ]
+  },
+  {
+    "agent": "eda",
+    "context": {
+      "walkId": "floor",
+      "stationIndex": 0
+    },
+    "questions": [
+      "Does choosing WCAG 2.2 as a target prove these case studies comply?"
+    ]
+  }
+]

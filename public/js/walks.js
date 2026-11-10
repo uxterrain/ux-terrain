@@ -140,9 +140,9 @@ window.UX_WALKS = {
         "title": "Advisories people can act on",
         "lede": "Tenant-level problems get steps. Microsoft-level incidents stay honest about repair work already in motion.",
         "visual": "image",
-        "src": "images/work/impact-metrics.png",
-        "alt": "Impact metrics and notification setup for Performance Monitoring",
-        "caption": "Notifications across email, phone, and SMS, with severity and tenant filters so urgent issues actually interrupt.",
+        "src": "images/work/outlook.png",
+        "alt": "Advisory overview and detail panel with impact and recommended action",
+        "caption": "Advisory details connect estimated impact, infrastructure context, and recommended action.",
         "tags": [
           "Advisories",
           "Tenant vs Microsoft",
@@ -173,18 +173,18 @@ window.UX_WALKS = {
         ]
       },
       {
-        "title": "Outlook, where the crash already is",
-        "lede": "Proactive alerts stay inside a familiar client instead of asking admins to open yet another console.",
+        "title": "Investigate Outlook crash details",
+        "lede": "Bring client versions, reliability measures, and failure details into the investigation.",
         "visual": "image",
-        "src": "images/work/outlook.png",
+        "src": "images/work/outlook-crash-detail.png",
         "alt": "Outlook integration showing crash and performance signals",
-        "caption": "Built with the Outlook team: crash signals named in the place people already work.",
+        "caption": "Outlook collaboration: a crash-detail view in the monitoring experience.",
         "tags": [
           "Outlook",
           "Crash signals",
-          "Native, not bolted on"
+          "Crash investigation"
         ],
-        "say": "The Outlook collaboration brings crash and performance signals into the client experience. It extends the monitoring story beyond the Admin Center. The prototype work also connected investigation states, conditional copy, and page transitions so research participants and engineering partners could review a flow rather than only isolated screens. That is the end of this walk. You can read the full case, ask a question, or choose another walk.",
+        "say": "The Outlook collaboration brought client crash information into the monitoring investigation. The crash-detail view combines channel and build information, session counts, reliability measures, and a failure list. The prototype work also connected investigation states, conditional copy, and page transitions so research participants and engineering partners could review a flow rather than only isolated screens. That is the end of this walk. You can read the full case, ask a question, or choose another walk.",
         "asks": [
           "What does the case document about Outlook?",
           "How were prototypes used in research and engineering reviews?"

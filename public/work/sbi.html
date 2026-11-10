@@ -177,7 +177,7 @@
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
                   A forecast needed to be considered alongside inventory, purchasing, and financial information. The dashboard brought these views together so executives and sales stakeholders could examine potential demand in the context of stock on hand and the business’s purchasing position.
                 </p>
-                <figure class="case-figure mt-8 rounded-2xl" data-eda-screen="gap">
+                <figure class="case-figure sbi-business-figure mt-8 rounded-2xl" data-eda-screen="gap">
                   <img
                     src="../images/work/sbi-insights.png"
                     alt="Predicted inventory gap drill-down and BLPS operations dashboard with financial and inventory modules"
@@ -204,18 +204,12 @@
 
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">03</p>
-                <h2 id="oslo-evidence-6" class="font-serif mt-2 text-3xl tracking-tight">Separate what needs attention from what needs watching</h2>
-                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                  The real-time section of the application map separated two jobs. “Action Flow” grouped alerts and recommendations. “My Indicators” grouped KPIs, market prices, market activity, and competitor information. That distinction shaped how I organized the dashboard: give leadership a place to notice an issue, then the context to examine what it could mean for sales, purchasing, and inventory.
-                </p>
-                <figure class="sbi-question-map mt-8" aria-labelledby="sbi-map-caption">
-                  <div class="sbi-map-root"><span class="sbi-map-label">Real-time signals</span><h3 class="font-serif">What needs attention—and what should we keep watching?</h3></div>
-                  <div class="sbi-map-branches sbi-map-branches-two">
-                    <div class="sbi-map-branch"><span class="sbi-map-label">Action Flow</span><h4>Bring attention to a change</h4><ul class="sbi-map-items"><li>Alerts</li><li>Recommendations</li></ul><p>The map gives items that may need a response their own route.</p></div>
-                    <div class="sbi-map-branch"><span class="sbi-map-label">My Indicators</span><h4>Keep the business context close</h4><ul class="sbi-map-items"><li>KPI indicators</li><li>Market prices</li><li>Market activity</li><li>Competitor information</li></ul><p>A separate route supports monitoring and investigation.</p></div>
-                  </div>
-                  <div class="sbi-map-result"><span class="sbi-map-label">Why the distinction matters</span><p>An alert raises a question. The surrounding indicators help leadership judge what it means before making a purchasing or inventory decision.</p></div>
-                  <figcaption id="sbi-map-caption">Simplified detail of the original map’s real-time branches; the business interpretation explains the design rationale. <a class="accent-link" href="../images/work/sbi-02.png" target="_blank" rel="noopener">Open the original detailed map ↗</a></figcaption>
+                <h2 id="oslo-evidence-6" class="font-serif mt-2 text-3xl tracking-tight">Make the relationship between operating data and demand visible</h2>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">The executives knew the machinery and the market. The design challenge was to connect that knowledge with operating data: how equipment was being used, which conditions could accelerate wear, and what that might mean for replacement-part demand. A forecast needed to be something they could examine, not just a number to accept.</p>
+                <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">These chart explorations put recorded data beside a dashed simulation, with weekly, monthly, and yearly views, a selected time window, and controls for data types and measurements. I explored how those controls could help leadership compare signals and scenarios while keeping the underlying data in view. Market activity supplied business context; rig data supplied operating context. Together, they informed the question of which parts might be needed and when.</p>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <a href="../images/work/sbi-07.png" target="_blank" rel="noopener" aria-label="Open the SBI forecasting chart explorations at full size"><img src="../images/work/sbi-07.png" alt="Forecasting chart explorations showing recorded series, dashed simulations, time-range selection, and data-type and measurement controls" /></a>
+                  <figcaption>Chart explorations: compare recorded data with simulations, select a period, and examine different data types and measurements. Select to view the original at full size.</figcaption>
                 </figure>
               </div>
 
@@ -229,31 +223,25 @@
                   <img src="../images/work/sbi-04.png" alt="Paper workshop mapping rig conditions and simulation onto a dashboard sketch" />
                   <figcaption>Workshop sketches comparing rig conditions with simulation ideas.</figcaption>
                 </figure>
-                <div class="case-figure-pair">
-                  <figure class="case-figure rounded-2xl">
-                    <img src="../images/work/sbi-06.png" alt="Early SBI dashboard with rig count, simulation forecast, and operations tables" />
-                    <figcaption>Dashboard A: live series beside a five-day simulation.</figcaption>
-                  </figure>
-                  <figure class="case-figure rounded-2xl">
-                    <img src="../images/work/sbi-07.png" alt="Chart module explorations for oil rig count, simulation, and value analysis" />
-                    <figcaption>Chart explorations for downtime windows, overlays, and measurement controls.</figcaption>
-                  </figure>
-                </div>
+                <figure class="case-figure mt-8 rounded-2xl">
+                  <img src="../images/work/sbi-06.png" alt="Early SBI dashboard with rig count, simulation forecast, and operations tables" />
+                  <figcaption>Dashboard A: live series beside a five-day simulation, with operational measures available below.</figcaption>
+                </figure>
               </div>
 
               <div>
                 <p class="font-mono text-xs uppercase tracking-widest" style="color: var(--color-accent)">05</p>
-                <h2 id="oslo-evidence-8" class="font-serif mt-2 text-3xl tracking-tight">Include the data a filter combination needs</h2>
+                <h2 id="oslo-evidence-8" class="font-serif mt-2 text-3xl tracking-tight">Make the assumptions behind a scenario understandable</h2>
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                  Some requested views depended on additional operating data. The filter exploration mapped those dependencies so a selection could include the inputs needed for the requested measure. The design question was how to support that relationship without asking stakeholders to reconstruct it themselves.
+                  The filter combinations were a way to explain scenario logic. An operating condition changes which data matters, and that changes how a forecast should be interpreted. For example, tougher soil can make drill bits wear faster. Connecting that condition with equipment usage could help estimate when replacements would be needed and when demand for those parts might increase.
                 </p>
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
-                  The diagram records the original filter terminology and relationships. It illustrates the interaction logic; it is not a specification of how equipment life was calculated.
+                  My task was to make those dependencies understandable in the interface: which conditions were selected, which supporting inputs were needed, and which measure the combination produced. The original exploration below maps drilling scenarios through an “Auto add” step to a resulting measurement. It shows how I worked through the logic before presenting it as dashboard controls.
                 </p>
                 <figure class="case-figure mt-8 rounded-2xl" data-eda-screen="filters">
                   <img src="../images/work/sbi-08.png" alt="Filter combinations that auto-add drilling clockwise data to reach a Producing measurement" />
                   <figcaption>
-                    A filter-dependency exploration showing the additional data needed for a selected measure.
+                    Original scenario-logic exploration: selected drilling conditions, supporting data, and the resulting measure. The drill-bit example explains the broader forecasting use case; it is not a label in this diagram.
                   </figcaption>
                 </figure>
               </div>
@@ -391,6 +379,7 @@
         </div>
       </aside>
     </div>
+    <script src="../js/guide-session.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/eda-walks.js?v=20261102-copy2"></script>
     <script src="../js/eda-case.js"></script>

@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const vm = require("node:vm");
-const { walks, resolveEdaContext } = require("../lib/eda-context");
+const { walks, resolveEdaContext, correctionFor, validateReply } = require("../lib/eda-context");
 const root = path.join(__dirname, "..");
 let total = 0;
 for (const id of ["floor", "m365", "zone", "armada", "sbi", "iqvia", "oslo", "eda"]) {
@@ -35,3 +35,11 @@ assert.equal(flashContext.walkId,"zone");
 assert.ok(!/Microsoft|tenant|Service Restored/i.test(JSON.stringify(flashContext)));
 for (const file of ["js/eda-case.js", "js/eda-walks.js", "js/walk.js", "js/about-curtain.js"]) new vm.Script(fs.readFileSync(path.join(root,file),"utf8"));
 console.log("PASS " + total + " concise stations across eight walks; case entry points, screen anchors, image paths, trusted context, invalid IDs, and scripts.");
+
+assert.match(correctionFor("Does the AI badge mean this meets accessibility standards?"), /only tells you that AI is used/);
+assert.equal(correctionFor("Why is there an AI badge?"), null);
+for (const raw of [{}, {answer: ""}, {answer: 4}, {answer: "x".repeat(2001)}]) assert.throws(()=>validateReply(raw));
+assert.equal(validateReply({answer:" A checked reply. "}), "A checked reply.");
+assert.match(correctionFor('Does it already reconnect automatically?', {walkId:'zone'}), /isn’t established/);
+assert.equal(correctionFor('Does it already reconnect automatically?', {walkId:'sbi'}), null);
+assert.match(correctionFor('What should someone understand?', resolveEdaContext({walkId:'sbi',stationIndex:2})), /aren’t controls shown/);

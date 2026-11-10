@@ -73,3 +73,15 @@ test("known historical-context mistake gets an evidence-backed correction", () =
   assert.equal(correctionFor("Why was history removed?", contextFor({projectId:"sbi"})), null);
 });
 console.log(passed + " checks passed.");
+test('confirmed capability and outcome regressions use authored, scoped corrections', () => {
+  const flotrak = contextFor({projectId:'zone-focus'});
+  const teaching = correctionFor('Is this an automatic filter app?', flotrak);
+  assert.match(teaching.claims[0].text, /student chooses/i);
+  const maturity = correctionFor('Which features are demonstrated versus proposed?', flotrak);
+  assert.ok(maturity.claims.some(c=>c.text.includes('AI answers when configured')));
+  assert.ok(maturity.claims.some(c=>c.text.includes('earlier prototype')));
+  const outcome = correctionFor('What did Jimmy personally contribute and what evidence shows it helped?', contextFor({projectId:'performance-monitoring'}));
+  assert.ok(outcome.claims.some(c=>c.text.includes('qualitative account')));
+  assert.ok(outcome.claims.some(c=>c.kind==='gap' && c.text.includes('numeric')));
+  assert.equal(correctionFor('Is this an automatic filter app?', contextFor({projectId:'sbi'})), null);
+});

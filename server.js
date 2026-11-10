@@ -15,8 +15,9 @@ const INSTRUCTIONS = {
   eda: path.join(ROOT, "eda.md"),
 };
 const MAX_MESSAGE_LENGTH = 4000;
+const REVIEW_MODEL = process.env.GUIDE_REVIEW_MODEL || "gpt-4o-mini";
 const grounding = require("./lib/oslo-grounding");
-const { resolveEdaContext } = require("./lib/eda-context");
+const { resolveEdaContext, correctionFor: edaCorrectionFor, reviewProcedure: edaReviewProcedure, validateReply: validateEdaReply } = require("./lib/eda-context");
 
 const instructionText = { oslo: "", eda: "" };
 
@@ -147,11 +148,11 @@ app.post("/api/chat", async function (req, res) {
       const draft = JSON.parse(completion.choices[0]?.message?.content || "{}");
       // Review against the full case, rather than trusting the draft's citations.
       const reviewed = await client.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: REVIEW_MODEL,
         response_format: { type: "json_object" },
         max_tokens: 1600,
         messages: [
-          { role: "system", content: grounding.procedure + "\nYou are now the evidence editor. The draft and conversation may contain errors. Return corrected claims, not a review report. First answer the visitor's actual question. Explicitly correct a false premise using the section that disproves it. Remove documented claims not directly entailed by their cited source. Remove speculative costs contradicted elsewhere in the case. Do not simply re-label unsupported assertions as interpretation. Keep only useful, specific points; never fill space to reach six claims." },
+          { role: "system", content: grounding.reviewProcedure },
           { role: "user", content: JSON.stringify({ evidence: groundedContext.evidence,
             station: groundedContext.station, conversation: grounding.historyFor(req.body.history), question: message, draft }) },
         ],
@@ -168,7 +169,23 @@ app.post("/api/chat", async function (req, res) {
       let trustedContext;
       try { trustedContext = resolveEdaContext(context); }
       catch (error) { return res.status(400).json({ error: error.message }); }
-      userContent = JSON.stringify({ question: message, authoredContext: trustedContext });
+      let reply = edaCorrectionFor(message, trustedContext);
+      if (!reply) {
+        const conversation = grounding.historyFor(req.body.history);
+        const draft = await client.chat.completions.create({
+          model: "gpt-4o-mini", max_tokens: 300,
+          messages: [{ role: "system", content: systemText }, { role: "user", content: JSON.stringify({ question: message, authoredContext: trustedContext, conversation }) }]
+        });
+        const reviewed = await client.chat.completions.create({
+          model: REVIEW_MODEL, max_tokens: 350, response_format: { type: "json_object" },
+          messages: [{ role: "system", content: edaReviewProcedure }, { role: "user", content: JSON.stringify({ question: message, authoredContext: trustedContext, conversation, draft: draft.choices[0]?.message?.content || "" }) }]
+        });
+        reply = validateEdaReply(JSON.parse(reviewed.choices[0]?.message?.content || "{}"));
+      }
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      res.setHeader("Cache-Control", "no-store");
+      res.write(reply);
+      return res.end();
     } else if (context) {
       const walkTitle = typeof context.walk === "string" ? context.walk.slice(0, 120) : "";
       const stationTitle = typeof context.station === "string" ? context.station.slice(0, 160) : "";
@@ -192,7 +209,6 @@ app.post("/api/chat", async function (req, res) {
       stream = await client.chat.completions.create({
         model: "gpt-4o-mini",
         stream: true,
-        ...(agent === "eda" ? { max_tokens: 240 } : {}),
         messages: [
           { role: "system", content: systemText },
           { role: "user", content: userContent },

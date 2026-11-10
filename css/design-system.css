@@ -2594,3 +2594,11 @@ html.is-walk-entering .walk-stage .walk-rail {
 .site-mark { width: 1.75rem; height: 1.75rem; flex: 0 0 auto; }
 .site-lockup > span { word-spacing: -.12em; }
 
+/* Match the inset screenshot presentation already baked into Oslo’s thumbnail. */
+.work-card-media.eda-thumbnail { display: flex; align-items: center; justify-content: center; background: #000; }
+.work-card-media.eda-thumbnail img.work-card-eda { width: 74%; height: auto; max-height: 80%; object-fit: contain; border-radius: .65rem; }
+.sbi-business-figure { width: 100%; max-width: 52rem; margin-inline: auto; }
+
+.guide-conversation-context { margin-top: .5rem; color: var(--color-text-muted); font: .7rem var(--font-mono); }
+
+.guide-context-link { display: inline-block; margin-top: .5rem; font-size: .8rem; line-height: 1.4; }

@@ -3,9 +3,48 @@
 
   // Shared by the sidebar and Oslo walks. No model-provided HTML or URLs execute.
   const osloConversations = new Map();
+  function conversationScope(context) {
+    return context.walkId ? "walk:" + context.walkId + ":" + context.stationIndex : "project:" + (context.projectId || "portfolio");
+  }
+  const session = window.UX_GUIDE_SESSION;
+  function cleanHistory(input) {
+    return Array.isArray(input) ? input.slice(-6).filter(turn => turn && ["user", "assistant"].includes(turn.role) && typeof turn.content === "string").map(turn => ({ role: turn.role, content: turn.content.slice(0, 3000) })) : [];
+  }
+  function renderOsloAnswer(result, body) {
+    const safe = { claims: Array.isArray(result.claims) ? result.claims.filter(claim => claim && typeof claim.text === "string" && ["documented", "interpretation", "gap"].includes(claim.kind)).slice(0, 3) : [] };
+    body.osloAnswer = safe;
+    body.replaceChildren();
+    const sources = new Map();
+    safe.claims.forEach(function (claim) {
+      const item = document.createElement("span");
+      item.className = "oslo-claim";
+      if (claim.kind === "interpretation") {
+        const label = document.createElement("strong"); label.textContent = "Design analysis. "; item.appendChild(label);
+      }
+      item.appendChild(document.createTextNode(claim.text));
+      (Array.isArray(claim.evidence) ? claim.evidence : []).forEach(function (source) {
+        if (!source || typeof source.title !== "string" || !/^\/(?:work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda)|systems)\.html#(?:oslo-evidence-\d+|(?:shifts|cut|core|trail|lay|proof|contact)-title)$/.test(source.url)) return;
+        sources.set(source.url, source);
+      });
+      body.appendChild(item);
+    });
+    if (sources.size) {
+      const references = document.createElement("span"); references.className = "oslo-evidence-list";
+      references.setAttribute("aria-label", "Supporting project sections");
+      sources.forEach(function (source) {
+        const link = document.createElement("a"); link.className = "oslo-evidence accent-link"; link.href = source.url; link.textContent = source.title;
+        references.appendChild(link);
+      });
+      body.appendChild(references);
+    }
+  }
   window.UX_OSLO = {
+    render: renderOsloAnswer,
+    history(context) { return cleanHistory(osloConversations.get(conversationScope(context))); },
+    resume(context, history) { osloConversations.set(conversationScope(context), cleanHistory(history)); },
+    reset(context) { osloConversations.delete(conversationScope(context)); },
     async answer(message, body, context, signal) {
-      const scope = context.walkId ? "walk:" + context.walkId + ":" + context.stationIndex : "project:" + (context.projectId || "portfolio");
+      const scope = conversationScope(context);
       const history = osloConversations.get(scope) || [];
       const response = await fetch("/api/chat", {
         method: "POST", headers: { "Content-Type": "application/json" }, signal: signal,
@@ -16,26 +55,47 @@
       if (signal && signal.aborted) return;
       if (!Array.isArray(result.claims)) throw new Error("Oslo returned an incomplete answer. Please try again.");
       const answerText = result.claims.map(claim => claim.kind + ": " + claim.text).join("\n");
-      // Memory lives only in this page, is bounded, and is isolated by project/station.
+      // Memory is bounded per project/station; open guides can carry it within this tab.
       osloConversations.set(scope, history.concat([{role: "user", content: message}, {role: "assistant", content: answerText}]).slice(-6));
-      body.replaceChildren();
-      (result.claims || []).forEach(function (claim) {
-        const item = document.createElement("span");
-        item.className = "oslo-claim";
-        const label = document.createElement("strong");
-        label.textContent = { documented: "From the case study. ", interpretation: "Design interpretation. ", gap: "Not documented. " }[claim.kind] || "";
-        item.append(label, document.createTextNode(claim.text));
-        (claim.evidence || []).forEach(function (source) {
-          // Defense in depth: only local authored case-study section destinations.
-          if (!/^\/(?:work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda)|systems)\.html#(?:oslo-evidence-\d+|(?:shifts|cut|core|trail|lay|proof|contact)-title)$/.test(source.url)) return;
-          const link = document.createElement("a");
-          link.className = "oslo-evidence accent-link";
-          link.href = source.url;
-          link.textContent = "View evidence: " + source.title;
-          item.appendChild(link);
-        });
-        body.appendChild(item);
+      renderOsloAnswer(result, body);
+      if (session) session.checkpoint();
+    }
+  };
+
+  const edaConversations = new Map();
+  window.UX_EDA = {
+    history(context) { return cleanHistory(edaConversations.get(conversationScope(context))); },
+    resume(context, history) { edaConversations.set(conversationScope(context), cleanHistory(history)); },
+    reset(context) { edaConversations.delete(conversationScope(context)); },
+    async answer(message, body, context, signal, onUpdate) {
+      const scope = conversationScope(context);
+      const history = edaConversations.get(scope) || [];
+      const response = await fetch("/api/chat", {
+        method: "POST", headers: { "Content-Type": "application/json" }, signal,
+        body: JSON.stringify({ agent: "eda", message, context, history })
       });
+      if (!response.ok) {
+        let detail = "Eda couldn’t answer. Please try again.";
+        try { detail = (await response.json()).error || detail; } catch (_) {}
+        throw new Error(detail);
+      }
+      if (!response.body) throw new Error("The reply could not load. Please try again.");
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let reply = "";
+      while (true) {
+        const chunk = await reader.read();
+        if (signal && signal.aborted) { await reader.cancel(); return; }
+        if (chunk.done) break;
+        reply += decoder.decode(chunk.value, { stream: true });
+        body.textContent = reply;
+        if (onUpdate) onUpdate();
+      }
+      reply = (reply + decoder.decode()).trim();
+      if (!reply) throw new Error("Eda returned an empty reply. Please try again.");
+      body.textContent = reply;
+      edaConversations.set(scope, history.concat([{ role: "user", content: message }, { role: "assistant", content: reply }]).slice(-6));
+      if (session) session.checkpoint();
     }
   };
 
@@ -112,6 +172,16 @@
 
     let isOpen = false;
     let lastFocus = null;
+    const continuation = session && session.read();
+    let conversationContext = continuation && continuation.guide === "oslo" ? continuation.context : null;
+    function currentContext() {
+      const match = window.location.pathname.match(/\/work\/([^/]+)\.html$/);
+      return match ? { projectId: match[1] } : window.location.pathname === "/systems.html" ? { projectId: "systems" } : {};
+    }
+    function snapshot() {
+      const context = conversationContext || currentContext();
+      return { context, turns: session.capture(log), history: window.UX_OSLO.history(context), draft: input.value, scrollTop: log.scrollTop };
+    }
 
     function setOpen(open) {
       isOpen = open;
@@ -128,11 +198,14 @@
       panel.inert = !open;
 
       if (open) {
+        if (session) session.activate("oslo", snapshot);
         window.requestAnimationFrame(function () {
           input.focus();
         });
-      } else if (lastFocus && typeof lastFocus.focus === "function") {
-        lastFocus.focus();
+      } else {
+        if (session) session.clear("oslo");
+        conversationContext = null;
+        if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
       }
     }
 
@@ -206,10 +279,8 @@
     }
 
     async function streamAgentReply(message, body) {
-      const match = window.location.pathname.match(/\/work\/([^/]+)\.html$/);
-      const context = match ? { projectId: match[1] } :
-        window.location.pathname === "/systems.html" ? { projectId: "systems" } : {};
-      await window.UX_OSLO.answer(message, body, context);
+      if (!conversationContext) conversationContext = currentContext();
+      await window.UX_OSLO.answer(message, body, conversationContext);
       hideAgentLoader(body);
     }
 
@@ -234,6 +305,23 @@
         input.focus();
       }
     }
+
+    if (continuation && continuation.guide === "oslo") {
+      const names = {"performance-monitoring":"M365",sbi:"SBI",armada:"Armada",iqvia:"IQVIA","zone-focus":"FloTrak",systems:"Systems",oslo:"Oslo",eda:"Eda",m365:"M365",ground:"Systems"};
+      const project = conversationContext.projectId || conversationContext.walkId;
+      if (project && project !== currentContext().projectId) {
+        const note = document.createElement("p"); note.className = "guide-conversation-context";
+        note.textContent = "Continuing " + (names[project] || "this conversation");
+        panel.querySelector("header > div").appendChild(note);
+      }
+      window.UX_OSLO.resume(conversationContext, continuation.history);
+      session.restore(log, continuation.turns, appendMessage, window.UX_OSLO.render);
+      input.value = typeof continuation.draft === "string" ? continuation.draft.slice(0, 4000) : "";
+      setOpen(true);
+      window.requestAnimationFrame(function () { log.scrollTop = continuation.scrollTop || 0; });
+    }
+    input.addEventListener("input", function () { if (isOpen && session) session.checkpoint(); });
+    log.addEventListener("scroll", function () { if (isOpen && session) session.checkpoint(); }, { passive: true });
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -301,8 +389,9 @@
     }
 
     document.addEventListener("click", function (event) {
+      if (event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const link = event.target.closest("a[href]");
-      if (!link) return;
+      if (!link || link.target === "_blank") return;
       const href = link.getAttribute("href");
       if (!href || href.indexOf("#") === -1) return;
 
@@ -312,7 +401,7 @@
       } catch (error) {
         return;
       }
-      if (url.pathname !== window.location.pathname) return;
+      if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) return;
 
       event.preventDefault();
       if (url.hash) {

@@ -342,7 +342,7 @@
               </a>
 
             <a class="surface work-card group block overflow-hidden rounded-2xl" href="work/eda.html">
-              <div class="work-card-media">
+              <div class="work-card-media eda-thumbnail">
                 <img
                   class="work-card-eda"
                   src="images/work/card-eda.png"
@@ -462,8 +462,54 @@
 
         </div>
       </aside>
+      <button id="eda-open" type="button" data-eda-walk="m365" hidden aria-controls="eda-panel" aria-expanded="false">Continue with Eda</button>
+<aside
+        id="eda-panel"
+        class="eda-panel flex h-full w-0 max-w-0 shrink-0 flex-col overflow-hidden"
+        role="complementary"
+        aria-labelledby="eda-title"
+        aria-hidden="true"
+        inert
+      >
+        <header class="walk-rail-head">
+          <div>
+            <h2 id="eda-title" class="font-serif text-2xl tracking-tight">Eda</h2>
+            <div class="agent-caption"><p id="eda-status" class="walk-rail-status mt-1" data-state="idle">On this screen</p><span class="ai-guide-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m10 2 1.9 5.8L18 10l-6.1 2.2L10 18l-1.9-5.8L2 10l6.1-2.2L10 2Z" stroke-linejoin="round"/></svg>AI-powered</span></div>
+          </div>
+          <button id="eda-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </header>
+        <p id="eda-station" class="eda-station"></p>
+        <div id="eda-log" class="walk-log" aria-live="polite"></div>
+        <div id="eda-asks" class="walk-asks" aria-label="Suggested questions"></div>
+        <form id="eda-form" class="walk-form">
+          <label class="sr-only" for="eda-input">Ask Eda</label>
+          <input
+            id="eda-input"
+            class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+            type="text"
+            name="message"
+            autocomplete="off"
+            placeholder="Ask about this screen…"
+          />
+          <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Ask</button>
+        </form>
+        <div class="walk-foot">
+          <div id="eda-dots" class="walk-dots" role="navigation" aria-label="Screens"></div>
+          <div class="walk-nav">
+            <button id="eda-back" type="button">← Back</button>
+            <button id="eda-next" class="walk-next" type="button">Next →</button>
+          </div>
+        </div>
+      </aside>
     </div>
 
+    <script src="js/guide-session.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/eda-walks.js?v=20261106-session"></script>
+    <script src="js/eda-case.js"></script>
   </body>
 </html>
