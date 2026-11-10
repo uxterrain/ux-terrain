@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light" class="is-walk-picking">
+<html lang="en" data-theme="dark" class="is-walk-picking">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,9 +22,7 @@
           var theme =
             stored === "light" || stored === "dark"
               ? stored
-              : window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light";
+              : "dark";
           document.documentElement.setAttribute("data-theme", theme);
         } catch (e) {}
       })();
@@ -58,7 +56,6 @@
             <a class="text-sm font-medium hover:underline underline-offset-4" href="index.html#contact" style="color: var(--color-text-muted)">Contact</a>
           </nav>
           <div class="flex items-center gap-3">
-            <a class="text-sm font-medium" href="index.html" style="color: var(--color-text-muted)">Exit walk</a>
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
               <svg class="icon-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z" />
@@ -138,7 +135,10 @@
                   Questions for this station
                 </p>
               </div>
-              <button id="walk-change" class="agent-close text-sm" type="button">Change walk</button>
+              <div class="walk-rail-actions">
+                <button id="walk-change" class="agent-close text-sm" type="button">Change walk</button>
+                <a class="walk-exit" href="index.html#work">Exit walk</a>
+              </div>
             </div>
             <div id="walk-log" class="walk-log" aria-live="polite"></div>
             <div id="walk-asks" class="walk-asks" aria-label="Suggested questions"></div>

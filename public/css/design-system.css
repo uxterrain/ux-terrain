@@ -2643,3 +2643,17 @@ html.is-walk-entering .walk-stage .walk-rail {
 .walk-guide-group .walk-choices { margin-top: 1.25rem; }
 a.walk-choice { text-decoration: none; }
 .walk-guide-eda .walk-choice-kicker, .walk-guide-eda .walk-choice-go, .walk-guide-eda .walk-guide-ai { color: var(--eda); }
+
+/* Dedicated walks keep the guide aligned with the full-height site drawers. */
+.walk-rail-actions { display: flex; flex-direction: column; align-items: flex-end; gap: .4rem; flex-shrink: 0; }
+.walk-exit { color: var(--color-text-muted); font-family: var(--font-sans); font-size: .75rem; text-decoration: none; }
+.walk-exit:hover, .walk-exit:focus-visible { color: var(--color-text); text-decoration: underline; text-underline-offset: .2em; }
+@media (min-width: 960px) {
+  html.is-walking .walk-shell { padding-right: var(--agent-width); }
+  html.is-walking .walk-stage .walk-rail { position: fixed; inset: 0 0 0 auto; width: var(--agent-width); height: 100dvh; max-height: 100%; z-index: 60; }
+}
+@media (min-width: 960px) and (max-width: 1279px) {
+  html.is-walking .walk-header nav[aria-label="Primary"] { display: none; }
+  html.is-walking .walk-header #nav-toggle { display: inline-flex; }
+  html.is-walking .walk-header #nav-menu:not(.hidden) { display: block; }
+}

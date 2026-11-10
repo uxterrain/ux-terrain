@@ -102,11 +102,11 @@
   const THEME_KEY = "ux-terrain-theme";
 
   function getPreferredTheme() {
-    const stored = localStorage.getItem(THEME_KEY);
-    if (stored === "light" || stored === "dark") return stored;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    try {
+      const stored = localStorage.getItem(THEME_KEY);
+      if (stored === "light" || stored === "dark") return stored;
+    } catch (_) {}
+    return "dark";
   }
 
   function applyTheme(theme) {
@@ -132,7 +132,7 @@
         document.documentElement.getAttribute("data-theme") === "dark"
           ? "light"
           : "dark";
-      localStorage.setItem(THEME_KEY, next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
       applyTheme(next);
     });
   }

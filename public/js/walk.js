@@ -446,6 +446,16 @@
     });
   });
 
+  // Site navigation is an intentional exit, unlike evidence inspected inside the walk.
+  document.querySelectorAll(".walk-exit, .walk-header a[href]").forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      if (event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === "_blank" || link.hasAttribute("download")) return;
+      if (session) session.clear(walkConfig.agent);
+      stopTyping();
+      if (abort) { abort.abort(); abort = null; }
+    });
+  });
+
   if (changeBtn) {
     changeBtn.addEventListener("click", function () {
       showPicker();
