@@ -175,7 +175,7 @@
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
                   A forecast needed to be considered alongside inventory, purchasing, and financial information. The dashboard brought these views together so executives and sales stakeholders could examine potential demand in the context of stock on hand and the business’s purchasing position.
                 </p>
-                <figure class="case-figure sbi-business-figure mt-8 rounded-2xl" data-eda-screen="gap">
+                <figure id="sbi-business-evidence" class="case-figure sbi-business-figure mt-8 rounded-2xl" data-eda-screen="gap">
                   <img
                     src="../images/work/sbi-insights.png"
                     alt="Predicted inventory gap drill-down and BLPS operations dashboard with financial and inventory modules"
@@ -192,12 +192,49 @@
                 <p class="mt-4 max-w-2xl text-base leading-relaxed" style="color: var(--color-text-muted)">
                   A drill bit makes the opportunity concrete. Usage data could help estimate wear and remaining useful life. That estimate could then inform when a replacement might be needed—and when SBI’s leadership should consider buying stock. Leadership could weigh that estimate alongside current inventory and purchasing information.
                 </p>
-                <ol class="case-flow" aria-label="Illustrative path from equipment usage to an inventory decision">
-                  <li class="case-flow-step"><span>01</span><h3 class="font-serif">Read the operating data</h3><p>Use rig activity and equipment-usage signals as inputs.</p></li>
-                  <li class="case-flow-step"><span>02</span><h3 class="font-serif">Estimate equipment life</h3><p>Assess wear and when a part might need replacement.</p></li>
-                  <li class="case-flow-step"><span>03</span><h3 class="font-serif">Anticipate demand</h3><p>Consider the replacement parts that may be needed.</p></li>
-                  <li class="case-flow-step"><span>04</span><h3 class="font-serif">Plan the stock</h3><p>Leadership weighs the forecast alongside inventory and purchasing information.</p></li>
-                </ol>
+                <section class="sbi-explainer mt-8" aria-label="Explore the equipment-to-demand relationship">
+                  <div class="sbi-explainer-top"><span>Field signals → business decision</span><span>Illustrative model · no measured values</span></div>
+                  <div class="sbi-steps" role="group" aria-label="Explore each forecasting stage">
+                    <button type="button" data-sbi-step="signals" aria-pressed="true"><span>01 / Observe</span><strong>Equipment use</strong></button>
+                    <button type="button" data-sbi-step="wear" aria-pressed="false"><span>02 / Interpret</span><strong>Wear &amp; useful life</strong></button>
+                    <button type="button" data-sbi-step="demand" aria-pressed="false"><span>03 / Anticipate</span><strong>Replacement demand</strong></button>
+                    <button type="button" data-sbi-step="stock" aria-pressed="false"><span>04 / Decide</span><strong>Inventory &amp; buying</strong></button>
+                  </div>
+                  <div class="sbi-scene" data-sbi-scene="signals">
+                    <div class="sbi-scene-copy"><p class="sbi-micro">01 / Read the operating signals</p><h3>Start with the equipment doing the work.</h3><p>Rig activity and equipment-usage signals supply operating context. Leadership can examine those inputs before interpreting a forecast.</p><div class="sbi-question"><span>Question for the interface</span><p>What is being used, and which signals support this estimate?</p></div></div>
+                    <div class="sbi-dataviz"><svg viewBox="0 0 640 370" role="img" aria-labelledby="sbi-signals-title sbi-signals-desc"><title id="sbi-signals-title">Rig activity feeds equipment-usage signals</title><desc id="sbi-signals-desc">A drill rig diagram connects to two schematic traces labeled rig activity and equipment usage. The traces illustrate inputs, not recorded measurements.</desc>
+                      <defs><pattern id="sbi-grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="currentColor" stroke-opacity=".07"/></pattern></defs><rect width="640" height="370" fill="url(#sbi-grid)"/>
+                      <g class="sbi-rig" fill="none" stroke="currentColor" stroke-width="2"><path d="M40 306h170M65 306 109 50h18l48 256M84 200h69M76 248h86M92 150h52M101 99h34M84 200l60-50-43-51 26-49M76 248l77-48-61-50M65 306l97-58-78-48M118 50v255M101 305h34v22h-34z"/><path d="M175 306v-85h30v85M184 240h12M184 254h12"/></g>
+                      <circle cx="118" cy="167" r="6" class="sbi-signal-dot"/><path d="M132 167h71l35-64h33M203 167l35 82h33" fill="none" stroke="var(--color-accent)" stroke-dasharray="5 5"/>
+                      <text x="280" y="64">RIG ACTIVITY</text><path d="M279 133H606M279 84v49" class="sbi-axis"/><path d="M280 119l26-7 26 3 26-21 26 10 26-4 26-16 26 7 26-9 26 12 26-4 26-11 26 4" class="sbi-line sbi-line-accent"/>
+                      <text x="280" y="210">EQUIPMENT USAGE</text><path d="M279 282H606M279 230v52" class="sbi-axis"/><path d="M280 269l26-5 26 8 26-28 26 9 26-16 26 10 26-9 26 6 26-19 26 10 26-8 26 6" class="sbi-line"/>
+                      <text x="280" y="315" class="sbi-axis-label">Earlier</text><text x="554" y="315" class="sbi-axis-label">Recent</text><text x="44" y="354" class="sbi-axis-label">Field context</text>
+                    </svg><p class="sbi-viz-caption">Schematic signal traces. Shape explains the relationship; it does not represent SBI measurements.</p></div>
+                  </div>
+                  <div class="sbi-scene" data-sbi-scene="wear" hidden>
+                    <div class="sbi-scene-copy"><p class="sbi-micro">02 / Interpret the conditions</p><h3>The same usage can mean different wear.</h3><p>The drill-bit example connects operating conditions to equipment life. Tougher soil can accelerate wear, changing when a replacement may be needed.</p><div class="sbi-question"><span>Question for the interface</span><p>Which conditions and assumptions changed the estimate?</p></div></div>
+                    <div class="sbi-dataviz"><svg viewBox="0 0 640 370" role="img" aria-labelledby="sbi-wear-title sbi-wear-desc"><title id="sbi-wear-title">Operating conditions change an illustrative wear estimate</title><desc id="sbi-wear-desc">Two schematic curves compare gradual and faster wear over operating time. A dashed replacement threshold is reached earlier by the faster-wear curve. No numeric prediction is implied.</desc>
+                      <path d="M70 45v240h515" class="sbi-axis"/><path d="M70 100h515" class="sbi-threshold"/><text x="78" y="82">Replacement threshold</text><text x="72" y="31">ACCUMULATED WEAR</text>
+                      <path d="M70 274C190 270 302 211 400 100C460 65 520 45 578 34" class="sbi-line sbi-line-accent"/><path d="M70 274C245 274 410 243 544 100" class="sbi-line"/>
+                      <path d="M400 100v185M544 100v185" class="sbi-threshold"/><circle cx="400" cy="100" r="6" class="sbi-signal-dot"/><circle cx="544" cy="100" r="5" fill="currentColor"/>
+                      <text x="72" y="312" class="sbi-axis-label">Operating time →</text><path d="M83 343h26" class="sbi-line sbi-line-accent"/><text x="118" y="348" class="sbi-axis-label">Faster wear / tougher soil</text><path d="M374 343h26" class="sbi-line"/><text x="409" y="348" class="sbi-axis-label">Comparison condition</text>
+                    </svg><p class="sbi-viz-caption">Conceptual curves, not a calibrated wear model. The point is to expose the assumption behind the forecast.</p></div>
+                  </div>
+                  <div class="sbi-scene" data-sbi-scene="demand" hidden>
+                    <div class="sbi-scene-copy"><p class="sbi-micro">03 / Translate life into timing</p><h3>A replacement window becomes a demand question.</h3><p>Estimated equipment life can inform when a replacement part may be needed. Showing that as a window makes the timing—and the uncertainty—available for discussion.</p><div class="sbi-question"><span>Question for the interface</span><p>Which part may be needed, and during which planning period?</p></div></div>
+                    <div class="sbi-dataviz"><svg viewBox="0 0 640 370" role="img" aria-labelledby="sbi-demand-title sbi-demand-desc"><title id="sbi-demand-title">Equipment-life estimate aligned with a replacement window</title><desc id="sbi-demand-desc">A shared timeline aligns an operating period, a shaded uncertain replacement window, and a replacement-part demand marker. It shows timing without quantities or dates.</desc>
+                      <rect x="342" y="45" width="164" height="245" rx="8" class="sbi-window"/><text x="326" y="26" class="sbi-axis-label">Estimated replacement window</text>
+                      <text x="32" y="97">EQUIPMENT</text><text x="32" y="117" class="sbi-axis-label">In operation</text><path d="M177 106h184" class="sbi-line"/><path d="M361 106h132" class="sbi-line sbi-dashed"/>
+                      <text x="32" y="195">PART DEMAND</text><text x="32" y="215" class="sbi-axis-label">Replacement need</text><path d="M424 132v43" class="sbi-threshold"/><path d="M177 221h407" class="sbi-axis"/><path d="M354 219c20 0 33-39 70-39s50 39 74 39" class="sbi-line sbi-line-accent"/><circle cx="424" cy="180" r="6" class="sbi-signal-dot"/>
+                      <path d="M177 286h407" class="sbi-axis"/><text x="177" y="313" class="sbi-axis-label">Now</text><text x="493" y="313" class="sbi-axis-label">Planning horizon →</text><text x="178" y="352" class="sbi-axis-label">Timing is an estimate, not a confirmed order.</text>
+                    </svg><p class="sbi-viz-caption">Illustrative planning timeline. The shaded interval expresses uncertain timing, not a measured confidence interval.</p></div>
+                  </div>
+                  <div class="sbi-scene" data-sbi-scene="stock" hidden>
+                    <div class="sbi-scene-copy"><p class="sbi-micro">04 / Bring it into the decision</p><h3>Demand is one input. Buying is the decision.</h3><p>Leadership weighs the forecast alongside inventory and purchasing information. The interface needs to connect those views, rather than turn a forecast into an automatic buying instruction.</p><div class="sbi-question"><span>Question for the interface</span><p>Does stock cover the potential need, and what should leadership review before purchasing?</p></div></div>
+                    <div class="sbi-planning-wire" aria-label="Illustrative planning wireframe"><div class="sbi-wire-head"><span>PLANNING VIEW</span><span>Drill-bit replacement</span></div><h4>Review the potential inventory gap</h4><div class="sbi-wire-row"><span>Forecast demand</span><div class="sbi-wire-track"><i class="sbi-bar-demand"></i></div><small>Estimated need</small></div><div class="sbi-wire-row"><span>Stock on hand</span><div class="sbi-wire-track"><i class="sbi-bar-stock"></i><b>Potential gap</b></div><small>Compare available inventory</small></div><p class="sbi-viz-caption">Relative bars explain a possible gap; they are not quantities from the project.</p><div class="sbi-purchase-context"><span>Also review</span><strong>Purchasing position</strong><strong>Cash &amp; receivables</strong><strong>Operating assumptions</strong></div><a href="#sbi-business-evidence" class="sbi-evidence-link">See the original business-view exploration ↑</a></div>
+                  </div>
+                  <div class="sbi-explainer-bottom"><span data-sbi-position>01 / 04</span><p>The relationship explained here is drawn from the case study. Diagrams are new explanatory illustrations, not shipped SBI screens.</p><button type="button" data-sbi-next>Next: wear &amp; useful life →</button></div>
+                </section>
               </div>
 
               <div>
@@ -377,6 +414,7 @@
         </div>
       </aside>
     </div>
+    <script src="../js/sbi-explainer.js"></script>
     <script src="../js/guide-session.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/eda-walks.js?v=20261102-copy2"></script>
