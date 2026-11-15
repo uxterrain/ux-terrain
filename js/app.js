@@ -178,6 +178,17 @@
       const match = window.location.pathname.match(/\/work\/([^/]+)\.html$/);
       return match ? { projectId: match[1] } : window.location.pathname === "/systems.html" ? { projectId: "systems" } : {};
     }
+    const projectNames = {"performance-monitoring":"M365",sbi:"SBI",armada:"Armada",iqvia:"IQVIA","zone-focus":"Flotrak",systems:"Systems",oslo:"Oslo",eda:"Eda",m365:"M365",ground:"Systems"};
+    if (!continuation || continuation.guide !== "oslo") {
+      const pageProject = currentContext().projectId;
+      const projectName = Object.prototype.hasOwnProperty.call(projectNames, pageProject) ? projectNames[pageProject] : null;
+      const greeting = log.querySelector(".chat-turn-agent .chat-turn-body");
+      if (greeting && projectName) {
+        greeting.textContent = pageProject === "systems"
+          ? "Hi, I’m Oslo. You’re viewing Systems. Ask me about the approach, design decisions, or supporting evidence."
+          : "Hi, I’m Oslo. You’re viewing the " + projectName + " case study. Let me know if you have questions about the work or the design decisions behind it.";
+      }
+    }
     function snapshot() {
       const context = conversationContext || currentContext();
       return { context, turns: session.capture(log), suggestions: session.captureSuggestions(panel, ".js-quick-inquiry"), history: window.UX_OSLO.history(context), draft: input.value, scrollTop: log.scrollTop };
@@ -324,11 +335,10 @@
     }
 
     if (continuation && continuation.guide === "oslo") {
-      const names = {"performance-monitoring":"M365",sbi:"SBI",armada:"Armada",iqvia:"IQVIA","zone-focus":"FloTrak",systems:"Systems",oslo:"Oslo",eda:"Eda",m365:"M365",ground:"Systems"};
       const project = conversationContext.projectId || conversationContext.walkId;
       if (project && project !== currentContext().projectId) {
         const note = document.createElement("p"); note.className = "guide-conversation-context";
-        note.textContent = "Continuing " + (names[project] || "this conversation");
+        note.textContent = "Continuing " + (projectNames[project] || "this conversation");
         panel.querySelector("header > div").appendChild(note);
       }
       window.UX_OSLO.resume(conversationContext, continuation.history);
