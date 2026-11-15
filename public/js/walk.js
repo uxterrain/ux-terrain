@@ -76,7 +76,19 @@
     return String(n).padStart(2, "0");
   }
 
+  function renderAccessExample(step) {
+    const header = '<div class="access-window-bar"><span aria-hidden="true">○ ○ ○</span><span>Service alerts / illustrative wireframe</span></div>';
+    const shell = function (body) { return '<section class="access-example" aria-label="Service alert example">' + header + '<div class="access-example-body">' + body + '</div></section>'; };
+    const alertPreview = '<div class="access-wire-screen"><p class="access-eyebrow">Employee services</p><h2>Set up your alerts</h2><div class="access-wire-field"><span>1 · Choose services</span><strong>Exchange · Teams · SharePoint</strong></div><div class="access-wire-field"><span>2 · Delivery email</span><strong>alerts@example.com</strong></div><span class="access-wire-action">3 · Save preferences →</span></div>';
+    if (step === 1) return shell('<p class="access-eyebrow">The task / Stay informed about service incidents</p>' + alertPreview + '<ol class="access-story"><li><strong>Context</strong><span>Who uses this service? Which requirements apply?</span></li><li><strong>Design target</strong><span>Define how selection, labels, and focus should work.</span></li><li><strong>Evidence</strong><span>Run the task and record the observed behavior.</span></li></ol>');
+    if (step === 2) return shell('<p class="access-eyebrow">Example context / A federal agency’s internal alert service</p><div class="access-surface-choices" role="group" aria-label="Explore a workflow surface"><button type="button" data-surface="web" aria-pressed="true">01 / Web form</button><span aria-hidden="true">→</span><button type="button" data-surface="document" aria-pressed="false">02 / Email summary</button><span aria-hidden="true">→</span><button type="button" data-surface="software" aria-pressed="false">03 / Alert software</button></div><div class="access-surface-view" aria-live="polite">' + alertPreview + '<aside><p class="access-eyebrow">Review this surface</p><h3>Can the employee complete setup?</h3><p>Examine labels, keyboard operation, focus order, and error recovery.</p><p class="access-reference">Covered web content: WCAG 2.0 A and AA, as incorporated by the Revised 508 Standards.</p></aside></div><a class="access-source" href="https://www.access-board.gov/ict/" target="_blank" rel="noopener noreferrer">Read the official scope and exceptions ↗</a>');
+    if (step === 3) return shell('<p class="access-eyebrow">Try it / Keyboard and pointer</p><h2>How should we notify you?</h2><p>Press Tab to find each control. Use Space or Enter to activate buttons.</p><div class="access-delivery" role="group" aria-label="Delivery preference"><button type="button" aria-pressed="true" data-delivery="Email">Email</button><button type="button" aria-pressed="false" data-delivery="SMS">SMS</button></div><p class="access-demo-status" data-delivery-status role="status">Email selected.</p><h3>Service priority</h3><p>Reorder with move buttons—no dragging required.</p><ol class="access-priority"><li><span>Exchange</span><button type="button" data-move="up" aria-label="Move Exchange up" disabled>↑</button><button type="button" data-move="down" aria-label="Move Exchange down">↓</button></li><li><span>Teams</span><button type="button" data-move="up" aria-label="Move Teams up">↑</button><button type="button" data-move="down" aria-label="Move Teams down" disabled>↓</button></li></ol><p class="access-demo-status" data-order-status role="status">Exchange first, Teams second.</p>');
+    if (step === 4) return shell('<p class="access-eyebrow">Try it / Error → recovery → confirmation</p><h2>Where should alerts go?</h2><form class="access-demo-form" novalidate><label for="example-alert-email">Email address <span>(required)</span></label><p id="example-email-hint">Use alerts@example.com to try the example. Nothing is sent or stored.</p><input id="example-alert-email" type="email" required autocomplete="off" aria-describedby="example-email-hint example-email-error"><p id="example-email-error" class="access-field-error" aria-live="polite"></p><button type="submit">Save preferences →</button><p data-save-status role="status"></p></form><div class="access-state-path"><span>Empty or invalid</span><span aria-hidden="true">→</span><span>Explain the fix + focus the field</span><span aria-hidden="true">→</span><span>Confirm the change</span></div>');
+    return shell('<p class="access-eyebrow">Example review record / Not completed audit results</p><h2>Task: save an alert preference</h2><dl class="access-evidence"><div><dt>Visible in the design</dt><dd>A persistent email label, written error guidance, and a confirmation state.</dd></div><div><dt>Test in the interface</dt><dd>Tab order, focus after an error, error announcement, and task completion with assistive technology.</dd></div><div><dt>Record with the result</dt><dd>Browser and version · assistive technology · steps · observed behavior · unresolved issues.</dd></div><div><dt>Current status</dt><dd><strong>Illustration only.</strong> No product conformance result is established by these wireframes.</dd></div></dl><p class="access-reference">Next: use these same questions when reviewing the Performance Monitoring screens.</p>');
+  }
+
   function renderVisual(st) {
+    if (st.visual === "access-example") return renderAccessExample(st.example);
     if (st.visual === "quote") {
       return (
         '<blockquote class="sys-quote" style="margin-top:0"><p>' +
@@ -360,6 +372,55 @@
     });
     main.prepend(overview);
     const visual = main.querySelector(".walk-visual");
+    if (st.visual === "access-example") {
+      const example = visual.querySelector(".access-example");
+      example.querySelectorAll("[data-surface]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          example.querySelectorAll("[data-surface]").forEach(function (item) { item.setAttribute("aria-pressed", String(item === button)); });
+          const view = example.querySelector(".access-surface-view");
+          const content = {
+            web: ['Set up your alerts', '1 · Choose services', 'Exchange · Teams · SharePoint', '2 · Delivery email', 'alerts@example.com', 'Can the employee complete setup?', 'Examine labels, keyboard operation, focus order, and error recovery.', 'Covered web content: WCAG 2.0 A and AA, as incorporated by the Revised 508 Standards.'],
+            document: ['Your service summary', 'Heading · Exchange incident', 'Service recovering', 'Summary · Next update', 'Follow the incident record', 'Can the employee read the summary?', 'Review headings, reading order, meaningful links, and text alternatives in the delivered document.', 'Electronic documents have their own scoping provisions. Verify the applicable requirements and exceptions.'],
+            software: ['Manage alert delivery', 'Delivery status', 'Email service connected', 'Employee preferences', 'Review · Edit · Save', 'Can the employee operate the software?', 'Review control names, states, keyboard access, and compatibility with assistive technology.', 'Software has additional provisions in the Revised Standards. A web-page checklist alone is not the full scope.']
+          }[button.dataset.surface];
+          view.innerHTML = '<div class="access-wire-screen"><p class="access-eyebrow">Employee services</p><h2>' + content[0] + '</h2><div class="access-wire-field"><span>' + content[1] + '</span><strong>' + content[2] + '</strong></div><div class="access-wire-field"><span>' + content[3] + '</span><strong>' + content[4] + '</strong></div></div><aside><p class="access-eyebrow">Review this surface</p><h3>' + content[5] + '</h3><p>' + content[6] + '</p><p class="access-reference">' + content[7] + '</p></aside>';
+        });
+      });
+      example.querySelectorAll("[data-delivery]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          example.querySelectorAll("[data-delivery]").forEach(function (item) { item.setAttribute("aria-pressed", String(item === button)); });
+          example.querySelector("[data-delivery-status]").textContent = button.dataset.delivery + " selected.";
+        });
+      });
+      example.querySelectorAll("[data-move]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const row = button.closest("li"), list = row.parentElement;
+          if (button.dataset.move === "up") list.insertBefore(row, row.previousElementSibling);
+          else list.insertBefore(row.nextElementSibling, row);
+          const rows = Array.from(list.children);
+          rows.forEach(function (item, i) {
+            item.querySelector('[data-move="up"]').disabled = i === 0;
+            item.querySelector('[data-move="down"]').disabled = i === rows.length - 1;
+          });
+          // Retain a usable keyboard position when the move reaches a boundary.
+          row.querySelector('[data-move="' + (button.dataset.move === "up" ? "down" : "up") + '"]').focus();
+          example.querySelector("[data-order-status]").textContent = rows[0].querySelector("span").textContent + " first, " + rows[1].querySelector("span").textContent + " second.";
+        });
+      });
+      const form = example.querySelector("form");
+      if (form) form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const input = form.querySelector("input"), error = form.querySelector(".access-field-error"), status = form.querySelector("[data-save-status]");
+        if (!input.value.trim() || !input.validity.valid) {
+          error.textContent = "Enter an email address, such as alerts@example.com.";
+          input.setAttribute("aria-invalid", "true"); status.textContent = ""; input.focus();
+        } else {
+          error.textContent = ""; input.removeAttribute("aria-invalid");
+          status.textContent = "Preferences updated in this example. No email was sent or stored.";
+        }
+      });
+    }
+
     if (st.visual === "image") {
       const image = visual.querySelector("img");
       const frame = document.createElement("div");

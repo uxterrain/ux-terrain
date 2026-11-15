@@ -8,29 +8,12 @@ window.EDA_WALKS = {
     "minutes": "3",
     "stations": [
       {
-        "title": "Standards, goals, and evidence",
-        "lede": "Separate a requirement, a design target, and a verified result.",
-        "visual": "bands",
-        "bands": [
-          {
-            "kicker": "Requirement",
-            "title": "Section 508",
-            "body": "Federal technology requirements and their scope."
-          },
-          {
-            "kicker": "Design target",
-            "title": "WCAG 2.2",
-            "body": "Criteria to translate into design and test questions."
-          },
-          {
-            "kicker": "Evidence",
-            "title": "The interface",
-            "body": "What inspection and testing actually establish."
-          }
-        ],
-        "caption": "Separate a requirement, a design target, and a verified result.",
+        "title": "Start with a real task",
+        "lede": "Follow one example: an employee configures service alerts, then receives an email summary.",
+        "visual": "access-example",
+        "caption": "This illustrative alert workflow connects the project context, a design target, and evidence from testing.",
         "tags": [],
-        "say": "Hi, I’m Eda. This introduction separates three things: an accessibility requirement, the target a team chooses, and evidence about a particular interface. They are related, but they do not answer the same question. We’ll start with Section 508, then look at WCAG and how a team brings those considerations into component design.",
+        "say": "Hi, I’m Eda. We’ll follow an illustrative service-alert workflow: an employee chooses services, saves an email address, and receives a summary. First identify the project requirements, then choose a design target, then gather evidence in the working interface. These wireframes explain that process; they are not shipped project screens or an accessibility audit. Next, look at the different surfaces involved.",
         "asks": [
           "Why distinguish a target from a verified result?",
           "What can this walk help me understand?"
@@ -43,32 +26,16 @@ window.EDA_WALKS = {
         "review": {
           "notice": "Separate the requirement, the team’s target, and the evidence for this interface.",
           "test": "Ask which requirements apply, who owns the checks, and where the results will be recorded."
-        }
+        },
+        "example": 1
       },
       {
-        "title": "Where Section 508 fits",
-        "lede": "Understand the context for federal technology requirements.",
-        "visual": "bands",
-        "bands": [
-          {
-            "kicker": "Web content",
-            "title": "WCAG 2.0 A and AA",
-            "body": "Incorporated by the Revised Standards for covered content."
-          },
-          {
-            "kicker": "Scope",
-            "title": "More than web pages",
-            "body": "Other technology and content can also be covered."
-          },
-          {
-            "kicker": "Next step",
-            "title": "Check applicability",
-            "body": "Use the official standards for the project’s context."
-          }
-        ],
-        "caption": "Understand the context for federal technology requirements.",
+        "title": "Locate the requirement in the workflow",
+        "lede": "A federal-agency alert service can involve a web form, an electronic document, and software—not just one screen.",
+        "visual": "access-example",
+        "caption": "Explore the three surfaces below. These are examples for scoping a review, not a determination that a particular project conforms.",
         "tags": [],
-        "say": "Section 508 concerns information and communication technology used by federal agencies. The Revised Standards incorporate WCAG 2.0 Level A and AA criteria for covered web content, with additional scope and exceptions in the standards. The important first step is identifying which requirements apply to the project. Next is the WCAG target described by this practice.",
+        "say": "Imagine this alert service is used by a federal agency. Section 508 concerns information and communication technology developed, procured, maintained, or used by federal agencies. The web form, an electronic summary document, and associated software can each need review. Choose a surface in the wireframe to see what the team would examine. The Revised Standards incorporate WCAG 2.0 A and AA for covered content, with scope and exceptions to verify in the official standards. A WCAG 2.2 design target is a separate decision.",
         "asks": [
           "What is Section 508’s role?",
           "Where can I find the official requirements?"
@@ -81,16 +48,16 @@ window.EDA_WALKS = {
         "review": {
           "notice": "Section 508 has a specific federal context. A newer WCAG design target is a separate decision.",
           "test": "Confirm applicability against the official standards before turning guidance into a compliance claim."
-        }
+        },
+        "example": 2
       },
       {
-        "title": "Use WCAG as a design reference",
-        "lede": "Translate relevant criteria into specific design and test questions.",
-        "visual": "bands",
-        "quote": "A design target becomes useful when it leads to specific questions and tests.",
-        "caption": "Translate relevant criteria into specific design and test questions.",
+        "title": "Turn the target into an interaction",
+        "lede": "Try the alert controls with Tab. Change a delivery preference and reorder the services without dragging.",
+        "visual": "access-example",
+        "caption": "Illustrative working controls: visible focus, a generous selection area, and move buttons for the same ordering task.",
         "tags": [],
-        "say": "This practice names WCAG 2.2 as a design target. It includes criteria on areas such as focus visibility, target size, and alternatives to dragging. Those criteria need to be translated into specific checks for the interface. Naming a target alone does not tell us how a particular screen performs. Next, we’ll look at component behavior.",
+        "say": "The same alert task now has working example controls. Use Tab to locate focus, choose email or SMS, and use Move up or Move down to reorder services without dragging. These illustrate questions about focus, target selection, and alternative operation. They do not establish that the whole experience meets WCAG 2.2. Try the controls, then move to the form’s error and recovery state.",
         "asks": [
           "Which interaction questions does WCAG help frame?",
           "How do you connect a criterion to a test?"
@@ -104,48 +71,15 @@ window.EDA_WALKS = {
           "notice": "A useful target names the interaction to examine: focus, target selection, or alternatives to dragging.",
           "test": "Try each task with a keyboard and check the relevant criterion in the working interface."
         },
-        "bands": [
-          {
-            "kicker": "Navigate",
-            "title": "Visible focus",
-            "body": "Can you tell which control will respond to the keyboard?"
-          },
-          {
-            "kicker": "Select",
-            "title": "Usable targets",
-            "body": "Can people select the intended control without fine pointer precision?"
-          },
-          {
-            "kicker": "Operate",
-            "title": "Beyond dragging",
-            "body": "Is there another way to complete the same task?"
-          }
-        ]
+        "example": 3
       },
       {
-        "title": "Define the component behavior",
-        "lede": "Document states, labels, focus, and interaction expectations.",
-        "visual": "bands",
-        "bands": [
-          {
-            "kicker": "Define",
-            "title": "States and labels",
-            "body": "Describe what changes and how it is communicated."
-          },
-          {
-            "kicker": "Interact",
-            "title": "Keyboard and focus",
-            "body": "Specify how people move through the component."
-          },
-          {
-            "kicker": "Review",
-            "title": "Checks and testing",
-            "body": "Combine automation with contextual evaluation."
-          }
-        ],
-        "caption": "Document states, labels, focus, and interaction expectations.",
+        "title": "Specify the error and recovery",
+        "lede": "An email field needs a label, a useful error, and a way to return to the task.",
+        "visual": "access-example",
+        "caption": "Try saving with the field empty, then enter alerts@example.com. The example connects the error message to its field.",
         "tags": [],
-        "say": "A component definition should cover its states, labels, interaction, and accessibility expectations. Some requirements can be checked automatically; others need people to try the interface in context. The goal is to make those responsibilities part of the design and engineering work. Next, we’ll look at the evidence a guide can use.",
+        "say": "Save this example with the address empty to see the error state. The field has a persistent label, a linked error message, and focus returns to the invalid field. Enter a valid address to see confirmation. This is a local demonstration: it does not send or save your address. A component specification should describe these transitions, and testing should examine keyboard and assistive-technology behavior in context.",
         "asks": [
           "What should a component specification include?",
           "Which checks need human review?"
@@ -158,16 +92,16 @@ window.EDA_WALKS = {
         "review": {
           "notice": "A component needs more than its default appearance. Labels, errors, focus, and recovery are part of the design.",
           "test": "Move through every state. Can someone understand the change and recover without a pointer?"
-        }
+        },
+        "example": 4
       },
       {
-        "title": "Know what the evidence can support",
-        "lede": "Distinguish a design explanation from an accessibility audit.",
-        "visual": "quote",
-        "quote": "Explain what is documented. Test what the screenshot cannot show.",
-        "caption": "Distinguish a design explanation from an accessibility audit.",
+        "title": "Record what you actually observed",
+        "lede": "A wireframe can explain intent. Evidence needs the task, environment, result, and remaining gaps.",
+        "visual": "access-example",
+        "caption": "This illustrative review record keeps visible design observations separate from untested behavior.",
         "tags": [],
-        "say": "I can explain the written guidance and help identify questions to review on a case-study screen. A screenshot can show labels and visual hierarchy, but it cannot establish keyboard behavior or screen-reader output. Those require the working interface and appropriate testing. That completes the introduction. Choose a case-study walk to see how these questions connect to a design.",
+        "say": "The example review record distinguishes design observations from results that still require testing. You can see a field label in a wireframe, but keyboard order and screen-reader output need a working interface. A useful record names the task, environment, observed result, and unresolved questions. This example is not a completed audit. Choose a product case-study walk to apply these questions to the documented screens.",
         "asks": [
           "What can a screenshot tell us?",
           "What needs testing in the working product?"
@@ -180,7 +114,8 @@ window.EDA_WALKS = {
         "review": {
           "notice": "A screenshot can reveal hierarchy and written labels. It cannot prove keyboard or screen-reader behavior.",
           "test": "Record the task, browser, assistive technology, observed behavior, and any unresolved questions."
-        }
+        },
+        "example": 5
       }
     ],
     "sources": [
