@@ -2697,3 +2697,14 @@ html.is-walking .walk-hold,html.is-walking .walk-cut-band,html.is-walking .sys-c
 /* Keep the evidence frame while bringing interface details closer. */
 html.is-walking .walk-image-frame{overflow:hidden;border:1px solid var(--color-border);border-radius:.75rem;background:var(--color-bg-muted)}
 html.is-walking .walk-image-frame img{border:0;border-radius:0;transform:scale(1.18);transform-origin:center}
+
+/* Authored screenshot regions keep each station's product evidence readable. */
+html.is-walking .walk-image-frame.has-detail{position:relative;aspect-ratio:16/9;isolation:isolate}
+html.is-walking .walk-image-frame.has-detail img{position:absolute;max-width:none;max-height:none;object-fit:fill;transform:none;border:0}
+.walk-detail-views{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+.walk-detail-views button{font:inherit;font-size:.78rem;color:var(--color-text-muted);background:transparent;border:1px solid var(--color-border);border-radius:999px;padding:.45rem .8rem;cursor:pointer}
+.walk-detail-views button[aria-pressed="true"]{color:var(--color-text);background:var(--color-bg-muted);border-color:currentColor}
+.walk-detail-views button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.walk-detail-caption{margin:.65rem 0 0;font-size:.75rem;color:var(--color-text-muted)}
+
+html.is-walking .walk-image-frame.has-detail{max-width:min(100%,calc(55vh * var(--detail-ratio,1.78)));margin-inline:auto}

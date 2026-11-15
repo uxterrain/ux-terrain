@@ -224,7 +224,27 @@ window.EDA_WALKS = {
         "review": {
           "notice": "Status, affected users, and the next action need to be easy to find while an incident develops.",
           "test": "Ask an admin to explain what is happening and what they would do next, without coaching."
-        }
+        },
+        "details": [
+          {
+            "label": "Incidents & advisories",
+            "region": [
+              0.34,
+              0.3,
+              0.52,
+              0.28
+            ]
+          },
+          {
+            "label": "Admin Center context",
+            "region": [
+              0.32,
+              0.13,
+              0.61,
+              0.55
+            ]
+          }
+        ]
       },
       {
         "title": "Name the investigation state",
@@ -248,7 +268,36 @@ window.EDA_WALKS = {
         "review": {
           "notice": "Written states such as Under Investigation and Service Restored carry meaning beyond color.",
           "test": "Update the state while someone uses the card. Check focus, announcements, and whether actions remain understandable."
-        }
+        },
+        "details": [
+          {
+            "label": "Status & impact",
+            "region": [
+              0.035,
+              0.07,
+              0.28,
+              0.33
+            ]
+          },
+          {
+            "label": "Resolve the incident",
+            "region": [
+              0.36,
+              0.07,
+              0.275,
+              0.2
+            ]
+          },
+          {
+            "label": "Recovery details",
+            "region": [
+              0.685,
+              0.25,
+              0.275,
+              0.3
+            ]
+          }
+        ]
       },
       {
         "title": "Explain who can take action",
@@ -272,7 +321,27 @@ window.EDA_WALKS = {
         "review": {
           "notice": "Tenant actions and Microsoft repair updates describe different responsibilities.",
           "test": "Can an admin identify the owner of the next step and select notification preferences using a keyboard?"
-        }
+        },
+        "details": [
+          {
+            "label": "Recommended action",
+            "region": [
+              0.73,
+              0.11,
+              0.23,
+              0.29
+            ]
+          },
+          {
+            "label": "Advisory overview",
+            "region": [
+              0.065,
+              0.5,
+              0.7,
+              0.26
+            ]
+          }
+        ]
       },
       {
         "title": "Make the chart usable beyond color",
@@ -296,7 +365,18 @@ window.EDA_WALKS = {
         "review": {
           "notice": "The labels name two measures. Color and hover alone may leave the relationship unclear.",
           "test": "Reach point details without a mouse, distinguish the series without color, and compare a text or table alternative."
-        }
+        },
+        "details": [
+          {
+            "label": "Impact & point details",
+            "region": [
+              0.02,
+              0.05,
+              0.96,
+              0.88
+            ]
+          }
+        ]
       },
       {
         "title": "Keep the timeline understandable",
@@ -320,7 +400,27 @@ window.EDA_WALKS = {
         "review": {
           "notice": "Incident categories and grouped events must remain understandable beyond the size and color of a mark.",
           "test": "Navigate the timeline by keyboard and confirm that each group exposes a useful name, category, and underlying events."
-        }
+        },
+        "details": [
+          {
+            "label": "Timeline & event groups",
+            "region": [
+              0.04,
+              0.42,
+              0.94,
+              0.53
+            ]
+          },
+          {
+            "label": "Chart & point details",
+            "region": [
+              0.04,
+              0.03,
+              0.94,
+              0.36
+            ]
+          }
+        ]
       }
     ]
   },
@@ -349,6 +449,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How does Coach help a student understand the adjustment?",
           "How could you check whether the guidance makes sense to a beginner?"
+        ],
+        "details": [
+          {
+            "label": "Reading & next adjustment",
+            "region": [
+              0.06,
+              0.075,
+              0.88,
+              0.24
+            ]
+          },
+          {
+            "label": "Exposure settings",
+            "region": [
+              0.06,
+              0.54,
+              0.88,
+              0.34
+            ]
+          }
         ]
       },
       {
@@ -368,6 +488,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could the interface explain which point is selected?",
           "What alternative to dragging would you explore?"
+        ],
+        "details": [
+          {
+            "label": "Focus & distance",
+            "region": [
+              0.04,
+              0.23,
+              0.92,
+              0.38
+            ]
+          },
+          {
+            "label": "Metering points",
+            "region": [
+              0.04,
+              0.57,
+              0.92,
+              0.3
+            ]
+          }
         ]
       },
       {
@@ -387,6 +527,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How should a failed connection be explained?",
           "What would you test before claiming reconnection works?"
+        ],
+        "details": [
+          {
+            "label": "Connection & flash controls",
+            "region": [
+              0.04,
+              0.53,
+              0.92,
+              0.36
+            ]
+          },
+          {
+            "label": "Focus context",
+            "region": [
+              0.04,
+              0.18,
+              0.92,
+              0.38
+            ]
+          }
         ]
       },
       {
@@ -406,6 +566,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could a photographer find a particular frame?",
           "What should stay understandable when a roll is expanded?"
+        ],
+        "details": [
+          {
+            "label": "Roll & frame records",
+            "region": [
+              0.035,
+              0.08,
+              0.93,
+              0.4
+            ]
+          },
+          {
+            "label": "Frame settings & notes",
+            "region": [
+              0.035,
+              0.45,
+              0.93,
+              0.4
+            ]
+          }
         ]
       }
     ]
@@ -435,6 +615,17 @@ window.EDA_WALKS = {
         "followUps": [
           "How could focus move from a drone to its details?",
           "What should remain visible when the selected flight changes?"
+        ],
+        "details": [
+          {
+            "label": "Selected flight & route",
+            "region": [
+              0.1,
+              0.17,
+              0.73,
+              0.67
+            ]
+          }
         ]
       },
       {
@@ -454,6 +645,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could a status change be communicated without color?",
           "How would you check that device names remain clear?"
+        ],
+        "details": [
+          {
+            "label": "Devices & status",
+            "region": [
+              0.055,
+              0.18,
+              0.66,
+              0.44
+            ]
+          },
+          {
+            "label": "Equipment record",
+            "region": [
+              0.24,
+              0.48,
+              0.71,
+              0.38
+            ]
+          }
         ]
       },
       {
@@ -473,6 +684,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could the map and incident panel show the same selection?",
           "What should happen when someone closes the incident details?"
+        ],
+        "details": [
+          {
+            "label": "Incident & selected drone",
+            "region": [
+              0.43,
+              0.32,
+              0.55,
+              0.62
+            ]
+          },
+          {
+            "label": "Flight context",
+            "region": [
+              0.035,
+              0.12,
+              0.45,
+              0.64
+            ]
+          }
         ]
       },
       {
@@ -492,6 +723,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could live updates avoid interrupting an operator?",
           "What should remain available if the video is unavailable?"
+        ],
+        "details": [
+          {
+            "label": "Camera & mission status",
+            "region": [
+              0.03,
+              0.07,
+              0.4,
+              0.78
+            ]
+          },
+          {
+            "label": "Route & live location",
+            "region": [
+              0.37,
+              0.21,
+              0.6,
+              0.68
+            ]
+          }
         ]
       }
     ]
@@ -521,6 +772,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How should uncertainty affect a purchasing decision?",
           "How could operating conditions help explain replacement demand?"
+        ],
+        "details": [
+          {
+            "label": "Forecast & data gap",
+            "region": [
+              0.12,
+              0.23,
+              0.64,
+              0.45
+            ]
+          },
+          {
+            "label": "Model context",
+            "region": [
+              0.76,
+              0.12,
+              0.22,
+              0.76
+            ]
+          }
         ]
       },
       {
@@ -540,6 +811,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could someone trace a forecast back to its inputs?",
           "What should a comparison reveal about a change in demand?"
+        ],
+        "details": [
+          {
+            "label": "Forecast & inventory",
+            "region": [
+              0.12,
+              0.02,
+              0.76,
+              0.48
+            ]
+          },
+          {
+            "label": "Financial measures",
+            "region": [
+              0.12,
+              0.49,
+              0.76,
+              0.47
+            ]
+          }
         ]
       },
       {
@@ -559,6 +850,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could a user compare two forecasting scenarios?",
           "How should the interface explain why another input is needed?"
+        ],
+        "details": [
+          {
+            "label": "Production filter choices",
+            "region": [
+              0.03,
+              0.1,
+              0.94,
+              0.45
+            ]
+          },
+          {
+            "label": "Related operations choices",
+            "region": [
+              0.03,
+              0.52,
+              0.94,
+              0.44
+            ]
+          }
         ]
       },
       {
@@ -578,6 +889,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could someone reach the same records through a list?",
           "What context should stay visible when a record opens?"
+        ],
+        "details": [
+          {
+            "label": "Map & selected locations",
+            "region": [
+              0.26,
+              0.28,
+              0.66,
+              0.46
+            ]
+          },
+          {
+            "label": "Location records",
+            "region": [
+              0.04,
+              0.7,
+              0.91,
+              0.25
+            ]
+          }
         ]
       }
     ]
@@ -607,6 +938,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How should a user know which role they are working in?",
           "What would you check when switching between tasks?"
+        ],
+        "details": [
+          {
+            "label": "Reviewer responsibilities",
+            "region": [
+              0.02,
+              0.025,
+              0.46,
+              0.72
+            ]
+          },
+          {
+            "label": "Marketing responsibilities",
+            "region": [
+              0.505,
+              0.025,
+              0.47,
+              0.82
+            ]
+          }
         ]
       },
       {
@@ -626,6 +977,35 @@ window.EDA_WALKS = {
         "followUps": [
           "How could the form help someone recover from an error?",
           "What should be preserved when moving back a step?"
+        ],
+        "details": [
+          {
+            "label": "Creation steps",
+            "region": [
+              0.05,
+              0.015,
+              0.88,
+              0.3
+            ]
+          },
+          {
+            "label": "Document setup",
+            "region": [
+              0.065,
+              0.32,
+              0.88,
+              0.4
+            ]
+          },
+          {
+            "label": "Review & continue",
+            "region": [
+              0.035,
+              0.7,
+              0.93,
+              0.28
+            ]
+          }
         ]
       },
       {
@@ -645,6 +1025,26 @@ window.EDA_WALKS = {
         "followUps": [
           "How could focus move between a comment and its target?",
           "How should an unresolved annotation be identified?"
+        ],
+        "details": [
+          {
+            "label": "Annotation & comment",
+            "region": [
+              0.38,
+              0.22,
+              0.6,
+              0.48
+            ]
+          },
+          {
+            "label": "Document tools",
+            "region": [
+              0.025,
+              0.035,
+              0.94,
+              0.22
+            ]
+          }
         ]
       }
     ]
@@ -674,6 +1074,17 @@ window.EDA_WALKS = {
         "followUps": [
           "How could a visitor compare the available walks?",
           "What should happen after a walk is selected?"
+        ],
+        "details": [
+          {
+            "label": "Walk choices",
+            "region": [
+              0.16,
+              0.48,
+              0.72,
+              0.34
+            ]
+          }
         ]
       },
       {
@@ -711,6 +1122,26 @@ window.EDA_WALKS = {
         "followUps": [
           "What should remain intact when viewing supporting detail?",
           "How could you test returning to an earlier station?"
+        ],
+        "details": [
+          {
+            "label": "Question & navigation controls",
+            "region": [
+              0.64,
+              0.64,
+              0.35,
+              0.35
+            ]
+          },
+          {
+            "label": "Station content",
+            "region": [
+              0.025,
+              0.13,
+              0.6,
+              0.52
+            ]
+          }
         ]
       }
     ]
@@ -740,6 +1171,26 @@ window.EDA_WALKS = {
         "followUps": [
           "What should Eda avoid claiming without testing?",
           "How can the guide explain its limits plainly?"
+        ],
+        "details": [
+          {
+            "label": "Guide role & questions",
+            "region": [
+              0.64,
+              0.15,
+              0.35,
+              0.76
+            ]
+          },
+          {
+            "label": "Evidence & categories",
+            "region": [
+              0.035,
+              0.17,
+              0.59,
+              0.53
+            ]
+          }
         ]
       },
       {

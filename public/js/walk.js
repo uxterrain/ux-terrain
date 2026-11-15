@@ -366,6 +366,43 @@
       frame.className = "walk-image-frame";
       image.replaceWith(frame);
       frame.appendChild(image);
+      if (st.details && st.details.length) {
+        frame.classList.add("has-detail");
+        const views = document.createElement("div");
+        views.className = "walk-detail-views";
+        views.setAttribute("role", "group");
+        views.setAttribute("aria-label", "Screenshot detail views");
+        const detailCaption = document.createElement("p");
+        detailCaption.className = "walk-detail-caption";
+        function showDetail(detail, selected) {
+          const r = detail.region;
+          image.style.width = (100 / r[2]) + "%";
+          image.style.height = (100 / r[3]) + "%";
+          image.style.left = (-100 * r[0] / r[2]) + "%";
+          image.style.top = (-100 * r[1] / r[3]) + "%";
+          function setAspect() {
+            const ratio = image.naturalWidth * r[2] / (image.naturalHeight * r[3]);
+            frame.style.aspectRatio = String(ratio);
+            frame.style.setProperty("--detail-ratio", String(ratio));
+          }
+          if (image.complete && image.naturalWidth) setAspect();
+          else image.onload = setAspect;
+          detailCaption.textContent = "Detail / " + detail.label;
+          Array.from(views.children).forEach(function (button, i) {
+            button.setAttribute("aria-pressed", String(i === selected));
+          });
+        }
+        st.details.forEach(function (detail, i) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = detail.label;
+          button.addEventListener("click", function () { showDetail(detail, i); });
+          views.appendChild(button);
+        });
+        if (st.details.length > 1) visual.insertBefore(views, frame);
+        visual.appendChild(detailCaption);
+        showDetail(st.details[0], 0);
+      }
       const zoom = document.createElement("button");
       zoom.type = "button";
       zoom.className = "eda-zoom";

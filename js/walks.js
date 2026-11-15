@@ -170,7 +170,27 @@ window.UX_WALKS = {
         "review": {
           "notice": "Put the recommendation beside the infrastructure context an admin needs to interpret it.",
           "test": "More information can help an investigation and slow scanning. Keep the immediate task visible before deeper detail."
-        }
+        },
+        "details": [
+          {
+            "label": "Incidents & advisories",
+            "region": [
+              0.34,
+              0.3,
+              0.52,
+              0.28
+            ]
+          },
+          {
+            "label": "Admin Center context",
+            "region": [
+              0.32,
+              0.13,
+              0.61,
+              0.55
+            ]
+          }
+        ]
       },
       {
         "title": "Incident cards that change with the investigation",
@@ -197,7 +217,36 @@ window.UX_WALKS = {
         "review": {
           "notice": "Keep the problem, estimated impact, timestamps, and state-dependent actions together.",
           "test": "An estimate is useful only if its uncertainty and available next actions remain understandable as the investigation changes."
-        }
+        },
+        "details": [
+          {
+            "label": "Status & impact",
+            "region": [
+              0.035,
+              0.07,
+              0.28,
+              0.33
+            ]
+          },
+          {
+            "label": "Resolve the incident",
+            "region": [
+              0.36,
+              0.07,
+              0.275,
+              0.2
+            ]
+          },
+          {
+            "label": "Recovery details",
+            "region": [
+              0.685,
+              0.25,
+              0.275,
+              0.3
+            ]
+          }
+        ]
       },
       {
         "title": "Advisories people can act on",
@@ -224,7 +273,27 @@ window.UX_WALKS = {
         "review": {
           "notice": "Separate actions an admin can take from Microsoft repair updates they need to follow.",
           "test": "Clear responsibility can reduce ambiguity; notification controls must also avoid overwhelming the admin with updates."
-        }
+        },
+        "details": [
+          {
+            "label": "Recommended action",
+            "region": [
+              0.73,
+              0.11,
+              0.23,
+              0.29
+            ]
+          },
+          {
+            "label": "Advisory overview",
+            "region": [
+              0.065,
+              0.5,
+              0.7,
+              0.26
+            ]
+          }
+        ]
       },
       {
         "title": "Duration and impact, read as one story",
@@ -251,7 +320,18 @@ window.UX_WALKS = {
         "review": {
           "notice": "Named series connect affected-user count with time in impact, while details support deeper investigation.",
           "test": "The overview needs to be scannable without hiding the measures or making hover the only route to detail."
-        }
+        },
+        "details": [
+          {
+            "label": "Impact & point details",
+            "region": [
+              0.02,
+              0.05,
+              0.96,
+              0.88
+            ]
+          }
+        ]
       },
       {
         "title": "Investigate Outlook crash details",
@@ -278,7 +358,36 @@ window.UX_WALKS = {
         "review": {
           "notice": "Connect channel, build, reliability, and failure details to an ongoing investigation.",
           "test": "A richer detail view adds investigative context. Preserve a clear path back to the incident and its next action."
-        }
+        },
+        "details": [
+          {
+            "label": "Channel & build health",
+            "region": [
+              0.125,
+              0.16,
+              0.59,
+              0.15
+            ]
+          },
+          {
+            "label": "Reliability measures",
+            "region": [
+              0.125,
+              0.505,
+              0.75,
+              0.15
+            ]
+          },
+          {
+            "label": "Failure details",
+            "region": [
+              0.125,
+              0.67,
+              0.75,
+              0.22
+            ]
+          }
+        ]
       }
     ]
   }
