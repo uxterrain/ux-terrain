@@ -26,3 +26,24 @@
     });
   });
 })();
+
+(function () {
+  "use strict";
+  const root = document.querySelector(".flotrak-photo-story");
+  if (!root) return;
+  const scenes = {
+    light: ["“I want the clouds to feel luminous, without losing their texture.”", "The sky is a large, bright part of the frame. Start with what matters about that light: its softness, its texture, and its relationship to the darker landscape.", "Give the exposure question a place in the scene.", "Coach can introduce the exposure reference and the role of point A. The photographer chooses the tone to expose for, then returns to the viewfinder to make that choice.", "Explore the A/B viewfinder →", "#oslo-evidence-3", "58%", "23%", "01 / LIGHT"],
+    shadow: ["“I like the dark trees. How much detail do I want to keep?”", "The foreground and forested slopes give the image its darker weight. The question is about the photograph's mood as well as the information in those shadows.", "Make the shadow a deliberate comparison.", "Point B gives the photographer a shadow reference to compare with point A. Coach can explain the two points, while the student decides which shadow matters and what they want to retain.", "Explore the A/B viewfinder →", "#oslo-evidence-3", "77%", "75%", "02 / SHADOW"],
+    depth: ["“I want the foreground trees and distant mountains to belong to the same picture.”", "The near trees, open water, and receding slopes create layers. Before choosing a setting, ask where the viewer's attention should settle and how the layers should relate.", "Connect the intention to focus and aperture.", "Coach's aperture lesson leads back to the control and the focus wedge. The indicated range gives the learner something to inspect while exploring how a setting relates to the photograph they want to make.", "Revisit the aperture learning loop →", "#flotrak-learning-title", "44%", "59%", "03 / DEPTH"]
+  };
+  root.querySelectorAll("[data-photo]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const scene = scenes[button.dataset.photo];
+      root.querySelectorAll("[data-photo]").forEach(function (item) { item.setAttribute("aria-pressed", String(item === button)); });
+      ["question", "notice", "heading", "bridge"].forEach(function (field, i) { root.querySelector("[data-photo-" + field + "]").textContent = scene[i]; });
+      const link = root.querySelector("[data-photo-link]"); link.textContent = scene[4]; link.href = scene[5];
+      const marker = root.querySelector("[data-photo-marker]"); marker.style.left = scene[6]; marker.style.top = scene[7];
+      root.querySelector("[data-photo-marker-label]").textContent = scene[8];
+    });
+  });
+})();
