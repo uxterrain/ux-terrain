@@ -135,11 +135,12 @@
               <p class="mt-5 text-base leading-relaxed" style="color: var(--color-text-muted)">
                 I wanted to build a tool for learning photography. Automated camera settings and filters can produce an image while leaving the choices behind it unclear. FloTrak brings those choices into the interface: where to focus, which shadows to read, and how to approach exposure. Coach brings that learning into the tool: students can ask a photography question, open a focused lesson, and use “Show me” to return to the relevant control. AI supports the explanation while the student makes the adjustment.
               </p>
-              <div class="flotrak-story-flow" aria-label="The photography workflow explored by the prototype">
-                <div><span>01 / BEFORE THE SHOT</span><h3 class="font-serif">Understand the settings</h3><p>Ask Coach about a setting and connect its explanation to the control.</p></div>
-                <div><span>02 / IN THE VIEWFINDER</span><h3 class="font-serif">Place the points yourself</h3><p>Follow “Show me,” change one control, and observe the wedge or exposure reading.</p></div>
-                <div><span>03 / WITH THE ROLL</span><h3 class="font-serif">Learn from the roll</h3><p>Keep frame settings and notes together so you can return to the choices you made.</p></div>
-              </div>
+              <section class="flotrak-learning" aria-labelledby="flotrak-learning-title">
+                <div class="flotrak-learning-intro"><p class="flotrak-eyebrow">The learning loop / aperture example</p><h3 id="flotrak-learning-title" class="font-serif">From “what does this do?” to “I can try it.”</h3><p>A lesson becomes useful when the learner can connect it to an action and a visible reference. Explore three moments from the working prototype.</p></div>
+                <div class="flotrak-learning-nav" role="group" aria-label="Explore the photography learning loop"><button type="button" data-learning="ask" aria-pressed="true"><span>01</span><strong>Ask</strong><small>Understand the idea</small></button><button type="button" data-learning="adjust" aria-pressed="false"><span>02</span><strong>Adjust</strong><small>Make the choice</small></button><button type="button" data-learning="observe" aria-pressed="false"><span>03</span><strong>Observe</strong><small>Read the feedback</small></button></div>
+                <div class="flotrak-learning-body"><div class="flotrak-learning-copy" aria-live="polite"><p class="flotrak-eyebrow" data-learning-kicker>01 / A question with somewhere to go</p><h4 class="font-serif" data-learning-heading>Give the explanation a visible reference.</h4><p data-learning-copy>The student asks about aperture. Coach connects its explanation to the focus wedge and suggests moving one control, rather than changing several settings at once. The lesson gives the learner something specific to look for.</p><div class="flotrak-learning-prompt"><span>The learner's question</span><p data-learning-question>“What should I watch when I change aperture?”</p></div><p class="flotrak-learning-principle"><span>Design principle</span><span data-learning-principle>Teach toward an action, not just a definition.</span></p></div><figure class="flotrak-learning-evidence"><div class="flotrak-learning-frame"><div class="flotrak-learning-chrome"><span>FLOTRAK</span><span data-learning-label>COACH / EXPLANATION</span><i aria-hidden="true"></i></div><a href="../images/work/zone/current-coach.png" target="_blank" rel="noopener" data-learning-link aria-label="Inspect the full original prototype screen"><div class="flotrak-learning-crop" data-learning-crop="ask"><img src="../images/work/zone/current-coach.png" alt="Prototype Coach reply about aperture directs the student to move one control and watch the focus wedge" data-learning-image /></div></a></div><figcaption data-learning-caption>Working prototype · Coach response and aperture lesson entry. Select to inspect the full screen.</figcaption></figure></div>
+                <div class="flotrak-learning-foot"><span>EXPLANATION → CHOICE → FEEDBACK ↺</span><p>Screen details show the prototype's teaching flow. This case-study explorer switches between captured screens; it does not calculate exposure or simulate a camera.</p></div>
+              </section>
               <p class="case-callout mt-8 text-xl leading-snug" style="color: var(--color-text)">
                 Ask Coach. Try the control. See what changes.
               </p>
@@ -376,6 +377,7 @@
         </div>
       </aside>
     </div>
+    <script src="../js/flotrak-learning.js"></script>
     <script src="../js/guide-session.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/eda-walks.js?v=20261102-copy2"></script>
