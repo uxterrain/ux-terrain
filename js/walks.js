@@ -26,7 +26,12 @@ window.UX_WALKS = {
         "followUps": [
           "How do you choose the first surface to work on?",
           "How would you know the design system is working?"
-        ]
+        ],
+        "shortTitle": "Foundation",
+        "review": {
+          "notice": "Start with a single product surface so shared rules can be grounded in real decisions.",
+          "test": "Which choices repeat, and which belong only to this product? Expand the system after that boundary is clear."
+        }
       },
       {
         "title": "Three things the system needs",
@@ -46,7 +51,12 @@ window.UX_WALKS = {
         "followUps": [
           "Which decisions still need human review?",
           "How should design and engineering resolve a mismatch?"
-        ]
+        ],
+        "shortTitle": "Three needs",
+        "review": {
+          "notice": "Meaningful tokens, a maintained connection to code, and practical checks support each other.",
+          "test": "Automation can catch a mismatch; it cannot decide who owns the fix or whether the exception is justified."
+        }
       },
       {
         "title": "How the layers fit together",
@@ -67,7 +77,12 @@ window.UX_WALKS = {
         "followUps": [
           "How does a token change affect the screens above it?",
           "How do you avoid creating too many patterns?"
-        ]
+        ],
+        "shortTitle": "Layers",
+        "review": {
+          "notice": "Tokens support components, components support patterns, and patterns support product tasks.",
+          "test": "Put a rule at the lowest layer that can express it without erasing the context above it."
+        }
       },
       {
         "title": "Make the decisions explicit",
@@ -87,7 +102,12 @@ window.UX_WALKS = {
         "followUps": [
           "When should an exception become a shared rule?",
           "How would you document why a token exists?"
-        ]
+        ],
+        "shortTitle": "Definitions",
+        "review": {
+          "notice": "Named values make the comparison between a design and its implementation explicit.",
+          "test": "A new shared rule has maintenance cost. Decide whether an exception should stay local before adding a token."
+        }
       },
       {
         "title": "Keep design and code connected",
@@ -108,7 +128,12 @@ window.UX_WALKS = {
         "followUps": [
           "How should a team review a proposed change?",
           "What would you check before expanding to another surface?"
-        ]
+        ],
+        "shortTitle": "Maintenance",
+        "review": {
+          "notice": "Publishing, review, and ownership keep a shared reference useful after the first release.",
+          "test": "Choose a small change and trace it from proposal through review to a product surface. Where does responsibility change hands?"
+        }
       }
     ]
   },
@@ -140,7 +165,12 @@ window.UX_WALKS = {
         "followUps": [
           "How did admin research shape the incident view?",
           "How did the design connect monitoring data to a next action?"
-        ]
+        ],
+        "shortTitle": "Context",
+        "review": {
+          "notice": "Put the recommendation beside the infrastructure context an admin needs to interpret it.",
+          "test": "More information can help an investigation and slow scanning. Keep the immediate task visible before deeper detail."
+        }
       },
       {
         "title": "Incident cards that change with the investigation",
@@ -162,7 +192,12 @@ window.UX_WALKS = {
         "followUps": [
           "How should the card explain uncertainty in an estimate?",
           "What should remain visible as an investigation progresses?"
-        ]
+        ],
+        "shortTitle": "Incident cards",
+        "review": {
+          "notice": "Keep the problem, estimated impact, timestamps, and state-dependent actions together.",
+          "test": "An estimate is useful only if its uncertainty and available next actions remain understandable as the investigation changes."
+        }
       },
       {
         "title": "Advisories people can act on",
@@ -184,14 +219,19 @@ window.UX_WALKS = {
         "followUps": [
           "How can an admin tell who is responsible for the next step?",
           "How should an update avoid creating more notification noise?"
-        ]
+        ],
+        "shortTitle": "Advisories",
+        "review": {
+          "notice": "Separate actions an admin can take from Microsoft repair updates they need to follow.",
+          "test": "Clear responsibility can reduce ambiguity; notification controls must also avoid overwhelming the admin with updates."
+        }
       },
       {
         "title": "Duration and impact, read as one story",
         "lede": "User count and time in impact run as two lines. Enough to see pattern, not so much that an admin has to decode it under pressure.",
         "visual": "image",
-        "src": "images/work/duration-chart.png",
-        "alt": "Line chart comparing user count and duration of impact over an incident window",
+        "src": "images/work/impact-metrics.png",
+        "alt": "Impact-chart detail with a selected point, timestamp, incident ID, and affected-user count",
         "caption": "Dual series: people affected and time in impact, designed to be scanned before it is studied.",
         "tags": [
           "Dual series",
@@ -206,7 +246,12 @@ window.UX_WALKS = {
         "followUps": [
           "How do duration and impact change the interpretation of an incident?",
           "What information would you preserve when opening chart details?"
-        ]
+        ],
+        "shortTitle": "Impact",
+        "review": {
+          "notice": "Named series connect affected-user count with time in impact, while details support deeper investigation.",
+          "test": "The overview needs to be scannable without hiding the measures or making hover the only route to detail."
+        }
       },
       {
         "title": "Investigate Outlook crash details",
@@ -228,7 +273,12 @@ window.UX_WALKS = {
         "followUps": [
           "How does the Outlook detail help an admin investigate?",
           "What could the prototype reveal before implementation?"
-        ]
+        ],
+        "shortTitle": "Outlook",
+        "review": {
+          "notice": "Connect channel, build, reliability, and failure details to an ongoing investigation.",
+          "test": "A richer detail view adds investigative context. Preserve a clear path back to the incident and its next action."
+        }
       }
     ]
   }

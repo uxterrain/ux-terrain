@@ -8,6 +8,7 @@
     walks: window.UX_WALKS,
   };
   const WALKS = walkConfig.walks;
+  const enhancedWalk = true;
   const session = window.UX_GUIDE_SESSION;
   const continuation = session && session.read();
   const carried = continuation && continuation.guide === walkConfig.agent ? continuation : null;
@@ -28,6 +29,22 @@
   if (!picker || !stage || !main || !log || !form) return;
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const guideRail = stage.querySelector(".walk-rail");
+  const guideToggle = document.createElement("button");
+  guideToggle.className = "walk-guide-toggle";
+  guideToggle.type = "button";
+  guideToggle.textContent = "Hide guide";
+  guideToggle.setAttribute("aria-expanded", "true");
+  guideToggle.setAttribute("aria-controls", "walk-guide");
+  guideRail.id = "walk-guide";
+  guideToggle.addEventListener("click", function () {
+    const collapsed = stage.classList.toggle("is-guide-collapsed");
+    guideToggle.setAttribute("aria-expanded", String(!collapsed));
+    guideToggle.textContent = collapsed ? "Ask " + walkConfig.name : "Hide guide";
+    if (!collapsed) input.focus();
+  });
+  stage.querySelector(".walk-foot").prepend(guideToggle);
+
 
   let walk = null;
   let index = 0;
@@ -164,7 +181,9 @@
       const button = document.createElement("button");
       button.type = "button";
       button.className = "walk-dot" + (i === index ? " is-current" : "");
-      button.setAttribute("aria-label", "Station " + (i + 1));
+      button.setAttribute("aria-label", "Station " + (i + 1) + ": " + walk.stations[i].title);
+      button.title = walk.stations[i].title;
+      if (enhancedWalk) button.textContent = String(i + 1);
       if (i === index) button.setAttribute("aria-current", "step");
       else button.removeAttribute("aria-current");
       button.addEventListener("click", function () {
@@ -227,7 +246,7 @@
 
   function typeNarration(text, body) {
     stopTyping();
-    if (reduceMotion) {
+    if (reduceMotion || enhancedWalk) {
       hideLoader(body);
       body.textContent = text;
       setStatus("idle", "With you");
@@ -284,7 +303,7 @@
       '<div class="walk-visual">' +
       renderVisual(st) +
       "</div>" +
-      (st.caption ? '<p class="walk-caption">' + escapeHtml(st.caption) + "</p>" : "") +
+      (st.caption && st.caption !== st.lede ? '<p class="walk-caption">' + escapeHtml(st.caption) + "</p>" : "") +
       (st.tags && st.tags.length
         ? '<ul class="walk-tags">' +
           st.tags.map(function (tag) {
@@ -293,6 +312,11 @@
           "</ul>"
         : "");
 
+    if (enhancedWalk) enhanceStation(st);
+    main.scrollTop = 0;
+    if (enhancedWalk && !reduceMotion) {
+      main.animate([{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "translateY(0)" }], { duration: 260, easing: "ease-out" });
+    }
     log.innerHTML = "";
     const body = appendTurn("agent", "");
     typeNarration(st.say, body);
@@ -306,7 +330,8 @@
 
     backBtn.disabled = index === 0;
     nextBtn.disabled = false;
-    nextBtn.textContent = index === walk.stations.length - 1 ? "Choose walk" : "Next →";
+    nextBtn.textContent = index === walk.stations.length - 1 ? (enhancedWalk ? "Finish walk →" : "Choose walk") : "Next →";
+    if (enhancedWalk) nextBtn.setAttribute("aria-label", index === walk.stations.length - 1 ? "Finish and choose another walk" : "Next: " + walk.stations[index + 1].title);
     input.placeholder = "Ask about this station…";
     input.value = "";
 
@@ -314,6 +339,88 @@
     if (window.location.hash !== hash) {
       history.replaceState({ walk: walk.id, index: index }, "", walkConfig.page + hash);
     }
+  }
+
+  function focusStation() {
+    const heading = main.querySelector("h1");
+    if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
+  }
+
+  function enhanceStation(st) {
+    const overview = document.createElement("nav");
+    overview.className = "eda-station-map";
+    overview.setAttribute("aria-label", walk.title + " stations");
+    walk.stations.forEach(function (item, i) {
+      const step = document.createElement("button");
+      step.type = "button";
+      step.innerHTML = '<span>' + pad(i + 1) + '</span>' + escapeHtml(item.shortTitle || item.title);
+      if (i === index) step.setAttribute("aria-current", "step");
+      step.addEventListener("click", function () { goTo(i); });
+      overview.appendChild(step);
+    });
+    main.prepend(overview);
+    const visual = main.querySelector(".walk-visual");
+    if (st.visual === "image") {
+      const image = visual.querySelector("img");
+      const zoom = document.createElement("button");
+      zoom.type = "button";
+      zoom.className = "eda-zoom";
+      zoom.textContent = "Inspect image ↗";
+      zoom.setAttribute("aria-label", "Enlarge: " + st.title);
+      zoom.addEventListener("click", function () { openImage(st, zoom); });
+      visual.appendChild(zoom);
+      image.style.cursor = "zoom-in";
+      image.addEventListener("click", function () { openImage(st, zoom); });
+    }
+    if (st.review) {
+      const review = document.createElement("section");
+      review.className = "eda-review";
+      review.setAttribute("aria-label", "Review this design decision");
+      review.innerHTML = '<div><h2>' + (walkConfig.agent === "eda" ? "What to notice" : "Design decision") + '</h2><p>' + escapeHtml(st.review.notice) + '</p></div><div><h2>' + (walkConfig.agent === 'eda' ? 'What to test' : 'Consider the tradeoff') + '</h2><p>' + escapeHtml(st.review.test) + '</p></div>';
+      main.appendChild(review);
+    }
+    if (index === walk.stations.length - 1) {
+      const end = document.createElement("section");
+      end.className = "eda-wrap-up";
+      const foundation = walkConfig.agent === "eda" ? "floor" : "ground";
+      const nextId = walk.id === foundation ? "m365" : foundation;
+      const isFoundation = walk.id === foundation;
+      const summaryTitle = walkConfig.agent === "eda" ? (isFoundation ? "Put the questions to work." : "From observation to a test plan.") : (isFoundation ? "See the system in a product." : "Connect the product to its foundation.");
+      const summaryCopy = walkConfig.agent === "eda" ? (isFoundation ? "Try Performance Monitoring to apply these questions to incident states, charts, and timelines." : "Take these questions into a working-product review. Screenshots explain design intent; interaction testing supplies the missing evidence.") : (isFoundation ? "Explore how a complex admin experience brings states, actions, and information hierarchy together." : "Revisit the shared values, component rules, and maintenance decisions behind a coherent product experience.");
+      end.innerHTML = '<p class="walk-station-kicker">Take it further</p><h2>' + summaryTitle + '</h2><p>' + summaryCopy + '</p>';
+      const next = document.createElement("a");
+      next.className = "eda-related-link";
+      next.href = walkConfig.page + "#" + nextId;
+      next.textContent = (isFoundation ? "Walk through Performance Monitoring" : (walkConfig.agent === "eda" ? "Revisit accessibility foundations" : "Explore the ground layer")) + " →";
+      next.addEventListener("click", function (event) { event.preventDefault(); if (session) session.clear(walkConfig.agent); startWalk(nextId, 0); });
+      const read = document.createElement("a");
+      read.className = "eda-related-link";
+      read.href = walk.readUrl;
+      read.textContent = "Read the full story ↗";
+      end.append(next, read);
+      (walk.sources || []).forEach(function (source) {
+        const link = document.createElement("a");
+        link.className = "eda-source-link"; link.href = source.url; link.target = "_blank"; link.rel = "noopener"; link.textContent = source.title + " ↗"; end.appendChild(link);
+      });
+      main.appendChild(end);
+    }
+  }
+
+  function openImage(st, trigger) {
+    const dialog = document.createElement("dialog");
+    dialog.className = "eda-image-dialog";
+    dialog.setAttribute("aria-label", st.title + " — enlarged evidence");
+    const head = document.createElement("div"); head.className = "eda-image-head";
+    const title = document.createElement("h2"); title.textContent = st.title;
+    const close = document.createElement("button"); close.type = "button"; close.textContent = "Close ×";
+    const viewport = document.createElement("div"); viewport.className = "eda-image-viewport";
+    const img = document.createElement("img"); img.src = st.src; img.alt = st.alt || st.title;
+    viewport.appendChild(img); head.append(title, close); dialog.append(head, viewport);
+    document.body.appendChild(dialog);
+    close.addEventListener("click", function () { dialog.close(); });
+    dialog.addEventListener("click", function (event) { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener("close", function () { dialog.remove(); if (trigger.isConnected) trigger.focus(); });
+    dialog.showModal(); close.focus();
   }
 
   function startWalk(id, startIndex) {
@@ -327,7 +434,8 @@
     setMode("walk");
     renderStation();
     window.requestAnimationFrame(function () {
-      if (input) input.focus();
+      if (enhancedWalk) focusStation();
+      else if (input) input.focus();
     });
   }
 
@@ -339,6 +447,8 @@
     walk = null;
     index = 0;
     setMode("pick");
+    if (enhancedWalk) picker.querySelector("h1").setAttribute("tabindex", "-1");
+    if (enhancedWalk) picker.querySelector("h1").focus();
     if (window.location.hash) {
       history.replaceState({}, "", walkConfig.page);
     }
@@ -353,6 +463,7 @@
     }
     index = nextIndex;
     renderStation();
+    if (enhancedWalk) focusStation();
   }
 
   function toPlainReply(text) {
@@ -480,8 +591,9 @@
   document.addEventListener("keydown", function (event) {
     if (!document.documentElement.classList.contains("is-walking")) return;
     if (event.target && (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")) return;
-    if (event.key === "ArrowRight") goTo(index + 1);
-    if (event.key === "ArrowLeft") goTo(index - 1);
+    if (event.defaultPrevented || document.querySelector(".eda-image-dialog[open]")) return;
+    if (event.key === "ArrowRight") { event.preventDefault(); goTo(index + 1); }
+    if (event.key === "ArrowLeft") { event.preventDefault(); goTo(index - 1); }
     if (event.key === "Escape") showPicker();
   });
 
@@ -495,7 +607,7 @@
   log.addEventListener("scroll", function () { if (walk && session) session.checkpoint(); }, { passive: true });
 
   const parsed = parseHash();
-  if (carried && carried.context.walkId && Object.hasOwn(WALKS, carried.context.walkId)) {
+  if (carried && carried.context.walkId && Object.hasOwn(WALKS, carried.context.walkId) && (!parsed.id || (parsed.id === carried.context.walkId && parsed.index === carried.context.stationIndex))) {
     startWalk(carried.context.walkId, carried.context.stationIndex);
     const context = { walkId: walk.id, stationIndex: index };
     const agent = walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA;

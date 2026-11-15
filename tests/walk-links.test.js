@@ -27,7 +27,7 @@ console.log('PASS walkthrough CTAs match authored routes; FloTrak has Eda only, 
 
 const landing=fs.readFileSync(path.join(root,'walk.html'),'utf8');
 const edaCards=[...landing.matchAll(/<a class="walk-choice" href="eda\.html#([^"#]+)">([\s\S]*?)<\/a>/g)];
-assert.equal(edaCards.length,Object.keys(eda).length,'shared landing must expose every authored Eda walk');
+assert.deepEqual(edaCards.map(card=>card[1]),['floor','m365'],'shared landing features only the two selected Eda walks');
 assert.equal(new Set(edaCards.map(card=>card[1])).size,edaCards.length);
 for(const [,id,content] of edaCards){
  assert.ok(Object.hasOwn(eda,id),'landing route must exist');
@@ -35,4 +35,4 @@ for(const [,id,content] of edaCards){
  assert.ok(content.includes(eda[id].stations.length+' stops'),'station count must match the route');
 }
 for(const id of Object.keys(oslo)) assert.ok(landing.includes('data-walk="'+id+'"'),'existing Oslo route remains available');
-console.log('PASS shared Walk landing: distinct guide groups and all eight authored Eda routes with accurate titles and station counts.');
+console.log('PASS shared Walk landing: distinct guide groups and two featured Eda routes with accurate titles and station counts.');

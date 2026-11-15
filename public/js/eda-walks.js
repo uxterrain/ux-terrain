@@ -38,7 +38,12 @@ window.EDA_WALKS = {
         "followUps": [
           "What would count as evidence for an accessibility claim?",
           "How should a team communicate an untested design target?"
-        ]
+        ],
+        "shortTitle": "Start here",
+        "review": {
+          "notice": "Separate the requirement, the team’s target, and the evidence for this interface.",
+          "test": "Ask which requirements apply, who owns the checks, and where the results will be recorded."
+        }
       },
       {
         "title": "Where Section 508 fits",
@@ -71,12 +76,17 @@ window.EDA_WALKS = {
         "followUps": [
           "How does a team establish which requirements apply?",
           "What should the team verify in the official standards?"
-        ]
+        ],
+        "shortTitle": "Requirements",
+        "review": {
+          "notice": "Section 508 has a specific federal context. A newer WCAG design target is a separate decision.",
+          "test": "Confirm applicability against the official standards before turning guidance into a compliance claim."
+        }
       },
       {
         "title": "Use WCAG as a design reference",
         "lede": "Translate relevant criteria into specific design and test questions.",
-        "visual": "quote",
+        "visual": "bands",
         "quote": "A design target becomes useful when it leads to specific questions and tests.",
         "caption": "Translate relevant criteria into specific design and test questions.",
         "tags": [],
@@ -88,6 +98,28 @@ window.EDA_WALKS = {
         "followUps": [
           "What does a useful test result need to record?",
           "Which checks require someone to use the interface?"
+        ],
+        "shortTitle": "Design targets",
+        "review": {
+          "notice": "A useful target names the interaction to examine: focus, target selection, or alternatives to dragging.",
+          "test": "Try each task with a keyboard and check the relevant criterion in the working interface."
+        },
+        "bands": [
+          {
+            "kicker": "Navigate",
+            "title": "Visible focus",
+            "body": "Can you tell which control will respond to the keyboard?"
+          },
+          {
+            "kicker": "Select",
+            "title": "Usable targets",
+            "body": "Can people select the intended control without fine pointer precision?"
+          },
+          {
+            "kicker": "Operate",
+            "title": "Beyond dragging",
+            "body": "Is there another way to complete the same task?"
+          }
         ]
       },
       {
@@ -121,7 +153,12 @@ window.EDA_WALKS = {
         "followUps": [
           "How should focus behavior be documented?",
           "How can a team review errors and recovery?"
-        ]
+        ],
+        "shortTitle": "Components",
+        "review": {
+          "notice": "A component needs more than its default appearance. Labels, errors, focus, and recovery are part of the design.",
+          "test": "Move through every state. Can someone understand the change and recover without a pointer?"
+        }
       },
       {
         "title": "Know what the evidence can support",
@@ -138,7 +175,12 @@ window.EDA_WALKS = {
         "followUps": [
           "What would you prioritize in a working-product review?",
           "How should unverified findings be presented?"
-        ]
+        ],
+        "shortTitle": "Evidence",
+        "review": {
+          "notice": "A screenshot can reveal hierarchy and written labels. It cannot prove keyboard or screen-reader behavior.",
+          "test": "Record the task, browser, assistive technology, observed behavior, and any unresolved questions."
+        }
       }
     ],
     "sources": [
@@ -177,7 +219,12 @@ window.EDA_WALKS = {
         "followUps": [
           "How could an admin find the most important information quickly?",
           "What would you test with an admin during an investigation?"
-        ]
+        ],
+        "shortTitle": "Overview",
+        "review": {
+          "notice": "Status, affected users, and the next action need to be easy to find while an incident develops.",
+          "test": "Ask an admin to explain what is happening and what they would do next, without coaching."
+        }
       },
       {
         "title": "Name the investigation state",
@@ -196,7 +243,12 @@ window.EDA_WALKS = {
         "followUps": [
           "How should a status change be announced?",
           "What should remain stable when the incident updates?"
-        ]
+        ],
+        "shortTitle": "Incident states",
+        "review": {
+          "notice": "Written states such as Under Investigation and Service Restored carry meaning beyond color.",
+          "test": "Update the state while someone uses the card. Check focus, announcements, and whether actions remain understandable."
+        }
       },
       {
         "title": "Explain who can take action",
@@ -215,15 +267,20 @@ window.EDA_WALKS = {
         "followUps": [
           "How can the next action identify who needs to act?",
           "What would you check about notification preferences?"
-        ]
+        ],
+        "shortTitle": "Next actions",
+        "review": {
+          "notice": "Tenant actions and Microsoft repair updates describe different responsibilities.",
+          "test": "Can an admin identify the owner of the next step and select notification preferences using a keyboard?"
+        }
       },
       {
         "title": "Make the chart usable beyond color",
         "anchor": "chart",
         "lede": "Identify the measures and provide access to point details.",
         "visual": "image",
-        "src": "images/work/duration-chart.png",
-        "alt": "Line chart comparing user count and duration of impact over an incident window",
+        "src": "images/work/impact-metrics.png",
+        "alt": "Impact-chart detail with a selected point, timestamp, incident ID, and affected-user count",
         "caption": "Identify the measures and provide access to point details.",
         "tags": [],
         "say": "The chart names affected-user count and duration of impact. Those names help explain the measures, but we still need to check whether people can distinguish the lines without relying on color and reach point details without a mouse. The case describes hover details; it does not establish the keyboard behavior. Next is the historic timeline.",
@@ -234,7 +291,12 @@ window.EDA_WALKS = {
         "followUps": [
           "How could a keyboard user reach the chart details?",
           "What text alternative would help explain the chart?"
-        ]
+        ],
+        "shortTitle": "Impact chart",
+        "review": {
+          "notice": "The labels name two measures. Color and hover alone may leave the relationship unclear.",
+          "test": "Reach point details without a mouse, distinguish the series without color, and compare a text or table alternative."
+        }
       },
       {
         "title": "Keep the timeline understandable",
@@ -253,7 +315,12 @@ window.EDA_WALKS = {
         "followUps": [
           "How should a grouped event explain its contents?",
           "How could someone navigate the timeline without a mouse?"
-        ]
+        ],
+        "shortTitle": "Timeline",
+        "review": {
+          "notice": "Incident categories and grouped events must remain understandable beyond the size and color of a mark.",
+          "test": "Navigate the timeline by keyboard and confirm that each group exposes a useful name, category, and underlying events."
+        }
       }
     ]
   },

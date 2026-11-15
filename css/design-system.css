@@ -2657,3 +2657,39 @@ a.walk-choice { text-decoration: none; }
   html.is-walking .walk-header #nav-toggle { display: inline-flex; }
   html.is-walking .walk-header #nav-menu:not(.hidden) { display: block; }
 }
+
+/* Eda: an inspectable, self-paced evidence walk. */
+html.is-walking .eda-station-map {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.5rem;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--color-border)}
+.eda-station-map button {text-align:left;padding:.65rem .55rem;border:1px solid transparent;border-radius:.5rem;font-size:.75rem;line-height:1.3;color:var(--color-text-muted);background:transparent;min-width:0}
+.eda-station-map button span {display:block;font: .65rem var(--font-mono);margin-bottom:.35rem;color:var(--color-accent)}
+.eda-station-map button[aria-current="step"] {background:var(--color-accent-soft);border-color:var(--color-border-strong);color:var(--color-text)}
+.eda-station-map button:hover {border-color:var(--color-accent)}
+html.is-walking .walk-station-title {max-width:38rem;font-size:clamp(1.8rem,3.2vw,2.8rem)}
+html.is-walking .walk-visual img {max-width:none;max-height:45vh;object-fit:contain;border-radius:.75rem;background:var(--color-bg-muted)}
+.eda-zoom {display:block;margin:.75rem 0 0 auto;padding:.5rem .75rem;color:var(--color-accent);border:1px solid var(--color-border-strong);border-radius:99px;font-size:.8rem}
+.eda-review {display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem;padding:1.4rem;border:1px solid var(--color-border);border-radius:1rem;background:var(--color-bg-elevated)}
+.eda-review h2 {font: .65rem var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--color-accent);margin:0 0 .6rem}
+.eda-review p {font-size:.94rem;line-height:1.6;color:var(--color-text-muted);margin:0}
+.eda-wrap-up {margin-top:1.5rem;padding:1.5rem;border-left:2px solid var(--color-accent);background:var(--color-accent-soft);border-radius:0 .75rem .75rem 0}
+.eda-wrap-up h2 {font:1.5rem var(--font-serif);margin:.6rem 0}
+.eda-wrap-up>p:not(.walk-station-kicker) {line-height:1.6;color:var(--color-text-muted);font-size:.94rem}
+.eda-related-link,.eda-source-link {display:block;width:fit-content;color:var(--color-accent);text-decoration:underline;text-underline-offset:4px;margin-top:1rem;font-size:.9rem}
+.eda-source-link {font-size:.75rem}
+html.is-walking .walk-dot {width:32px;height:32px;border-radius:50%;font: .7rem var(--font-mono);color:var(--color-text-muted);background:transparent;border:1px solid var(--color-border-strong)}
+html.is-walking .walk-dot.is-current {background:var(--color-accent);color:var(--color-bg)}
+.eda-image-dialog {position:fixed;inset:0;margin:auto;width:min(96vw,1500px);height:90dvh;max-width:none;max-height:94dvh;padding:0;background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border);border-radius:1rem;box-shadow:0 24px 100px #0008;overflow:hidden}
+.eda-image-dialog::backdrop {background:#000b;backdrop-filter:blur(5px)}
+.eda-image-head {display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.5rem;border-bottom:1px solid var(--color-border)}
+.eda-image-head h2 {font:1.15rem var(--font-serif)}
+.eda-image-head button {padding:.6rem 1rem;border:1px solid var(--color-border-strong);border-radius:99px;flex-shrink:0}
+.eda-image-viewport {height:calc(100% - 85px);overflow:auto;padding:1.5rem;display:grid;align-items:start}
+.eda-image-viewport img {width:100%;min-width:850px;height:auto;background:#fff}
+.eda-image-dialog :focus-visible,.eda-station-map :focus-visible,.eda-zoom:focus-visible {outline:2px solid var(--color-accent);outline-offset:4px}
+@media(max-width:959px){html.is-walking .walk-main{flex:0 0 52%;padding:1.3rem}html.is-walking .walk-rail{flex:1;min-height:0}.eda-station-map button{font-size:.65rem;padding:.4rem .2rem}html.is-walking .eda-station-map{margin-bottom:1.2rem;gap:.2rem}.eda-review{grid-template-columns:1fr;gap:1rem;padding:1rem}html.is-walking .walk-visual img{max-height:35vh}html.is-walking .walk-foot{padding:.6rem;gap:.3rem}html.is-walking .walk-dots{gap:.2rem}html.is-walking .walk-dot{width:27px;height:27px}.eda-image-head{padding:.8rem}.eda-image-viewport{padding:.75rem}}
+@media(prefers-reduced-motion:reduce){.eda-station-map button{transition:none}}
+
+html.is-walking .walk-hold,html.is-walking .walk-cut-band,html.is-walking .sys-core{animation:station-detail-in 380ms ease-out both}html.is-walking .walk-hold:nth-child(2),html.is-walking .walk-cut-band:nth-child(2){animation-delay:70ms}html.is-walking .walk-hold:nth-child(3),html.is-walking .walk-cut-band:nth-child(3){animation-delay:140ms}@keyframes station-detail-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){html.is-walking .walk-hold,html.is-walking .walk-cut-band,html.is-walking .sys-core{animation:none}}
+
+.walk-station-title[tabindex="-1"]:focus{outline:none}
+.walk-guide-toggle{display:none}
+@media(max-width:959px){.walk-guide-toggle{display:block;font-size:.7rem;color:var(--color-accent);border:1px solid var(--color-border-strong);padding:.45rem;border-radius:.4rem;white-space:nowrap}.walk-stage.is-guide-collapsed .walk-rail{display:none}html.is-walking .walk-stage.is-guide-collapsed .walk-main{flex:1 1 auto}html.is-walking .walk-dot{width:24px;height:28px}.walk-nav{gap:.25rem}.walk-nav button{padding:.5rem .6rem}}
