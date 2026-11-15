@@ -362,6 +362,10 @@
     const visual = main.querySelector(".walk-visual");
     if (st.visual === "image") {
       const image = visual.querySelector("img");
+      const frame = document.createElement("div");
+      frame.className = "walk-image-frame";
+      image.replaceWith(frame);
+      frame.appendChild(image);
       const zoom = document.createElement("button");
       zoom.type = "button";
       zoom.className = "eda-zoom";

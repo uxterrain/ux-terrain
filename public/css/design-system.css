@@ -2693,3 +2693,7 @@ html.is-walking .walk-hold,html.is-walking .walk-cut-band,html.is-walking .sys-c
 .walk-station-title[tabindex="-1"]:focus{outline:none}
 .walk-guide-toggle{display:none}
 @media(max-width:959px){.walk-guide-toggle{display:block;font-size:.7rem;color:var(--color-accent);border:1px solid var(--color-border-strong);padding:.45rem;border-radius:.4rem;white-space:nowrap}.walk-stage.is-guide-collapsed .walk-rail{display:none}html.is-walking .walk-stage.is-guide-collapsed .walk-main{flex:1 1 auto}html.is-walking .walk-dot{width:24px;height:28px}.walk-nav{gap:.25rem}.walk-nav button{padding:.5rem .6rem}}
+
+/* Keep the evidence frame while bringing interface details closer. */
+html.is-walking .walk-image-frame{overflow:hidden;border:1px solid var(--color-border);border-radius:.75rem;background:var(--color-bg-muted)}
+html.is-walking .walk-image-frame img{border:0;border-radius:0;transform:scale(1.18);transform-origin:center}
