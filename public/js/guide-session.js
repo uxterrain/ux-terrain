@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   const KEY = "ux-terrain-guide-session-v1";
-  const sitePages = /^\/(?:index|about|systems|walk|eda|privacy|work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda))\.html$/;
+  const sitePages = /^\/(?:index|about|systems|walk|eda|privacy|accessibility|work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda))\.html$/;
   let active = null;
   function validContext(context) {
     return context && typeof context === "object" &&

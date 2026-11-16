@@ -8,7 +8,7 @@ fs.writeFileSync(path.join(__dirname, "../knowledge/projects.json"), JSON.string
 
 const root = path.join(__dirname, "..");
 const dest = path.join(root, "public");
-const items = ["index.html", "about.html", "privacy.html", "eda.html", "systems.html", "walk.html", "css", "js", "images", "work"];
+const items = ["index.html", "about.html", "privacy.html", "accessibility.html", "eda.html", "systems.html", "walk.html", "css", "js", "images", "work"];
 
 fs.rmSync(dest, { recursive: true, force: true });
 fs.mkdirSync(dest);
