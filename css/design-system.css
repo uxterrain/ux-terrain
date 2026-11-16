@@ -2869,10 +2869,3 @@ html.is-walking .walk-image-frame.has-detail{max-width:min(100%,calc(55vh * var(
   #agent-panel .agent-inquiries, #eda-panel .walk-asks, .walk-stage .walk-asks { display: none; }
 }
 .has-glass-chrome > footer { max-width: none; padding-inline: max(1.25rem, calc((100% - 72rem) / 2 + 2rem)); }
-
-/* Keep the site footer proportional to its single line of information. */
-.has-glass-chrome > footer {
-  padding-block: .75rem;
-  padding-bottom: max(.75rem, env(safe-area-inset-bottom));
-}
-.has-glass-chrome > footer > p { line-height: 1.65; }
