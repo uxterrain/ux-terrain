@@ -38,7 +38,22 @@
       body.appendChild(references);
     }
   }
+  const osloIntroductions = {
+    "sbi": "I see you’re exploring SBI. We designed it to help teams connect equipment activity with decisions about parts and inventory. Anything you’d like to dig into?",
+    "zone-focus": "I see you’re getting to know Flotrak. It’s about helping people learn photography by trying things themselves, with Coach there to guide them. Curious about how any of it works?",
+    "armada": "I see you’re exploring Armada. We worked on helping operators keep track of multiple drones, follow their paths, and stay with what’s happening on the mission. What would you like to know?",
+    "performance-monitoring": "I see you’re looking at the M365 work. We designed ways to help admins understand an issue, see who’s affected, and work out what to do next. Anything you’d like a closer look at?",
+    "iqvia": "I see you’re exploring IQVIA. We worked on helping teams create, review, and approve medical content, with a clearer path through the process. What are you curious about?",
+    "oslo": "You’re reading about how I fit into the site. The idea is to help you explore the work and ask about the decisions along the way. Happy to talk through how that came together.",
+    "eda": "I see you’re getting to know Eda. We designed her to help people explore accessibility through the interfaces and decisions in this portfolio. Anything you’d like to understand better?",
+    "systems": "I see you’re exploring our approach to design systems. It’s about giving teams a shared foundation they can put to work. What would you like to talk through?"
+};
   window.UX_OSLO = {
+    introduction(projectId) {
+      return Object.prototype.hasOwnProperty.call(osloIntroductions, projectId)
+        ? osloIntroductions[projectId]
+        : "Hi, I’m Oslo. Take a look around, and ask me anything you’re curious about in the work.";
+    },
     hasConversation(state) {
       return Boolean(state && state.guide === "oslo" &&
         ((Array.isArray(state.turns) && state.turns.some(turn => turn && turn.role === "user")) ||
@@ -186,10 +201,7 @@
     }
     const projectNames = {"performance-monitoring":"M365",sbi:"SBI",armada:"Armada",iqvia:"IQVIA","zone-focus":"Flotrak",systems:"Systems",oslo:"Oslo",eda:"Eda",m365:"M365",ground:"Systems"};
     function greetingText() {
-      const pageProject = currentContext().projectId;
-      const projectName = Object.prototype.hasOwnProperty.call(projectNames, pageProject) ? projectNames[pageProject] : null;
-      return projectName ? "Hi, I’m Oslo. You’re viewing " + (pageProject === "systems" ? "Systems" : "the " + projectName + " case study") + ". Let me know if you have questions about the work or the design decisions behind it."
-        : "Hi, I’m Oslo. Ask me about the projects, the design decisions, or the evidence behind them.";
+      return window.UX_OSLO.introduction(currentContext().projectId);
     }
     if (!resumeConversation) {
       const greeting = log.querySelector(".chat-turn-agent .chat-turn-body");

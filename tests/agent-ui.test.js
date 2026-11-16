@@ -25,6 +25,13 @@ const fetch=async (_,options)=>{
 const code=fs.readFileSync(require.resolve('../js/app.js'),'utf8');
 vm.runInNewContext(code.slice(0,code.indexOf('  const THEME_KEY'))+'})();',{window,document,fetch,TextDecoder,Map});
 async function run(){
+ for (const project of ['sbi','zone-focus','armada','performance-monitoring','iqvia','oslo','eda']) {
+   assert.ok(window.UX_OSLO.introduction(project).length > 70, 'each case study should have its own introduction');
+ }
+ assert.match(window.UX_OSLO.introduction('sbi'), /equipment activity/);
+ assert.match(window.UX_OSLO.introduction('zone-focus'), /photography/);
+ assert.match(window.UX_OSLO.introduction('__proto__'), /Hi, I’m Oslo/);
+
  assert.equal(window.UX_OSLO.hasConversation({guide:'oslo',context:{},turns:[{role:'agent',text:'Generic greeting'}],history:[]}),false,'opening a guide alone must not pin homepage context');
  assert.equal(window.UX_OSLO.hasConversation({guide:'oslo',context:{projectId:'sbi'},turns:[{role:'user',text:'Why?'}]}),true,'an actual conversation must retain its scope');
  assert.equal(window.UX_OSLO.hasConversation({guide:'eda',turns:[{role:'user'}]}),false,'Eda continuation must not resume as Oslo');
