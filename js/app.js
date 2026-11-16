@@ -23,7 +23,7 @@
       }
       item.appendChild(document.createTextNode(claim.text));
       (Array.isArray(claim.evidence) ? claim.evidence : []).forEach(function (source) {
-        if (!source || typeof source.title !== "string" || !/^\/(?:work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda)|systems)\.html#(?:oslo-evidence-\d+|(?:shifts|cut|core|trail|lay|proof|contact)-title)$/.test(source.url)) return;
+        if (!source || typeof source.title !== "string" || !/^\/(?:work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda)|systems|about)\.html#(?:oslo-evidence-\d+|implementation-note|(?:shifts|cut|core|trail|lay|proof|contact)-title)$/.test(source.url)) return;
         sources.set(source.url, source);
       });
       body.appendChild(item);

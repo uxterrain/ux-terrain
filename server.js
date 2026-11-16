@@ -165,7 +165,7 @@ app.post("/api/chat", async function (req, res) {
         max_tokens: 1600,
         messages: [
           { role: "system", content: grounding.procedure },
-          { role: "user", content: JSON.stringify({ evidence: groundedContext.evidence,
+          { role: "user", content: JSON.stringify({ evidence: groundedContext.evidence, practiceEvidence: groundedContext.practiceEvidence,
             station: groundedContext.station, conversation: grounding.historyFor(req.body.history), question: message }) },
         ],
       });
@@ -177,7 +177,7 @@ app.post("/api/chat", async function (req, res) {
         max_tokens: 1600,
         messages: [
           { role: "system", content: grounding.reviewProcedure },
-          { role: "user", content: JSON.stringify({ evidence: groundedContext.evidence,
+          { role: "user", content: JSON.stringify({ evidence: groundedContext.evidence, practiceEvidence: groundedContext.practiceEvidence,
             station: groundedContext.station, conversation: grounding.historyFor(req.body.history), question: message, draft }) },
         ],
       });

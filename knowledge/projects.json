@@ -490,5 +490,17 @@
         "url": "/systems.html#contact-title"
       }
     ]
+  },
+  "practice": {
+    "title": "Design and implementation practice",
+    "path": "/about.html",
+    "evidence": [
+      {
+        "id": "practice:implementation",
+        "title": "From specification to implementation",
+        "text": "From specification to implementation I work across design specifications, Storybook architecture, and merge requests to carry design intent into implementation. Automation helps produce the code; human judgment remains essential to reviewing the visual details, interactions, and accessibility.",
+        "url": "/about.html#implementation-note"
+      }
+    ]
   }
 }

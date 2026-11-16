@@ -93,3 +93,14 @@ test("author-confirmed design-system context reaches both guides", () => {
   const eda = require('../lib/eda-context').resolveEdaContext({walkId:'sbi',stationIndex:0});
   assert.ok(eda.caseEvidence.some(e=>e.text.includes('custom design system designed from the ground up')));
 });
+
+test("shared practice supports general fluency without becoming case evidence", () => {
+ const context=contextFor({projectId:'sbi'});
+ assert.ok(context.evidence.every(e=>e.id.startsWith('sbi:')));
+ assert.ok(context.practiceEvidence[0].text.includes('Storybook architecture'));
+ assert.ok(context.practiceEvidence[0].text.includes('human judgment'));
+ assert.equal(validateAnswer({claims:[{kind:'documented',text:'Jimmy works across Storybook architecture and merge requests.',evidenceIds:['practice:implementation']}]},context).claims[0].evidence[0].url,'/about.html#implementation-note');
+ assert.throws(()=>contextFor({projectId:'practice'}));
+ const about=fs.readFileSync(path.join(__dirname,'../about.html'),'utf8');
+ assert.ok(about.includes('id="implementation-note"'));
+});

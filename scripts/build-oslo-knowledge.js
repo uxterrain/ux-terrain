@@ -27,6 +27,10 @@ function build() {
     });
     result[id] = { title, path: "/" + file, evidence };
   }
+  const about = fs.readFileSync(path.join(root, "about.html"), "utf8");
+  const implementation = about.match(/<section\b[^>]*aria-labelledby="implementation-note"[^>]*>([\s\S]*?)<\/section>/);
+  if (!implementation) throw new Error("Missing authored implementation practice context.");
+  result.practice = { title: "Design and implementation practice", path: "/about.html", evidence: [{ id: "practice:implementation", title: "From specification to implementation", text: plain(implementation[1]), url: "/about.html#implementation-note" }] };
   return result;
 }
 if (require.main === module) fs.writeFileSync(path.join(root, "knowledge/projects.json"), JSON.stringify(build(), null, 2) + "\n");
