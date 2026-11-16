@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="is-walk-picking">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Walk with Oslo and Eda — UX Terrain</title>
+    <meta
+      name="description"
+      content="Explore design decisions with Oslo or accessibility questions with Eda. Choose an AI-guided walkthrough and move at your own pace."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var key = "ux-terrain-theme";
+          var stored = localStorage.getItem(key);
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : "dark";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Lora", "Palatino", "serif"],
+              sans: ['"Source Sans 3"', "system-ui", "sans-serif"],
+              mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/design-system.css" />
+  </head>
+  <body class="h-full overflow-hidden antialiased">
+    <div id="app-shell" class="walk-shell flex h-full w-full flex-col overflow-hidden">
+      <header class="walk-header">
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+          <a href="index.html" class="site-lockup font-serif text-xl" style="color: var(--color-text)"><svg class="site-mark" viewBox="8 7 84 84" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M66 76C42 89 15 73 15 48 15 26 33 11 52 13 76 15 89 34 84 54"/><path d="M65 65C49 77 28 67 27 49 26 32 39 24 52 25 68 26 77 39 73 52"/><path d="M62 54C56 64 41 60 40 50 38 41 45 36 52 37 60 38 64 45 62 49"/></svg><span>UX Terrain</span></a>
+          <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+            <a class="text-sm font-medium hover:underline underline-offset-4" href="index.html#work" style="color: var(--color-text-muted)">Work</a>
+            <a class="text-sm font-medium hover:underline underline-offset-4" href="systems.html" style="color: var(--color-text-muted)">Systems</a>
+            <a class="text-sm font-medium underline underline-offset-4" href="walk.html" aria-current="page" style="color: var(--color-text)">Walk</a>
+            <a class="text-sm font-medium hover:underline underline-offset-4" href="about.html" style="color: var(--color-text-muted)">About</a>
+            <a class="text-sm font-medium hover:underline underline-offset-4" href="index.html#contact" style="color: var(--color-text-muted)">Contact</a>
+          </nav>
+          <div class="flex items-center gap-3">
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+              <svg class="icon-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z" />
+              </svg>
+              <svg class="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.93 4.93l1.06 1.06M17.99 17.99l1.06 1.06M3 12h1.5M19.5 12H21M4.93 19.07l1.06-1.06M17.99 6.01l1.06-1.06" />
+              </svg>
+            </button>
+            <button id="nav-toggle" class="theme-toggle md:hidden" type="button" aria-controls="nav-menu" aria-expanded="false" aria-label="Open menu">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="nav-menu" class="hidden border-t px-5 py-3 md:hidden" style="border-color: var(--color-border)">
+          <nav class="flex flex-col gap-3" aria-label="Mobile">
+            <a class="text-sm font-medium" href="index.html#work" style="color: var(--color-text)">Work</a>
+            <a class="text-sm font-medium" href="systems.html" style="color: var(--color-text)">Systems</a>
+            <a class="text-sm font-medium" href="walk.html" aria-current="page" style="color: var(--color-text)">Walk</a>
+            <a class="text-sm font-medium" href="about.html" style="color: var(--color-text)">About</a>
+            <a class="text-sm font-medium" href="index.html#contact" style="color: var(--color-text)">Contact</a>
+          </nav>
+        </div>
+      </header>
+
+      <div id="walk-picker" class="walk-picker">
+        <div class="walk-picker-inner">
+          <p class="walk-picker-kicker">AI-powered guides · Oslo and Eda</p>
+          <h1 class="walk-picker-title">Choose what you want to explore.</h1>
+          <p class="walk-picker-lede">
+            Explore the design decisions with Oslo or the accessibility questions with Eda. Each walk pairs the work with a conversation, and you decide when to continue.
+          </p>
+          <p class="walk-picker-meta">Short introductions. Room for questions. Your pace.</p>
+<section class="walk-guide-group" aria-labelledby="oslo-routes"><div class="walk-guide-heading"><h2 id="oslo-routes">Explore the design with Oslo</h2><span class="walk-guide-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg>AI-powered</span></div><p class="walk-guide-description">Decisions, tradeoffs, and the evidence behind the work.</p>          <div class="walk-choices">
+            <button class="walk-choice" type="button" data-walk="ground">
+              <span class="walk-choice-kicker">Design systems</span>
+              <h3>The ground layer</h3>
+              <p>Shared tokens, component behavior, and a practical approach to keeping Figma and code aligned.</p>
+              <span class="walk-choice-go">5 stops · Begin with Oslo →</span>
+            </button>
+            <button class="walk-choice" type="button" data-walk="m365">
+              <span class="walk-choice-kicker">Microsoft 365</span>
+              <h3>Performance Monitoring</h3>
+              <p>Incident cards that change with the investigation, advisories people can act on, and impact you can scan under pressure.</p>
+              <span class="walk-choice-go">5 stops · Begin with Oslo →</span>
+            </button>
+          </div>
+</section>
+<section class="walk-guide-group walk-guide-eda" aria-labelledby="eda-routes"><div class="walk-guide-heading"><h2 id="eda-routes">Explore accessibility with Eda</h2><span class="walk-guide-ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg>AI-powered</span></div><p class="walk-guide-description">Interface choices, questions to investigate, and what still needs testing. These walks explain the material; they are not accessibility audits.</p><div class="walk-choices"><a class="walk-choice" href="eda.html#floor"><span class="walk-choice-kicker">Introduction</span><h3>Accessibility foundations</h3><p>Five short stops on standards, design targets, component behavior, and evidence.</p><span class="walk-choice-go">5 stops · Begin with Eda →</span></a>
+<a class="walk-choice" href="eda.html#m365"><span class="walk-choice-kicker">Case study</span><h3>Performance Monitoring</h3><p>Five short stops on readable incident states, actions, notifications, charts, and timelines.</p><span class="walk-choice-go">5 stops · Begin with Eda →</span></a>
+</div></section>
+          <p class="mt-10 text-sm" style="color: var(--color-text-muted)">
+            Prefer to read? <a class="accent-link" href="systems.html">The ground layer</a>,
+            <a class="accent-link" href="work/performance-monitoring.html">Performance Monitoring</a>,
+            <a class="accent-link" href="work/oslo.html">how Oslo was designed</a>,
+            or <a class="accent-link" href="work/eda.html">how Eda was designed</a>.
+          </p>
+        </div>
+      </div>
+
+      <div id="walk-stage" class="walk-stage">
+        <div class="walk-split">
+          <div id="walk-main" class="walk-main"></div>
+          <aside class="walk-rail" aria-labelledby="walk-oslo-title">
+            <div class="walk-rail-head">
+              <div>
+                <h2 id="walk-oslo-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
+                <div class="agent-caption"><p id="walk-status" class="walk-rail-status mt-1" data-state="idle">With you</p><span class="ai-guide-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m10 2 1.9 5.8L18 10l-6.1 2.2L10 18l-1.9-5.8L2 10l6.1-2.2L10 2Z" stroke-linejoin="round"/></svg>AI-powered</span></div>
+                <p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">
+                  Questions for this station
+                </p>
+              </div>
+              <div class="walk-rail-actions">
+                <button id="walk-change" class="agent-close text-sm" type="button">Change walk</button>
+                <a class="walk-exit" href="index.html#work">Exit walk</a>
+              </div>
+            </div>
+            <div id="walk-log" class="walk-log" aria-live="polite"></div>
+            <div id="walk-asks" class="walk-asks" aria-label="Suggested questions"></div>
+            <form id="walk-form" class="walk-form">
+              <label class="sr-only" for="walk-input">Ask Oslo</label>
+              <input
+                id="walk-input"
+                class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+                type="text"
+                name="message"
+                autocomplete="off"
+                placeholder="Ask about this station…"
+              />
+              <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Ask</button>
+            </form>
+          </aside>
+        </div>
+        <div class="walk-foot">
+          <div id="walk-dots" class="walk-dots" role="navigation" aria-label="Stations"></div>
+          <div class="walk-nav">
+            <button id="walk-back" type="button">← Back</button>
+            <button id="walk-next" class="walk-next" type="button">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/guide-session.js?v=20261115-navigation5"></script>
+    <script src="js/app.js?v=20261115-practice6"></script>
+    <script src="js/walks.js"></script>
+    <script src="js/walk-evidence.js"></script>
+    <script src="js/walk.js?v=20261115-navigation5"></script>
+  </body>
+</html>

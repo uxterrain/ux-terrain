@@ -31,6 +31,9 @@ function build() {
   const implementation = about.match(/<section\b[^>]*aria-labelledby="implementation-note"[^>]*>([\s\S]*?)<\/section>/);
   if (!implementation) throw new Error("Missing authored implementation practice context.");
   result.practice = { title: "Design and implementation practice", path: "/about.html", evidence: [{ id: "practice:implementation", title: "From specification to implementation", text: plain(implementation[1]), url: "/about.html#implementation-note" }] };
+  const identity = about.match(/<p\b[^>]*id="practice-identity"[^>]*>([\s\S]*?)<\/p>/);
+  if (!identity) throw new Error("Missing independent practice identity.");
+  result.practice.evidence.push({ id: "practice:identity", title: "Jimmy Van Galder’s independent design practice", text: plain(identity[1]), url: "/about.html#practice-identity" });
   return result;
 }
 if (require.main === module) fs.writeFileSync(path.join(root, "knowledge/projects.json"), JSON.stringify(build(), null, 2) + "\n");

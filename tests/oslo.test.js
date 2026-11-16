@@ -104,3 +104,9 @@ test("shared practice supports general fluency without becoming case evidence", 
  const about=fs.readFileSync(path.join(__dirname,'../about.html'),'utf8');
  assert.ok(about.includes('id="implementation-note"'));
 });
+
+test("practice identity is authored and available without implying a studio team", () => {
+ const identity=contextFor({projectId:'sbi'}).practiceEvidence.find(e=>e.id==='practice:identity');
+ assert.ok(identity.text.includes('independent design practice of Jimmy Van Galder'));
+ assert.equal(identity.url,'/about.html#practice-identity');
+});

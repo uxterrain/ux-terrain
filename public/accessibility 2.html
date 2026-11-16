@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accessibility — UX Terrain</title>
+    <meta
+      name="description"
+      content="Our accessibility target, current evaluation status, known limitations, and how to report a barrier on UX Terrain."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var key = "ux-terrain-theme";
+          var stored = localStorage.getItem(key);
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : "dark";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ["Lora", "Palatino", "serif"],
+              sans: ['"Source Sans 3"', "system-ui", "sans-serif"],
+              mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/design-system.css" />
+  </head>
+  <body class="h-full overflow-hidden antialiased">
+    <div id="app-shell" class="flex h-full w-full overflow-hidden">
+      <div id="site-column" class="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+        <header
+          class="sticky top-0 z-40 border-b backdrop-blur-md"
+          style="
+            background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
+            border-color: var(--color-border);
+          "
+        >
+          <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+            <a href="index.html" class="site-lockup font-serif text-xl" style="color: var(--color-text)"><svg class="site-mark" viewBox="8 7 84 84" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M66 76C42 89 15 73 15 48 15 26 33 11 52 13 76 15 89 34 84 54"/><path d="M65 65C49 77 28 67 27 49 26 32 39 24 52 25 68 26 77 39 73 52"/><path d="M62 54C56 64 41 60 40 50 38 41 45 36 52 37 60 38 64 45 62 49"/></svg><span>UX Terrain</span></a>
+            <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="index.html#work" style="color: var(--color-text-muted)">Work</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="systems.html" style="color: var(--color-text-muted)">Systems</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="walk.html" style="color: var(--color-text-muted)">Walk</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="about.html" style="color: var(--color-text)">About</a>
+              <a class="text-sm font-medium hover:underline underline-offset-4" href="about.html#contact" style="color: var(--color-text-muted)">Contact</a>
+            </nav>
+            <div class="flex items-center gap-3">
+              <button class="js-agent-open agent-trigger" type="button" aria-controls="agent-panel" aria-expanded="false">Ask <span class="oslo-word">Oslo</span></button>
+              <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                <svg class="icon-moon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z" />
+                </svg>
+                <svg class="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4" />
+                  <path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.93 4.93l1.06 1.06M17.99 17.99l1.06 1.06M3 12h1.5M19.5 12H21M4.93 19.07l1.06-1.06M17.99 6.01l1.06-1.06" />
+                </svg>
+              </button>
+              <button id="nav-toggle" class="theme-toggle md:hidden" type="button" aria-controls="nav-menu" aria-expanded="false" aria-label="Open menu">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="nav-menu" class="hidden border-t px-5 py-3 md:hidden" style="border-color: var(--color-border)">
+            <nav class="flex flex-col gap-3" aria-label="Mobile">
+              <a class="text-sm font-medium" href="index.html#work" style="color: var(--color-text)">Work</a>
+              <a class="text-sm font-medium" href="systems.html" style="color: var(--color-text)">Systems</a>
+              <a class="text-sm font-medium" href="walk.html" style="color: var(--color-text)">Walk</a>
+              <a class="text-sm font-medium" href="about.html" style="color: var(--color-text)">About</a>
+              <a class="text-sm font-medium" href="about.html#contact" style="color: var(--color-text)">Contact</a>
+            </nav>
+          </div>
+        </header>
+
+        <main class="about-main min-h-0 flex-1 overflow-y-auto">
+          <article class="mx-auto max-w-6xl px-5 pb-24 pt-10 md:px-8 md:pt-14">
+            <a class="case-back inline-block" href="about.html">← About UX Terrain</a>
+            <header class="mt-10"><p class="font-mono text-xs uppercase tracking-[0.22em]" style="color: var(--color-accent)">Accessibility</p><h1 class="font-serif mt-4 max-w-4xl text-4xl leading-[1.12] tracking-tight md:text-6xl">A commitment we keep working on.</h1><p class="mt-6 max-w-2xl text-lg leading-relaxed" style="color: var(--color-text-muted)">We consider accessibility throughout design and development, using WCAG 2.2 Level AA as our target and the Revised Section 508 Standards where applicable.</p><p class="font-mono mt-5 text-xs" style="color: var(--color-text-muted)">Last updated <time datetime="2026-11-15">November 15, 2026</time></p></header>
+            <section class="about-section case-prose" aria-labelledby="accessibility-target"><h2 id="accessibility-target" class="about-section-title font-serif">Our target</h2><p>Our target for this website is WCAG 2.2 Level AA. It guides our decisions about content, controls, navigation, and interaction. This is a design and development commitment, not a claim of verified conformance.</p><p>The Revised Section 508 Standards inform work where those requirements apply. They incorporate WCAG 2.0 Level A and AA for covered content and include requirements beyond web content. Referencing them here does not establish that this portfolio is Section 508 compliant.</p><p><a class="accent-link" href="https://www.w3.org/TR/WCAG22/">W3C: WCAG 2.2</a> · <a class="accent-link" href="https://www.access-board.gov/ict/">U.S. Access Board: Revised Section 508 Standards</a></p></section>
+            <section class="about-section case-prose" aria-labelledby="accessibility-evaluation"><h2 id="accessibility-evaluation" class="about-section-title font-serif">Where evaluation stands</h2><p>The implementation includes labeled controls, visible keyboard-focus styles, and reduced-motion support. Development checks cover selected guide interactions, including panel state, navigation, and conversation continuity. Those checks do not amount to an accessibility audit.</p><p>We have not completed a full WCAG conformance evaluation of the site. Keyboard operation, screen-reader use, contrast in both themes, zoom and reflow, and complete Oslo and Eda workflows still need systematic evaluation across pages and interaction states.</p></section>
+            <section class="about-section case-prose" aria-labelledby="accessibility-limitations"><h2 id="accessibility-limitations" class="about-section-title font-serif">Current limitations</h2><p>Some case-study screenshots contain text, charts, or interface details that are not fully reproduced in the surrounding descriptions. Nearby explanations provide context, but may not communicate every detail in the original image.</p><p>Oslo and Eda can explain the work and accessibility considerations. Their replies are not automated accessibility tests, audit results, or confirmation that an interface meets a standard.</p><p>This is not an exhaustive list of barriers. We will update this statement as issues are identified and evaluations are completed.</p></section>
+            <section class="about-section case-prose" aria-labelledby="accessibility-contact"><h2 id="accessibility-contact" class="about-section-title font-serif">Tell us about a barrier</h2><p>If something makes this site difficult to use, email <a class="accent-link" href="mailto:uxterrain@gmail.com?subject=Accessibility%20feedback%20for%20UX%20Terrain">uxterrain@gmail.com</a>. Include the page URL, what you were trying to do, and what got in the way. If useful, you can also share your browser, device, or assistive technology. Share only what you are comfortable providing.</p><p>You can also ask for clarification or a text explanation of case-study material.</p></section>
+          </article>
+        </main>
+
+        <footer class="mx-auto w-full max-w-6xl px-5 pb-10 pt-4 md:px-8">
+          <p class="font-mono text-xs" style="color: var(--color-text-muted)">
+            This website is handmade · © 2026 UX Terrain
+            · <a href="https://www.linkedin.com/in/jimmyvangalder/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            · <a href="https://github.com/uxterrain" target="_blank" rel="noopener noreferrer">GitHub</a>
+            · <a href="https://www.instagram.com/uxterrain" target="_blank" rel="noopener noreferrer">Instagram</a>
+          · <a href="accessibility.html" aria-current="page">Accessibility</a>
+          </p>
+        </footer>
+      </div>
+
+      <aside
+        id="agent-panel"
+        class="agent-panel flex h-full w-0 max-w-0 shrink-0 flex-col overflow-hidden"
+        role="complementary"
+        aria-labelledby="agent-title"
+        aria-hidden="true"
+        inert
+      >
+        <div class="flex h-full min-h-0 w-full flex-col">
+          <header class="flex shrink-0 items-start justify-between gap-4 border-b px-6 py-5" style="border-color: var(--color-border)">
+            <div>
+              <h2 id="agent-title" class="font-serif text-2xl tracking-tight">Oslo</h2>
+              <div class="agent-caption"><p class="mt-1 font-mono text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">Your guide to the work</p><span class="ai-guide-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m10 2 1.9 5.8L18 10l-6.1 2.2L10 18l-1.9-5.8L2 10l6.1-2.2L10 2Z" stroke-linejoin="round"/></svg>AI-powered</span></div>
+            </div>
+            <button id="agent-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </header>
+
+          <div id="chat-log" class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-6 py-5" aria-live="polite">
+            <article class="chat-turn chat-turn-agent">
+              <p class="chat-turn-label">Oslo</p>
+              <p class="chat-turn-body">Hi, I’m Oslo. Ask me about the projects, the design decisions, or the evidence behind them.</p>
+            </article>
+          </div>
+
+          <div class="agent-inquiries shrink-0 px-4 pb-1 pt-3" aria-label="Suggested questions">
+            <p class="font-mono mb-2 px-1 text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted)">
+              Try a question
+            </p>
+            <div class="flex flex-col gap-2">
+              <button type="button" class="js-quick-inquiry agent-inquiry">How did you design the AI-powered Incident Cards for M365?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you take Figma to production code with MCP?</button>
+              <button type="button" class="js-quick-inquiry agent-inquiry">How do you manage handover and design systems sync between design and development teams?</button>
+            </div>
+          </div>
+
+          <form id="chat-form" class="flex shrink-0 gap-2 border-t p-4" style="border-color: var(--color-border)">
+            <label class="sr-only" for="chat-input">Message</label>
+            <input
+              id="chat-input"
+              class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+              type="text"
+              name="message"
+              autocomplete="off"
+              placeholder="Ask about a project…"
+            />
+            <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Send</button>
+          </form>
+        </div>
+      </aside>
+      <button id="eda-open" type="button" data-eda-walk="m365" hidden aria-controls="eda-panel" aria-expanded="false">Continue with Eda</button>
+<aside
+        id="eda-panel"
+        class="eda-panel flex h-full w-0 max-w-0 shrink-0 flex-col overflow-hidden"
+        role="complementary"
+        aria-labelledby="eda-title"
+        aria-hidden="true"
+        inert
+      >
+        <header class="walk-rail-head">
+          <div>
+            <h2 id="eda-title" class="font-serif text-2xl tracking-tight">Eda</h2>
+            <div class="agent-caption"><p id="eda-status" class="walk-rail-status mt-1" data-state="idle">On this screen</p><span class="ai-guide-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m10 2 1.9 5.8L18 10l-6.1 2.2L10 18l-1.9-5.8L2 10l6.1-2.2L10 2Z" stroke-linejoin="round"/></svg>AI-powered</span></div>
+          </div>
+          <button id="eda-close" class="agent-close mt-0.5 inline-flex items-center p-1" type="button" aria-label="Close panel">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </header>
+        <p id="eda-station" class="eda-station"></p>
+        <div id="eda-log" class="walk-log" aria-live="polite"></div>
+        <div id="eda-asks" class="walk-asks" aria-label="Suggested questions"></div>
+        <form id="eda-form" class="walk-form">
+          <label class="sr-only" for="eda-input">Ask Eda</label>
+          <input
+            id="eda-input"
+            class="chat-input min-w-0 flex-1 rounded-full px-4 py-2.5 text-sm"
+            type="text"
+            name="message"
+            autocomplete="off"
+            placeholder="Ask about this screen…"
+          />
+          <button class="btn-accent rounded-full px-4 py-2.5 text-sm font-medium" type="submit">Ask</button>
+        </form>
+        <div class="walk-foot">
+          <div id="eda-dots" class="walk-dots" role="navigation" aria-label="Screens"></div>
+          <div class="walk-nav">
+            <button id="eda-back" type="button">← Back</button>
+            <button id="eda-next" class="walk-next" type="button">Next →</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <script src="js/guide-session.js?v=20261115-navigation5"></script>
+    <script src="js/app.js?v=20261115-practice6"></script>
+    <script src="js/eda-walks.js?v=20261106-session"></script>
+    <script src="js/eda-case.js?v=20261115-navigation5"></script>
+  </body>
+</html>

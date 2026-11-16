@@ -23,7 +23,7 @@
       }
       item.appendChild(document.createTextNode(claim.text));
       (Array.isArray(claim.evidence) ? claim.evidence : []).forEach(function (source) {
-        if (!source || typeof source.title !== "string" || !/^\/(?:work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda)|systems|about)\.html#(?:oslo-evidence-\d+|implementation-note|(?:shifts|cut|core|trail|lay|proof|contact)-title)$/.test(source.url)) return;
+        if (!source || typeof source.title !== "string" || !/^\/(?:work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda)|systems|about)\.html#(?:oslo-evidence-\d+|implementation-note|practice-identity|(?:shifts|cut|core|trail|lay|proof|contact)-title)$/.test(source.url)) return;
         sources.set(source.url, source);
       });
       body.appendChild(item);
@@ -39,14 +39,14 @@
     }
   }
   const osloIntroductions = {
-    "sbi": "I see you’re exploring SBI. We designed it to help teams connect equipment activity with decisions about parts and inventory. Anything you’d like to dig into?",
+    "sbi": "I see you’re exploring SBI. Jimmy’s design work helps teams connect equipment activity with decisions about parts and inventory. Anything you’d like to dig into?",
     "zone-focus": "I see you’re getting to know Flotrak. It’s about helping people learn photography by trying things themselves, with Coach there to guide them. Curious about how any of it works?",
-    "armada": "I see you’re exploring Armada. We worked on helping operators keep track of multiple drones, follow their paths, and stay with what’s happening on the mission. What would you like to know?",
-    "performance-monitoring": "I see you’re looking at the M365 work. We designed ways to help admins understand an issue, see who’s affected, and work out what to do next. Anything you’d like a closer look at?",
-    "iqvia": "I see you’re exploring IQVIA. We worked on helping teams create, review, and approve medical content, with a clearer path through the process. What are you curious about?",
+    "armada": "I see you’re exploring Armada. Jimmy worked on helping operators keep track of multiple drones, follow their paths, and stay with what’s happening on the mission. What would you like to know?",
+    "performance-monitoring": "I see you’re looking at the M365 work. Jimmy designed ways to help admins understand an issue, see who’s affected, and work out what to do next. Anything you’d like a closer look at?",
+    "iqvia": "I see you’re exploring IQVIA. Jimmy worked on helping teams create, review, and approve medical content, with a clearer path through the process. What are you curious about?",
     "oslo": "You’re reading about how I fit into the site. The idea is to help you explore the work and ask about the decisions along the way. Happy to talk through how that came together.",
-    "eda": "I see you’re getting to know Eda. We designed her to help people explore accessibility through the interfaces and decisions in this portfolio. Anything you’d like to understand better?",
-    "systems": "I see you’re exploring our approach to design systems. It’s about giving teams a shared foundation they can put to work. What would you like to talk through?"
+    "eda": "I see you’re getting to know Eda. Jimmy designed her to help people explore accessibility through the interfaces and decisions in this portfolio. Anything you’d like to understand better?",
+    "systems": "I see you’re exploring Jimmy’s approach to design systems. It’s about giving teams a shared foundation they can put to work. What would you like to talk through?"
 };
   window.UX_OSLO = {
     introduction(projectId) {
