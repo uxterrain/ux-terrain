@@ -97,7 +97,7 @@ test("author-confirmed design-system context reaches both guides", () => {
 test("shared practice supports general fluency without becoming case evidence", () => {
  const context=contextFor({projectId:'sbi'});
  assert.ok(context.evidence.every(e=>e.id.startsWith('sbi:')));
- assert.ok(context.practiceEvidence[0].text.includes('Storybook architecture'));
+ assert.ok(context.practiceEvidence[0].text.includes('components in code and Storybook'));
  assert.ok(context.practiceEvidence[0].text.includes('human judgment'));
  assert.equal(validateAnswer({claims:[{kind:'documented',text:'Jimmy works across Storybook architecture and merge requests.',evidenceIds:['practice:implementation']}]},context).claims[0].evidence[0].url,'/about.html#implementation-note');
  assert.throws(()=>contextFor({projectId:'practice'}));

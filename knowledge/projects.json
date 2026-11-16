@@ -498,7 +498,7 @@
       {
         "id": "practice:implementation",
         "title": "From specification to implementation",
-        "text": "From specification to implementation I work across design specifications, Storybook architecture, and merge requests to carry design intent into implementation. Automation helps produce the code; human judgment remains essential to reviewing the visual details, interactions, and accessibility.",
+        "text": "From specification to implementation I work at the seam between design systems and front-end engineering. Figma specifications are a starting point: I build and test components in code and Storybook, then review spacing, design-token alignment, interactions, and accessibility through merge requests. Automation helps produce the code; human judgment carries the design intent through.",
         "url": "/about.html#implementation-note"
       }
     ]
