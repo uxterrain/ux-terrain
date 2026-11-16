@@ -39,6 +39,11 @@
     }
   }
   window.UX_OSLO = {
+    hasConversation(state) {
+      return Boolean(state && state.guide === "oslo" &&
+        ((Array.isArray(state.turns) && state.turns.some(turn => turn && turn.role === "user")) ||
+         (Array.isArray(state.history) && state.history.some(turn => turn && turn.role === "user"))));
+    },
     render: renderOsloAnswer,
     history(context) { return cleanHistory(osloConversations.get(conversationScope(context))); },
     resume(context, history) { osloConversations.set(conversationScope(context), cleanHistory(history)); },
@@ -173,22 +178,50 @@
     let isOpen = false;
     let lastFocus = null;
     const continuation = session && session.read();
-    let conversationContext = continuation && continuation.guide === "oslo" ? continuation.context : null;
+    const resumeConversation = window.UX_OSLO.hasConversation(continuation);
+    let conversationContext = resumeConversation ? continuation.context : null;
     function currentContext() {
       const match = window.location.pathname.match(/\/work\/([^/]+)\.html$/);
       return match ? { projectId: match[1] } : window.location.pathname === "/systems.html" ? { projectId: "systems" } : {};
     }
     const projectNames = {"performance-monitoring":"M365",sbi:"SBI",armada:"Armada",iqvia:"IQVIA","zone-focus":"Flotrak",systems:"Systems",oslo:"Oslo",eda:"Eda",m365:"M365",ground:"Systems"};
-    if (!continuation || continuation.guide !== "oslo") {
+    function greetingText() {
       const pageProject = currentContext().projectId;
       const projectName = Object.prototype.hasOwnProperty.call(projectNames, pageProject) ? projectNames[pageProject] : null;
-      const greeting = log.querySelector(".chat-turn-agent .chat-turn-body");
-      if (greeting && projectName) {
-        greeting.textContent = pageProject === "systems"
-          ? "Hi, I’m Oslo. You’re viewing Systems. Ask me about the approach, design decisions, or supporting evidence."
-          : "Hi, I’m Oslo. You’re viewing the " + projectName + " case study. Let me know if you have questions about the work or the design decisions behind it.";
-      }
+      return projectName ? "Hi, I’m Oslo. You’re viewing " + (pageProject === "systems" ? "Systems" : "the " + projectName + " case study") + ". Let me know if you have questions about the work or the design decisions behind it."
+        : "Hi, I’m Oslo. Ask me about the projects, the design decisions, or the evidence behind them.";
     }
+    if (!resumeConversation) {
+      const greeting = log.querySelector(".chat-turn-agent .chat-turn-body");
+      if (greeting) greeting.textContent = greetingText();
+    }
+    const pageContextLabel = document.createElement("p");
+    pageContextLabel.className = "guide-conversation-context";
+    const contextSwitch = document.createElement("button");
+    contextSwitch.type = "button";
+    contextSwitch.className = "accent-link guide-context-switch";
+    panel.querySelector("header > div").appendChild(pageContextLabel);
+    panel.querySelector("header > div").appendChild(contextSwitch);
+    function updateContextIndicator() {
+      const page = currentContext().projectId;
+      const active = conversationContext && (conversationContext.projectId || conversationContext.walkId);
+      const viewing = page ? (projectNames[page] || "this case study") : "Portfolio";
+      const differs = Boolean(conversationContext && (active || "portfolio") !== (page || "portfolio"));
+      pageContextLabel.textContent = "Viewing: " + viewing + (differs ? " · Conversation: " + (projectNames[active] || "Portfolio") : "");
+      contextSwitch.hidden = !differs;
+      contextSwitch.textContent = "Ask about " + viewing + " →";
+    }
+    contextSwitch.addEventListener("click", function () {
+      conversationContext = currentContext();
+      window.UX_OSLO.reset(conversationContext);
+      log.replaceChildren();
+      appendMessage("agent", greetingText());
+      setPageSuggestions();
+      updateContextIndicator();
+      if (session) session.checkpoint();
+      input.focus();
+    });
+    updateContextIndicator();
     function snapshot() {
       const context = conversationContext || currentContext();
       return { context, turns: session.capture(log), suggestions: session.captureSuggestions(panel, ".js-quick-inquiry"), history: window.UX_OSLO.history(context), draft: input.value, scrollTop: log.scrollTop };
@@ -209,13 +242,13 @@
       panel.inert = !open;
 
       if (open) {
+        updateContextIndicator();
         if (session) session.activate("oslo", snapshot);
         window.requestAnimationFrame(function () {
           input.focus();
         });
       } else {
         if (session) session.clear("oslo");
-        conversationContext = null;
         if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
       }
     }
@@ -335,17 +368,13 @@
     }
 
     if (continuation && continuation.guide === "oslo") {
-      const project = conversationContext.projectId || conversationContext.walkId;
-      if (project && project !== currentContext().projectId) {
-        const note = document.createElement("p"); note.className = "guide-conversation-context";
-        note.textContent = "Continuing " + (projectNames[project] || "this conversation");
-        panel.querySelector("header > div").appendChild(note);
+      if (resumeConversation) {
+        window.UX_OSLO.resume(conversationContext, continuation.history);
+        session.restore(log, continuation.turns, appendMessage, window.UX_OSLO.render);
       }
-      window.UX_OSLO.resume(conversationContext, continuation.history);
-      session.restore(log, continuation.turns, appendMessage, window.UX_OSLO.render);
       input.value = typeof continuation.draft === "string" ? continuation.draft.slice(0, 4000) : "";
       setOpen(true);
-      window.requestAnimationFrame(function () { log.scrollTop = continuation.scrollTop || 0; });
+      window.requestAnimationFrame(function () { log.scrollTop = resumeConversation ? continuation.scrollTop || 0 : 0; });
     }
     input.addEventListener("input", function () { if (isOpen && session) session.checkpoint(); });
     log.addEventListener("scroll", function () { if (isOpen && session) session.checkpoint(); }, { passive: true });
@@ -357,15 +386,17 @@
       await sendUserMessage(message);
     });
 
-    if (/\/work\/[^/]+\.html$/.test(window.location.pathname)) {
-      const questions = ["Which design decision matters most here, and what evidence supports it?",
-        "What tradeoff does this design make, and when might another approach work better?",
-        "What outcomes were measured, and what is still undocumented?"];
+    function setPageSuggestions() {
+      const questions = currentContext().projectId === "zone-focus"
+        ? ["How does Coach connect a photography question to a control?", "How do the wedge and metering points support learning?", "Which Flotrak features are prototypes or explorations?"]
+        : currentContext().projectId ? ["Which design decision matters most here, and what evidence supports it?", "What tradeoff does this design make, and when might another approach work better?", "What outcomes were measured, and what is still undocumented?"]
+        : ["Which project best shows the data visualization work?", "How do Oslo and Eda serve different needs?", "How does the AI support decisions across these projects?"];
       panel.querySelectorAll(".js-quick-inquiry").forEach(function (button, index) {
         (button.querySelector(".js-inquiry-label") || button).textContent = questions[index % questions.length];
       });
     }
-    if (continuation && continuation.guide === "oslo") session.restoreSuggestions(panel, continuation.suggestions, ".js-quick-inquiry");
+    setPageSuggestions();
+    if (resumeConversation) session.restoreSuggestions(panel, continuation.suggestions, ".js-quick-inquiry");
     panel.querySelectorAll(".js-quick-inquiry").forEach(function (button) {
       button.addEventListener("click", function () {
         const label = button.querySelector(".js-inquiry-label");
