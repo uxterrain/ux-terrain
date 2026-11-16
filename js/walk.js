@@ -339,7 +339,7 @@
       const context = { walkId: walk.id, stationIndex: index };
       const agent = walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA;
       return { context, turns: session.capture(log), suggestions: session.captureSuggestions(asks), history: agent.history(context), draft: input.value, scrollTop: log.scrollTop };
-    });
+    }, !stage.classList.contains("is-guide-collapsed"));
 
     backBtn.disabled = index === 0;
     nextBtn.disabled = false;
@@ -536,6 +536,11 @@
     walk = next;
     index = Math.max(0, Math.min(next.stations.length - 1, startIndex || 0));
     setMode("walk");
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      stage.classList.add("is-guide-collapsed");
+      guideToggle.setAttribute("aria-expanded", "false");
+      guideToggle.textContent = "Ask " + walkConfig.name;
+    }
     renderStation();
     window.requestAnimationFrame(function () {
       if (enhancedWalk) focusStation();
@@ -722,7 +727,12 @@
     session.restoreSuggestions(asks, carried.suggestions);
     input.value = typeof carried.draft === "string" ? carried.draft.slice(0, 4000) : "";
     window.requestAnimationFrame(function () { log.scrollTop = carried.scrollTop || 0; });
-    if (carried.open === false) {
+    if (carried.open !== false) {
+      stage.classList.remove("is-guide-collapsed");
+      guideToggle.setAttribute("aria-expanded", "true");
+      guideToggle.textContent = "Hide guide";
+      session.setOpen(walkConfig.agent, true);
+    } else {
       stage.classList.add("is-guide-collapsed");
       guideToggle.setAttribute("aria-expanded", "false");
       guideToggle.textContent = "Ask " + walkConfig.name;

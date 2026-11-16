@@ -469,6 +469,26 @@
     });
   }
 
+  function initGlassChrome() {
+    const column = document.getElementById("site-column");
+    if (!column) return;
+    const header = column.querySelector(":scope > header");
+    const footer = column.querySelector(":scope > footer");
+    if (!header) return;
+    function measure() {
+      column.style.setProperty("--site-header-height", header.getBoundingClientRect().height + "px");
+      column.style.setProperty("--site-footer-height", (footer ? footer.getBoundingClientRect().height : 0) + "px");
+    }
+    measure();
+    column.classList.add("has-glass-chrome");
+    measure();
+    if (window.ResizeObserver) {
+      const observer = new ResizeObserver(measure);
+      observer.observe(header);
+      if (footer) observer.observe(footer);
+    } else window.addEventListener("resize", measure);
+  }
+
   function initSiteColumnScroll() {
     const column = document.getElementById("site-column");
     if (!column) return;
@@ -502,7 +522,8 @@
       const top =
         target.getBoundingClientRect().top -
         scroller.getBoundingClientRect().top +
-        scroller.scrollTop;
+        scroller.scrollTop -
+        (parseFloat(getComputedStyle(column).getPropertyValue("--site-header-height")) || 0) - 16;
       scroller.scrollTo({ top: Math.max(0, top), behavior: behavior });
       pinWindow();
     }
@@ -687,6 +708,7 @@
     initTheme();
     initMobileNav();
     initAgentPanel();
+    initGlassChrome();
     initSiteColumnScroll();
     initContactMail();
     initHeroOrbitPulse();
