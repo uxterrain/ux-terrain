@@ -17,6 +17,7 @@ const INSTRUCTIONS = {
 const MAX_MESSAGE_LENGTH = 4000;
 const REVIEW_MODEL = process.env.GUIDE_REVIEW_MODEL || "gpt-4o-mini";
 const grounding = require("./lib/oslo-grounding");
+const questions = require("./lib/guide-questions");
 const { resolveEdaContext, correctionFor: edaCorrectionFor, reviewProcedure: edaReviewProcedure, validateReply: validateEdaReply } = require("./lib/eda-context");
 
 const instructionText = { oslo: "", eda: "" };
@@ -93,6 +94,29 @@ function sendJsonError(res, status, error) {
   res.status(status).json({ error: publicErrorMessage(error) });
 }
 
+function supportFor(agent, context, needsFollowup) {
+  const projectId = context.projectId || "portfolio";
+  const project = grounding.projects[projectId];
+  const page = project ? project.path : "/index.html";
+  const metadata = { guide: agent, projectId, page, station: context.station && context.station.title || null, reason: needsFollowup ? "knowledge-gap" : "visitor-suggested" };
+  return { ...metadata, needsFollowup, token: questions.issueReviewToken(metadata) };
+}
+app.post("/api/guide-questions", async function (req, res) {
+  res.setHeader("Cache-Control", "no-store");
+  const origin = req.headers && req.headers.origin;
+  const host = req.get && req.get("host");
+  if (origin) {
+    try { if (new URL(origin).host !== host) return res.status(403).json({ error: "Please share the question from this website." }); }
+    catch (_) { return res.status(403).json({ error: "Please share the question from this website." }); }
+  }
+  let record;
+  try { record = questions.normalizeSubmission(req.body); }
+  catch (error) { return res.status(400).json({ error: error.message }); }
+  if (!process.env.BLOB_READ_WRITE_TOKEN && !process.env.BLOB_STORE_ID) return res.status(503).json({ error: "The question inbox is unavailable. You can still email Jimmy." });
+  try { await questions.saveQuestion(record); return res.json({ saved: true }); }
+  catch (_) { return res.status(503).json({ error: "The question could not be saved. Please try again or email Jimmy." }); }
+});
+
 app.post("/api/chat", async function (req, res) {
   try {
     await ready;
@@ -133,7 +157,7 @@ app.post("/api/chat", async function (req, res) {
         return res.status(400).json({ error: error.message });
       }
       const correction = grounding.correctionFor(message, groundedContext);
-      if (correction) return res.json(correction);
+      if (correction) return res.json({ ...correction, support: supportFor("oslo", groundedContext, correction.claims.some(claim => claim.kind === "gap")) });
       const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
       const completion = await client.chat.completions.create({
         model: "gpt-4o-mini",
@@ -158,7 +182,8 @@ app.post("/api/chat", async function (req, res) {
         ],
       });
       const answer = JSON.parse(reviewed.choices[0]?.message?.content || "{}");
-      return res.json(grounding.validateAnswer(answer, groundedContext));
+      const validated = grounding.validateAnswer(answer, groundedContext);
+      return res.json({ ...validated, support: supportFor("oslo", groundedContext, validated.needsFollowup) });
     }
 
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -169,6 +194,7 @@ app.post("/api/chat", async function (req, res) {
       let trustedContext;
       try { trustedContext = resolveEdaContext(context); }
       catch (error) { return res.status(400).json({ error: error.message }); }
+      let needsFollowup = false;
       let reply = edaCorrectionFor(message, trustedContext);
       if (!reply) {
         const conversation = grounding.historyFor(req.body.history);
@@ -180,8 +206,13 @@ app.post("/api/chat", async function (req, res) {
           model: REVIEW_MODEL, max_tokens: 350, response_format: { type: "json_object" },
           messages: [{ role: "system", content: edaReviewProcedure }, { role: "user", content: JSON.stringify({ question: message, authoredContext: trustedContext, conversation, draft: draft.choices[0]?.message?.content || "" }) }]
         });
-        reply = validateEdaReply(JSON.parse(reviewed.choices[0]?.message?.content || "{}"));
+        const checked = JSON.parse(reviewed.choices[0]?.message?.content || "{}");
+        reply = validateEdaReply(checked);
+        needsFollowup = checked.needsFollowup === true;
       }
+      const projectIds = { m365: "performance-monitoring", zone: "zone-focus", armada: "armada", sbi: "sbi", iqvia: "iqvia", oslo: "oslo", eda: "eda" };
+      const support = supportFor("eda", { projectId: projectIds[trustedContext.walkId] || "systems", station: trustedContext.station }, needsFollowup);
+      res.setHeader("X-Guide-Support", Buffer.from(JSON.stringify(support)).toString("base64"));
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
       res.setHeader("Cache-Control", "no-store");
       res.write(reply);

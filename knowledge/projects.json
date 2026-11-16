@@ -42,8 +42,14 @@
       {
         "id": "armada:7",
         "title": "A live viewfinder with mission and mechanical status",
-        "text": "I designed the map panel to serve as the drone’s live viewfinder and show mechanical and mission status. The operator can keep the camera, the flight route, and the drone’s status in view during a live situation. The live feed for Skydio C3 appears beside its flight route. ← Back to selected work",
+        "text": "I designed the map panel to serve as the drone’s live viewfinder and show mechanical and mission status. The operator can keep the camera, the flight route, and the drone’s status in view during a live situation. The live feed for Skydio C3 appears beside its flight route.",
         "url": "/work/armada.html#oslo-evidence-7"
+      },
+      {
+        "id": "armada:8",
+        "title": "Design-system context",
+        "text": "This work used a custom design system designed from the ground up. It provided a shared foundation for the interface rather than treating each screen as an isolated design. ← Back to selected work",
+        "url": "/work/armada.html#oslo-evidence-8"
       }
     ]
   },
@@ -96,8 +102,14 @@
       {
         "id": "eda:7",
         "title": "Evaluate the guide without overstating its reach",
-        "text": "The next evaluation should check whether visitors understand Eda’s role, can navigate the stations, and can distinguish an explanation from a verified finding. It should also test how reliably answers stay within the written material. The presence of the guide is not a conformance result for the portfolio or its case studies. ← Back to selected work",
+        "text": "The next evaluation should check whether visitors understand Eda’s role, can navigate the stations, and can distinguish an explanation from a verified finding. It should also test how reliably answers stay within the written material. The presence of the guide is not a conformance result for the portfolio or its case studies.",
         "url": "/work/eda.html#oslo-evidence-7"
+      },
+      {
+        "id": "eda:9",
+        "title": "Design-system context",
+        "text": "This work used a custom design system designed from the ground up. It provided a shared foundation for the interface rather than treating each screen as an isolated design. ← Back to selected work",
+        "url": "/work/eda.html#oslo-evidence-9"
       }
     ]
   },
@@ -150,8 +162,14 @@
       {
         "id": "iqvia:8",
         "title": "Keep review comments with the content",
-        "text": "Review discussions often moved into email. The collaborative canvas keeps comments on the creative: real-time annotations, threaded replies with author and timestamp, targeted pins, and a history you can audit. Approve, request changes, or reject without leaving the document. Menus were cut to the tools people actually touch — labels in their language, not the platform’s. Wireframe: comment on the page, decide in the rail. Annotation cards as a design-system component, not a one-off modal. Visual design: claims, comments, and the creative in one review — MLR status visible without hunting. ← Back to selected work",
+        "text": "Review discussions often moved into email. The collaborative canvas keeps comments on the creative: real-time annotations, threaded replies with author and timestamp, targeted pins, and a history you can audit. Approve, request changes, or reject without leaving the document. Menus were cut to the tools people actually touch — labels in their language, not the platform’s. Wireframe: comment on the page, decide in the rail. Annotation cards as a design-system component, not a one-off modal. Visual design: claims, comments, and the creative in one review — MLR status visible without hunting.",
         "url": "/work/iqvia.html#oslo-evidence-8"
+      },
+      {
+        "id": "iqvia:9",
+        "title": "Design-system context",
+        "text": "This work used a custom design system designed from the ground up. It provided a shared foundation for the interface rather than treating each screen as an isolated design. ← Back to selected work",
+        "url": "/work/iqvia.html#oslo-evidence-9"
       }
     ]
   },
@@ -216,8 +234,14 @@
       {
         "id": "oslo:9",
         "title": "Keep evaluating the conversation",
-        "text": "Automated checks cover source destinations, invalid context, unsupported reference IDs, and response compatibility. Conversation checks also need human review: did the answer address the question, use the whole case, distinguish interpretation from fact, and acknowledge what was missing? Those are the next quality questions for Oslo. The product goal is a portfolio that helps people understand and question the work. The case studies remain the evidence; the agent helps visitors find their way through them. ← Back to selected work",
+        "text": "Automated checks cover source destinations, invalid context, unsupported reference IDs, and response compatibility. Conversation checks also need human review: did the answer address the question, use the whole case, distinguish interpretation from fact, and acknowledge what was missing? Those are the next quality questions for Oslo. The product goal is a portfolio that helps people understand and question the work. The case studies remain the evidence; the agent helps visitors find their way through them.",
         "url": "/work/oslo.html#oslo-evidence-9"
+      },
+      {
+        "id": "oslo:11",
+        "title": "Design-system context",
+        "text": "This work used a custom design system designed from the ground up. It provided a shared foundation for the interface rather than treating each screen as an isolated design. ← Back to selected work",
+        "url": "/work/oslo.html#oslo-evidence-11"
       }
     ]
   },
@@ -294,8 +318,14 @@
       {
         "id": "performance-monitoring:11",
         "title": "Clearer infrastructure context, a more practical response",
-        "text": "The work gave admins more insight into the infrastructure affected by an incident and a more practical path to remediation. Keeping the recommendation with the incident details helped connect monitoring information to the work of managing the issue. ← Back to selected work",
+        "text": "The work gave admins more insight into the infrastructure affected by an incident and a more practical path to remediation. Keeping the recommendation with the incident details helped connect monitoring information to the work of managing the issue.",
         "url": "/work/performance-monitoring.html#oslo-evidence-11"
+      },
+      {
+        "id": "performance-monitoring:13",
+        "title": "Design-system context",
+        "text": "M365 used a design system that was still in its infancy when I joined the project. I worked closely with the M365 design team as that foundation developed alongside the product work. ← Back to selected work",
+        "url": "/work/performance-monitoring.html#oslo-evidence-13"
       }
     ]
   },
@@ -354,8 +384,14 @@
       {
         "id": "sbi:9",
         "title": "Keep location and operating context with the forecast",
-        "text": "The map explorations brought regional measures, well details, and drilling activity into the planning view. Alongside the forecasts, that context gave stakeholders another way to examine where activity and potential equipment demand were concentrated. A rig is one point in a much larger operating system. Onshore fields and offshore drilling sites connect through pipelines to processing and refinery infrastructure, with relationships that can extend hundreds of miles. The design question was how to keep that regional context available while examining a specific site's activity and forecast. Geography as operating context A point tells you where. The network helps explain why it matters. The map provides the spatial reference; the time series provides the operating pattern. Keeping both in view lets someone investigate a location without losing the system around it. 01 / Connected system 02 / Onshore field 03 / Offshore site Rigs in a connected operating system Illustrative schematic showing onshore rigs linked through a gathering hub and pipeline to a refinery, with an offshore connection across the coast. This is not a geographic map or a real infrastructure dataset. ONSHORE / FIELD NETWORK OFFSHORE Rig A Rig B Rig C Gathering hub Refinery Offshore rig PIPELINE SCHEMATIC · NOT TO SCALE · NO REAL ASSET LOCATIONS Pipeline connection Offshore connection Regional context Read the location as part of a system. Nearby points are not the whole story. Connections between fields, gathering infrastructure, offshore sites, and refineries add operating context beyond a single map marker. Question to investigate Where is activity concentrated, and how does that region relate to the wider operating network? New explanatory diagram. Pipeline and refinery connections explain the domain; they are not presented as implemented layers in the original product. 01 / Spatial reference Keep the geography honest. Use the map for location, distribution, and regional relationships. A cluster shows where sites are close; it does not, by itself, prove that they share a pipeline or operating dependency. 02 / Operating context Give the selected point a story. The original detail view pairs a location with environment, activity, well information, and a historical-to-simulated trend. Those attributes give the marker meaning beyond its coordinates. 03 / Forecast context Carry place and time together. Region, active-rig filters, and forecast horizon frame the question. Keeping those controls with the map helps stakeholders interpret a forecast in relation to the activity and locations being examined. Why this mattered The map connected where equipment operates, what is happening there, and the forecast being examined —adding geographic context to the replacement-demand conversation. Regional measures and a state-level overlay in an early map exploration. Well details, filters, and drilling activity alongside the map. ← Back to selected work",
+        "text": "The map explorations brought regional measures, well details, and drilling activity into the planning view. Alongside the forecasts, that context gave stakeholders another way to examine where activity and potential equipment demand were concentrated. A rig is one point in a much larger operating system. Onshore fields and offshore drilling sites connect through pipelines to processing and refinery infrastructure, with relationships that can extend hundreds of miles. The design question was how to keep that regional context available while examining a specific site's activity and forecast. Geography as operating context A point tells you where. The network helps explain why it matters. The map provides the spatial reference; the time series provides the operating pattern. Keeping both in view lets someone investigate a location without losing the system around it. 01 / Connected system 02 / Onshore field 03 / Offshore site Rigs in a connected operating system Illustrative schematic showing onshore rigs linked through a gathering hub and pipeline to a refinery, with an offshore connection across the coast. This is not a geographic map or a real infrastructure dataset. ONSHORE / FIELD NETWORK OFFSHORE Rig A Rig B Rig C Gathering hub Refinery Offshore rig PIPELINE SCHEMATIC · NOT TO SCALE · NO REAL ASSET LOCATIONS Pipeline connection Offshore connection Regional context Read the location as part of a system. Nearby points are not the whole story. Connections between fields, gathering infrastructure, offshore sites, and refineries add operating context beyond a single map marker. Question to investigate Where is activity concentrated, and how does that region relate to the wider operating network? New explanatory diagram. Pipeline and refinery connections explain the domain; they are not presented as implemented layers in the original product. 01 / Spatial reference Keep the geography honest. Use the map for location, distribution, and regional relationships. A cluster shows where sites are close; it does not, by itself, prove that they share a pipeline or operating dependency. 02 / Operating context Give the selected point a story. The original detail view pairs a location with environment, activity, well information, and a historical-to-simulated trend. Those attributes give the marker meaning beyond its coordinates. 03 / Forecast context Carry place and time together. Region, active-rig filters, and forecast horizon frame the question. Keeping those controls with the map helps stakeholders interpret a forecast in relation to the activity and locations being examined. Why this mattered The map connected where equipment operates, what is happening there, and the forecast being examined —adding geographic context to the replacement-demand conversation. Regional measures and a state-level overlay in an early map exploration. Well details, filters, and drilling activity alongside the map.",
         "url": "/work/sbi.html#oslo-evidence-9"
+      },
+      {
+        "id": "sbi:10",
+        "title": "Design-system context",
+        "text": "This work used a custom design system designed from the ground up. It provided a shared foundation for the interface rather than treating each screen as an isolated design. ← Back to selected work",
+        "url": "/work/sbi.html#oslo-evidence-10"
       }
     ]
   },
@@ -396,8 +432,14 @@
       {
         "id": "zone-focus:5",
         "title": "Keep a record for each frame",
-        "text": "The earlier archive exploration groups frame records by roll, with film and format named in the header. Each record brings together exposure, focus, flash information, location, and a note. The design explores how a photographer could return to the choices made for each frame. Earlier roll-ledger exploration with example frame settings and notes organized by film roll. ← Back to selected work",
+        "text": "The earlier archive exploration groups frame records by roll, with film and format named in the header. Each record brings together exposure, focus, flash information, location, and a note. The design explores how a photographer could return to the choices made for each frame. Earlier roll-ledger exploration with example frame settings and notes organized by film roll.",
         "url": "/work/zone-focus.html#oslo-evidence-5"
+      },
+      {
+        "id": "zone-focus:7",
+        "title": "Design-system context",
+        "text": "Flotrak does not use a design system. The working prototype explores its own visual language and photography controls; that consistency should not be described as an established design system. ← Back to selected work",
+        "url": "/work/zone-focus.html#oslo-evidence-7"
       }
     ]
   },

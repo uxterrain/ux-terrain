@@ -85,3 +85,11 @@ test('confirmed capability and outcome regressions use authored, scoped correcti
   assert.ok(outcome.claims.some(c=>c.kind==='gap' && c.text.includes('numeric')));
   assert.equal(correctionFor('Is this an automatic filter app?', contextFor({projectId:'sbi'})), null);
 });
+
+test("author-confirmed design-system context reaches both guides", () => {
+  for (const id of ['armada','iqvia','sbi','oslo','eda']) assert.ok(contextFor({projectId:id}).evidence.some(e=>e.text.includes('custom design system designed from the ground up')));
+  assert.ok(contextFor({projectId:'performance-monitoring'}).evidence.some(e=>e.text.includes('still in its infancy')));
+  assert.ok(contextFor({projectId:'zone-focus'}).evidence.some(e=>e.text.includes('does not use a design system')));
+  const eda = require('../lib/eda-context').resolveEdaContext({walkId:'sbi',stationIndex:0});
+  assert.ok(eda.caseEvidence.some(e=>e.text.includes('custom design system designed from the ground up')));
+});

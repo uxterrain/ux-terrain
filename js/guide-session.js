@@ -35,7 +35,8 @@
       return {
         role: turn.classList.contains("chat-turn-user") ? "user" : "agent",
         text: (body && body.textContent || "Reply interrupted. You can send that question again.").slice(0, 10000),
-        answer: body && body.osloAnswer || null
+        answer: body && body.osloAnswer || null,
+        support: body && body.guideSupport || null
       };
     });
   }
@@ -45,6 +46,7 @@
       if (!turn || typeof turn.text !== "string" || !["user", "agent"].includes(turn.role)) return;
       const body = append(turn.role, turn.text.slice(0, 10000));
       if (turn.answer && Array.isArray(turn.answer.claims) && render) render(turn.answer, body);
+      if (turn.support && window.UX_GUIDE_SUPPORT) window.UX_GUIDE_SUPPORT.attach(body, turn.support.question, turn.support.support);
     });
   }
   window.UX_GUIDE_SESSION = {

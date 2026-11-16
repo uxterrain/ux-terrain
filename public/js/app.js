@@ -78,6 +78,7 @@
       // Memory is bounded per project/station; open guides can carry it within this tab.
       osloConversations.set(scope, history.concat([{role: "user", content: message}, {role: "assistant", content: answerText}]).slice(-6));
       renderOsloAnswer(result, body);
+      attachGuideSupport(body, message, result.support);
       if (session) session.checkpoint();
     }
   };
@@ -114,10 +115,56 @@
       reply = (reply + decoder.decode()).trim();
       if (!reply) throw new Error("Eda returned an empty reply. Please try again.");
       body.textContent = reply;
+      let support;
+      try { support = JSON.parse(atob(response.headers && response.headers.get("X-Guide-Support") || "")); } catch (_) {}
+      attachGuideSupport(body, message, support);
       edaConversations.set(scope, history.concat([{ role: "user", content: message }, { role: "assistant", content: reply }]).slice(-6));
       if (session) session.checkpoint();
     }
   };
+
+  // A visitor chooses what to share; questions never become source evidence automatically.
+  function attachGuideSupport(body, question, support) {
+    if (!body || !body.parentElement || typeof question !== "string" || question.length > 4000 || !support || !["oslo", "eda"].includes(support.guide)) return;
+    const projects = { sbi: "SBI", "zone-focus": "Flotrak", "performance-monitoring": "M365", armada: "Armada", iqvia: "IQVIA", oslo: "Oslo", eda: "Eda", systems: "Systems", portfolio: "UX Terrain" };
+    if (!Object.prototype.hasOwnProperty.call(projects, support.projectId) || !/^\/(?:index|systems|work\/(?:sbi|zone-focus|performance-monitoring|armada|iqvia|oslo|eda))\.html$/.test(support.page)) return;
+    const existing = body.parentElement.querySelector(".guide-support");
+    if (existing) existing.remove();
+    const actions = document.createElement("div"); actions.className = "guide-support";
+    const project = projects[support.projectId];
+    if (support.needsFollowup) {
+      const invitation = document.createElement("p"); invitation.textContent = "Want to go into more detail? You can ask Jimmy directly.";
+      const email = document.createElement("a"); email.className = "accent-link"; email.textContent = "Ask Jimmy about this ↗";
+      const pageUrl = "https://ux-terrain.vercel.app" + support.page;
+      email.href = "mailto:uxterrain@gmail.com?subject=" + encodeURIComponent("A question about " + project) + "&body=" + encodeURIComponent("Hi Jimmy,\n\nI was exploring " + project + " with " + (support.guide === "eda" ? "Eda" : "Oslo") + " and wanted to ask:\n\n" + question + "\n\nCase study: " + pageUrl + "\n\nThanks!");
+      actions.appendChild(invitation); actions.appendChild(email);
+    }
+    if (typeof support.token === "string" && support.token.length < 3000) {
+      const details = document.createElement("details");
+      const summary = document.createElement("summary"); summary.textContent = "Suggest a question for the portfolio";
+      const label = document.createElement("label"); label.className = "guide-review-label"; label.textContent = "Question to share";
+      const textarea = document.createElement("textarea"); textarea.maxLength = 600; textarea.rows = 3; textarea.value = question.slice(0, 600); label.appendChild(textarea);
+      const notice = document.createElement("p"); notice.className = "guide-review-notice"; notice.textContent = "Only this question, the guide, and the page context will be saved privately for Jimmy to review. Your conversation and contact details aren’t included. Leave out personal or confidential information. Nothing is saved until you choose Share question.";
+      const privacy = document.createElement("a"); privacy.className = "accent-link"; privacy.href = "/privacy.html"; privacy.target = "_blank"; privacy.rel = "noopener"; privacy.textContent = "How questions are used";
+      const send = document.createElement("button"); send.type = "button"; send.className = "guide-review-send"; send.textContent = "Share question";
+      const status = document.createElement("p"); status.className = "guide-review-status"; status.setAttribute("role", "status");
+      send.addEventListener("click", async function () {
+        if (!textarea.value.trim()) { status.textContent = "Add a question before sharing."; return; }
+        send.disabled = true; textarea.disabled = true; status.textContent = "Sharing…";
+        try {
+          const response = await fetch("/api/guide-questions", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: textarea.value.trim(), token: support.token, consent: true }) });
+          const result = await response.json();
+          if (!response.ok || !result.saved) throw new Error(result.error || "That didn’t save. Please try again.");
+          status.textContent = "Thanks—Jimmy can use this to make the portfolio more useful. This isn’t an email request, so there’s no reply to wait for.";
+          send.textContent = "Shared";
+        } catch (error) { status.textContent = error.message || "That didn’t save. Please try again."; send.disabled = false; textarea.disabled = false; }
+      });
+      details.appendChild(summary); details.appendChild(label); details.appendChild(notice); details.appendChild(privacy); details.appendChild(send); details.appendChild(status); actions.appendChild(details);
+    }
+    if (actions.children.length) body.parentElement.appendChild(actions);
+    body.guideSupport = { question, support };
+  }
+  window.UX_GUIDE_SUPPORT = { attach: attachGuideSupport };
 
   const THEME_KEY = "ux-terrain-theme";
 

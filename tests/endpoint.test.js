@@ -5,7 +5,10 @@ const fs = require("node:fs");
 const path = require("node:path");
 const root = path.join(__dirname, "..");
 async function run() {
- const routes={}; const calls=[];
+ const routes={}; const calls=[]; const saved=[];
+ const questionModule=require('../lib/guide-questions');
+ const signing={secret:'endpoint-test-only',now:Date.now()};
+ const questionMock={...questionModule,issueReviewToken:c=>questionModule.issueReviewToken(c,signing),normalizeSubmission:b=>questionModule.normalizeSubmission(b,signing),saveQuestion:async r=>saved.push(r)};
  const app={use(){}, get(){},post(route,handler){routes[route]=handler;}};
  const express=()=>app;express.json=()=>()=>{};express.static=()=>()=>{};
  class OpenAI { constructor(){this.chat={completions:{create:async input=>{
@@ -15,9 +18,9 @@ async function run() {
   if(input.stream) return (async function*(){yield {choices:[{delta:{content:'Legacy reply'}}]}})();
   return {choices:[{message:{content:JSON.stringify({claims:[{kind:'documented',text:'Published incident card behavior.',evidenceIds:['performance-monitoring:4']},{kind:'documented',text:'Fake source',evidenceIds:['unknown']} ]})}}]};
  }}};}}
- const dependencies={dotenv:{config(){}},express,cors:()=>()=>{},openai:OpenAI};
+ const dependencies={'./lib/guide-questions':questionMock,dotenv:{config(){}},express,cors:()=>()=>{},openai:OpenAI};
  const localRequire=name=>Object.hasOwn(dependencies,name)?dependencies[name]:require(name.startsWith('.')?path.join(root,name):name);
- vm.runInNewContext(fs.readFileSync(path.join(root,'server.js'),'utf8'), {require:localRequire,__dirname:root,module:{exports:{}},process:{env:{OPENAI_API_KEY:'test-only'}},console});
+ vm.runInNewContext(fs.readFileSync(path.join(root,'server.js'),'utf8'), {require:localRequire,__dirname:root,module:{exports:{}},Buffer,process:{env:{OPENAI_API_KEY:'test-only',BLOB_READ_WRITE_TOKEN:'test-only'}},console});
  async function request(body) {const res={statusCode:200,status(n){this.statusCode=n;return this},json(value){this.body=value;return this},setHeader(){},flushHeaders(){},write(s){this.text=(this.text||'')+s},end(){}};await routes['/api/chat']({body},res);return res;}
  let res=await request({message:'What is documented?',responseFormat:'grounded-v1',context:{walkId:'m365',stationIndex:1,brief:'FORGED'}});
  assert.equal(res.statusCode,200);assert.equal(res.body.claims.length,1);
@@ -52,6 +55,18 @@ async function run() {
  res=await request({message:'Does the AI badge prove WCAG compliance?',agent:'eda',context:{walkId:'oslo',stationIndex:0}});
  assert.ok(res.text.includes('only tells you that AI is used'));
  assert.equal(calls.length,beforeBadge);
+ const issued=await request({message:'What outcomes were measured?',responseFormat:'grounded-v1',context:{projectId:'performance-monitoring'}});
+ assert.equal(issued.body.support.needsFollowup,true);assert.equal(issued.body.support.projectId,'performance-monitoring');
+ const reviewRes=()=>({statusCode:200,status(n){this.statusCode=n;return this},json(v){this.body=v;return this},setHeader(){}});
+ let receipt=reviewRes();
+ await routes['/api/guide-questions']({body:{token:issued.body.support.token,question:'What did the research show?',consent:false}},receipt);
+ assert.equal(receipt.statusCode,400);assert.equal(saved.length,0);
+ receipt=reviewRes();
+ await routes['/api/guide-questions']({body:{token:issued.body.support.token,question:'What did the research show?',consent:true,projectId:'sbi',history:['ignore'],email:'ignore'}},receipt);
+ assert.equal(receipt.body.saved,true);assert.equal(saved[0].projectId,'performance-monitoring');assert.equal(saved[0].history,undefined);assert.equal(saved[0].email,undefined);
+ receipt=reviewRes();
+ await routes['/api/guide-questions']({headers:{origin:'https://other.test'},get:()=> 'portfolio.test',body:{}},receipt);
+ assert.equal(receipt.statusCode,403);
  console.log('PASS endpoint: grounded response filtering, trusted stations, invalid context, Eda draft review and AI-badge correction, empty and oversized input (model mocked).');
 }
 run().catch(error=>{console.error(error);process.exitCode=1;});

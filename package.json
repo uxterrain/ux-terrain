@@ -7,9 +7,11 @@
   "scripts": {
     "start": "node server.js",
     "vercel-build": "node scripts/copy-static.js",
-    "test": "node tests/oslo.test.js && node tests/eda.test.js && node tests/agent-ui.test.js && node tests/guide-session.test.js && node tests/walk-links.test.js && node tests/endpoint.test.js"
+    "test": "node tests/oslo.test.js && node tests/eda.test.js && node tests/agent-ui.test.js && node tests/guide-session.test.js && node tests/walk-links.test.js && node tests/endpoint.test.js && node tests/guide-questions.test.js",
+    "questions:review": "node scripts/review-guide-questions.js"
   },
   "dependencies": {
+    "@vercel/blob": "^2.9.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
