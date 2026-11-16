@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   const KEY = "ux-terrain-guide-session-v1";
-  const sitePages = /^\/(?:index|about|systems|work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda))\.html$/;
+  const sitePages = /^\/(?:index|about|systems|walk|eda|privacy|work\/(?:armada|iqvia|oslo|performance-monitoring|sbi|zone-focus|eda))\.html$/;
   let active = null;
   function validContext(context) {
     return context && typeof context === "object" &&
@@ -23,7 +23,7 @@
     try {
       const state = active.snapshot();
       if (!validContext(state.context)) return false;
-      const saved = { ...state, guide: active.guide, version: 1 };
+      const saved = { ...state, open: active.open, guide: active.guide, version: 1 };
       while (JSON.stringify(saved).length > 140000 && saved.turns.length > 2) saved.turns.shift();
       sessionStorage.setItem(KEY, JSON.stringify(saved));
       return true;
@@ -76,7 +76,8 @@
       });
       checkpoint();
     },
-    activate(guide, snapshot) { active = { guide, snapshot }; checkpoint(); },
+    activate(guide, snapshot, open = true) { active = { guide, snapshot, open }; checkpoint(); },
+    setOpen(guide, open) { if (active && active.guide === guide) { active.open = open; checkpoint(); } },
     clear(guide) {
       if (active && active.guide !== guide) return;
       active = null;
@@ -90,6 +91,7 @@
     let target;
     try { target = new URL(link.href, window.location.href); } catch (_) { return; }
     if (!/^https?:$/.test(target.protocol)) return;
+    const guideLink = Boolean(link.closest && link.closest("#agent-panel, #eda-panel, .walk-rail, .walk-finish, .case-walks")) || link.hasAttribute("data-guide-link");
     let returningToWalk = false;
     try {
       returningToWalk = Boolean(active.snapshot().context.walkId) &&
@@ -100,6 +102,7 @@
       if (target.pathname !== window.location.pathname) { link.target = "_blank"; link.rel = "noopener noreferrer"; }
       return;
     }
+    if (target.pathname !== window.location.pathname) active.open = guideLink;
     const saved = checkpoint();
     if (!saved && target.pathname !== window.location.pathname) {
       link.target = "_blank"; link.rel = "noopener noreferrer";

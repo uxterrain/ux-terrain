@@ -7,8 +7,8 @@ function setup(storage=new Map(),blocked=false) {
  const document={addEventListener(name,fn){if(name==='click')clicks.push(fn);}};
  const sessionStorage={getItem:key=>storage.get(key)||null,setItem:(key,value)=>{if(blocked)throw new Error('Storage blocked');storage.set(key,value);},removeItem:key=>storage.delete(key)};
  vm.runInNewContext(fs.readFileSync(require.resolve('../js/guide-session.js'),'utf8'),{window,document,sessionStorage,URL,Array,JSON});
- return {api:window.UX_GUIDE_SESSION,storage,events,click(href,modifiers={}){
-  const link={href,hasAttribute:()=>false};const event={button:0,target:{closest:()=>link},...modifiers};clicks.forEach(fn=>fn(event));return link;
+ return {api:window.UX_GUIDE_SESSION,storage,events,click(href,modifiers={},guideLink=false){
+  const link={href,hasAttribute:name=>name==='data-guide-link' && guideLink,closest:()=>guideLink ? {} : null};const event={button:0,target:{closest:()=>link},...modifiers};clicks.forEach(fn=>fn(event));return link;
  }};
 }
 const first=setup();
@@ -16,18 +16,18 @@ let draft='Why was that chosen?';
 const snapshot=()=>({context:{projectId:'performance-monitoring'},turns:[{role:'user',text:'What did Jimmy design?'},{role:'agent',text:'Incident cards.',answer:{claims:[]}}],history:[{role:'user',content:'What did Jimmy design?'},{role:'assistant',content:'Incident cards.'}],draft,scrollTop:123});
 first.api.activate('oslo',snapshot);
 draft='Continue this question';
-const internal=first.click('https://portfolio.test/work/performance-monitoring.html#oslo-evidence-4');
+const internal=first.click('https://portfolio.test/work/performance-monitoring.html#oslo-evidence-4',{},true);
 assert.equal(internal.target,undefined,'local evidence should navigate in this tab');
 const next=setup(first.storage);const state=next.api.read();
-assert.equal(state.guide,'oslo');assert.equal(state.draft,draft);assert.equal(state.scrollTop,123);
+assert.equal(state.open,true,'guide references keep the panel open');assert.equal(state.guide,'oslo');assert.equal(state.draft,draft);assert.equal(state.scrollTop,123);
 assert.equal(state.history[1].content,'Incident cards.');assert.equal(state.context.projectId,'performance-monitoring');
 assert.equal(first.click('https://external.test/reference').target,'_blank');
 assert.equal(first.click('https://portfolio.test/images/work/chart.png').target,'_blank');
 assert.equal(first.click('https://external.test/reference',{ctrlKey:true}).target,undefined,'modified clicks should keep native behavior');
 first.api.clear('oslo');assert.equal(next.api.read(),null,'explicit close must clear continuation');
 first.api.activate('eda',()=>({context:{walkId:'sbi',stationIndex:2},turns:[],history:[],draft:'A draft',scrollTop:42}));
-assert.equal(first.click('https://portfolio.test/eda.html#sbi/2').target,undefined,'returning to the same guide’s Walk should retain the session');
-const eda=setup(first.storage).api.read();assert.equal(eda.guide,'eda');assert.equal(eda.context.walkId,'sbi');assert.equal(eda.context.stationIndex,2);
+assert.equal(first.click('https://portfolio.test/eda.html#sbi/2',{},true).target,undefined,'returning to the same guide’s Walk should retain the session');
+const eda=setup(first.storage).api.read();assert.equal(eda.open,true);assert.equal(eda.guide,'eda');assert.equal(eda.context.walkId,'sbi');assert.equal(eda.context.stationIndex,2);
 first.events.pagehide();assert.equal(first.api.read().draft,'A draft');
 first.api.clear('eda');assert.equal(first.api.read(),null);
 first.storage.set('ux-terrain-guide-session-v1','{bad json');assert.equal(first.api.read(),null);
@@ -53,3 +53,18 @@ const restored=[makeButton('Original one'),makeButton('Original two')];
 first.api.restoreSuggestions({querySelectorAll(){return restored;}},savedSuggestions);
 assert.equal(restored[0].textContent,buttons[0].textContent);assert.equal(restored[1].removed,true);
 console.log('PASS relevant follow-ups replace answered prompts, avoid repeats, exhaust cleanly, and restore across navigation.');
+
+const nav=setup();
+nav.api.activate('oslo',snapshot);
+nav.click('https://portfolio.test/work/sbi.html');
+assert.equal(nav.api.read().open,false,'ordinary navigation collapses Oslo');
+nav.events.pagehide();assert.equal(nav.api.read().open,false,'pagehide must not reopen a collapsed continuation');
+assert.equal(nav.api.read().draft,draft,'collapsed continuation retains the draft');
+assert.equal(nav.api.read().history[0].content,'What did Jimmy design?','collapsed continuation retains the conversation');
+nav.api.activate('eda',()=>({context:{walkId:'sbi',stationIndex:2},turns:[{role:'agent',text:'Context'}],history:[],draft:'An Eda draft'}));
+nav.click('https://portfolio.test/about.html');assert.equal(nav.api.read().open,false,'ordinary navigation collapses Eda');
+nav.api.activate('eda',()=>({context:{walkId:'sbi',stationIndex:2},turns:[],history:[],draft:'An Eda draft'}),false);
+nav.api.setOpen('eda',true);assert.equal(nav.api.read().open,true,'explicit reopen restores open state');
+nav.click('https://portfolio.test/work/sbi.html#oslo-evidence-8',{},true);assert.equal(nav.api.read().open,true,'Eda reference stays with the conversation');
+nav.click('https://portfolio.test/walk.html');assert.equal(nav.api.read().open,false,'regular header Walk navigation collapses the guide');
+console.log('PASS guide navigation: ordinary links collapse both guides; authored references retain them; saved drafts and conversations survive pagehide and reopen.');

@@ -432,7 +432,8 @@
         session.restore(log, continuation.turns, appendMessage, window.UX_OSLO.render);
       }
       input.value = typeof continuation.draft === "string" ? continuation.draft.slice(0, 4000) : "";
-      setOpen(true);
+      if (continuation.open === false) session.activate("oslo", snapshot, false);
+      else setOpen(true);
       window.requestAnimationFrame(function () { log.scrollTop = resumeConversation ? continuation.scrollTop || 0 : 0; });
     }
     input.addEventListener("input", function () { if (isOpen && session) session.checkpoint(); });

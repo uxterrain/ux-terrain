@@ -325,7 +325,12 @@
     stopTyping();
     setStatus("idle", idleLabel());
     input.value = typeof carried.draft === "string" ? carried.draft.slice(0, 4000) : "";
-    setOpen(true);
+    if (carried.open === false) {
+      session.activate("eda", function () {
+        const context = { walkId: walk.id, stationIndex: index };
+        return { context, turns: session.capture(log), suggestions: session.captureSuggestions(asks), history: window.UX_EDA.history(context), draft: input.value, scrollTop: log.scrollTop };
+      }, false);
+    } else setOpen(true);
     window.requestAnimationFrame(function () { log.scrollTop = carried.scrollTop || 0; });
   }
   input.addEventListener("input", function () { if (isOpen && session) session.checkpoint(); });

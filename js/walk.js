@@ -41,6 +41,7 @@
     const collapsed = stage.classList.toggle("is-guide-collapsed");
     guideToggle.setAttribute("aria-expanded", String(!collapsed));
     guideToggle.textContent = collapsed ? "Ask " + walkConfig.name : "Hide guide";
+    if (session) session.setOpen(walkConfig.agent, !collapsed);
     if (!collapsed) input.focus();
   });
   stage.querySelector(".walk-foot").prepend(guideToggle);
@@ -498,6 +499,7 @@
       const read = document.createElement("a");
       read.className = "eda-related-link";
       read.href = walk.readUrl;
+      read.setAttribute("data-guide-link", "");
       read.textContent = "Read the full story ↗";
       end.append(next, read);
       (walk.sources || []).forEach(function (source) {
@@ -709,7 +711,7 @@
   log.addEventListener("scroll", function () { if (walk && session) session.checkpoint(); }, { passive: true });
 
   const parsed = parseHash();
-  if (carried && carried.context.walkId && Object.hasOwn(WALKS, carried.context.walkId) && (!parsed.id || (parsed.id === carried.context.walkId && parsed.index === carried.context.stationIndex))) {
+  if (carried && carried.context.walkId && Object.hasOwn(WALKS, carried.context.walkId) && (carried.open !== false || parsed.id) && (!parsed.id || (parsed.id === carried.context.walkId && parsed.index === carried.context.stationIndex))) {
     startWalk(carried.context.walkId, carried.context.stationIndex);
     const context = { walkId: walk.id, stationIndex: index };
     const agent = walkConfig.agent === "oslo" ? window.UX_OSLO : window.UX_EDA;
@@ -720,6 +722,12 @@
     session.restoreSuggestions(asks, carried.suggestions);
     input.value = typeof carried.draft === "string" ? carried.draft.slice(0, 4000) : "";
     window.requestAnimationFrame(function () { log.scrollTop = carried.scrollTop || 0; });
+    if (carried.open === false) {
+      stage.classList.add("is-guide-collapsed");
+      guideToggle.setAttribute("aria-expanded", "false");
+      guideToggle.textContent = "Ask " + walkConfig.name;
+      session.setOpen(walkConfig.agent, false);
+    }
     session.checkpoint();
   } else if (parsed.id && WALKS[parsed.id]) startWalk(parsed.id, parsed.index);
   else setMode("pick");
